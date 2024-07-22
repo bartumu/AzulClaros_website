@@ -1,0 +1,50 @@
+{% load static %}
+
+<header>
+    <!-- Header Start -->
+    <div class="header-area">
+        <div class="main-header header-sticky">
+            <!-- Logo -->
+            <div class="header-left">
+                <div class="logo">
+                    <a href="index.html"><img src="{% static 'frontEnd/assets/img/logo/logo_.png' %}" alt=""></a>
+                </div>
+                <div class="menu-wrapper  d-flex align-items-center">
+                    <!-- Main-menu -->
+                    <div class="main-menu d-none d-lg-block">
+                        <nav>
+                            <ul id="navigation">
+                                <li class="active"><a href="/">Home</a></li>
+                                <li><a href="">Sobre</a></li>
+                                <li><a href="">Serviços</a></li>
+                                {% if is_logged %}
+                                <li><a href="">Portal Cliente</a>
+                                    <ul class="submenu">
+                                        <li><a href="blog.html">Ver Pedidos</a></li>
+                                        <li><a href="blog_details.html">Deixe seu comentário</a></li>
+                                        <li><a href="{% url 'logout' %}">Sair</a></li>
+                                    </ul>
+                                </li>
+                                {% endif %}
+                                <li><a href="">Contactos</a></li>
+                                {% if is_logged == False %}
+                                <li><a href="{% url 'login' %}">Login</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right d-none d-lg-block">
+                <a href="#" class="header-btn1"><img src="{% static 'frontEnd/assets/img/icon/call.png' %}" alt=""> Faça Reserva</a>
+                <a href="" class="header-btn2">Login</a>
+            </div>
+            <!-- Mobile Menu -->
+            <div class="col-12">
+                <div class="mobile_menu d-block d-lg-none"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+</header>

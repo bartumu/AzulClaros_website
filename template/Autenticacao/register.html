@@ -1,0 +1,94 @@
+{% extends "Autenticacao/layout/app.html" %} 
+{% load static %} 
+{% block titulo %}
+ Registrar
+{% endblock %} 
+
+
+{% block Conteudo %}
+    <div class="container-fluid">
+        <!-- Log In page -->
+        <div class="row">
+            <div class="col-lg-3 pe-0">
+                <div class="card mb-0 shadow-none">
+                    <div class="card-body">
+
+                        <h3 class="text-center m-0">
+                            <a href="index.html" class="logo logo-admin"><img src="{% static 'BackEnd/assets/images/Laundry_Icon_Blue.ico' %}"
+                                    height="60" alt="logo" class="my-3"></a>
+                        </h3>
+
+                        <div class="px-2 mt-2">
+                            <h4 class="font-size-18 mb-2 text-center">Cadastra-se grátis</h4>
+                            <p class="text-muted text-center">Tenha uma conta no sistema Agora.</p>
+
+                            <form class="form-horizontal my-4" action="" method="POST">
+                            {% if formulario.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ formulario.errors }}</strong>
+                            </div>
+                            {% endif %}
+                            {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label" for="username">Nome de Utilizador</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1"><i
+                                                class="far fa-user"></i></span>
+                                        {{formulario.username}}
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="username">Email</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon2"><i
+                                                class="far fa-envelope"></i></span>
+                                        {{formulario.email}}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="userpassword">Senha</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon3"><i
+                                                class="fas fa-lock"></i></span>
+                                        {{formulario.password1}}
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="userpassword">Confirmar Senha</label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon4"><i
+                                                class="fas fa-key"></i></span>
+                                        
+                                        {{formulario.password2}}
+                                    </div>
+                                </div>
+
+                                <div class="mb-0 row">
+                                    <div class="col-12 mt-2">
+                                        <button class="btn btn-primary w-100 waves-effect waves-light"
+                                            type="submit">Cadastrar <i class="fas fa-sign-in-alt ms-1"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+                        <div class="m-2 text-center bg-light p-4 text-primary">
+                            <h4 class="">Já tem Alguma conta ? </h4>
+                            <p class="font-size-13">Junta-te a Comunidade <span>Azul Claros</span> Agora</p>
+                            <a href="Auth/login.html" class="btn btn-primary waves-effect waves-light">Entrar</a>
+                        </div>
+                        {% include "Autenticacao/layout/footer.html" %}
+                    </div>
+                </div>
+            </div>
+            {% include "Autenticacao/layout/Msg.html" %}
+        </div>
+        <!-- End Log In page -->
+    </div>
+{% endblock  %}
+
+
+
