@@ -56,11 +56,11 @@ def login_view(request):
             #messages.success(request,f"Login Feito Com sucesso")
             if usuario.user_tipo == 'client':
                 return redirect('home')
-            elif usuario.user_tipo == 'admin':
+            elif usuario.user_tipo == 'funcionario':
                 messages.success(request,f"Login Feito Com sucesso")
-                return redirect('/admin/')
-            else:
-                return redirect('home')
+                return redirect('cliDashBoard')
+            """ else:
+                return redirect('home') """
         else:
             messages.warning(request, "Usuario não existe crie uma conta")
             return redirect('login')
