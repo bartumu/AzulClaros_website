@@ -6,5 +6,6 @@ from . import views
 
 urlpatterns = [
     path('',views.index,name="home"),
-    path('',views.sobre,name="fronEnd.sobre"),
+    path('/sobre',views.sobre,name="sobre"),
+    path('/pedidos',views.pedido,name="pedido"),
 ]

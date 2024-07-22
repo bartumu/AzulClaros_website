@@ -1,9 +1,10 @@
 from django.urls import path
-from . import views
+from AdminDashboard import views
 
 
 
 
 urlpatterns = [
-    path('cli',views.cliDashboard,name="cliDashBoard"),
+    path('func',views.cliDashboard,name="cliDashBoard"),
+    path('func/logout/',views.logout_view,name="logout"),
 ]

@@ -20,7 +20,7 @@
                                 {% if is_logged %}
                                 <li><a href="">Portal Cliente</a>
                                     <ul class="submenu">
-                                        <li><a href="blog.html">Ver Pedidos</a></li>
+                                        <li><a href="{% url 'pedido' %}">Ver Pedidos</a></li>
                                         <li><a href="blog_details.html">Deixe seu comentário</a></li>
                                         <li><a href="{% url 'logout' %}">Sair</a></li>
                                     </ul>

@@ -133,7 +133,7 @@
             src="{% static 'BackEnd/assets/images/users/user-1.jpg'%}"
             alt="Header Avatar"
           />
-          <span class="d-none d-xl-inline-block ms-1">Amelia</span>
+          <span class="d-none d-xl-inline-block ms-1">{{ usuario.username }}</span>
           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-end">
@@ -150,7 +150,7 @@
           >
 
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#"
+          <a class="dropdown-item" href="{% url 'logout' %}"
             ><i class="dripicons-exit d-inline-block text-muted me-2"></i>
             Logout</a
           >
