@@ -10,6 +10,7 @@ def index(request):
         'is_logged':is_logged(request)
     }
     return render(request,'Portifolio/index.html', context)
+
 def sobre(request):
     return render(request,'Portifolio/SobreNos.html')
 
@@ -20,6 +21,12 @@ def pedido(request):
     if request.user.is_authenticated:
         return render(request,'Portifolio/Pedido.html', context)
     return redirect('login')
+
+def addPedido_view(request):
+    context = {
+        'is_logged': is_logged(request)
+    }
+    return render(request, 'Portifolio/PedidoAdd', context)
 
 def is_logged(request):
     if request.user.is_authenticated:
