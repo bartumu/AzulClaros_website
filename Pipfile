@@ -9,7 +9,7 @@ mysql-client = "*"
 mysqlclient = "*"
 pillow = "*"
 django-phonenumber-field = "*"
-phonenumbers = "*"
+django-phonenumbers = "*"
 
 [dev-packages]
 

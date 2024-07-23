@@ -3,9 +3,10 @@ from UserAutenticacao.forms import FormRegistarUser
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.conf import settings
+from .models import Usuario
 # Create your views here.
 
-Usuario = settings.AUTH_USER_MODEL
+#Usuario = settings.AUTH_USER_MODEL
 
 def registar_view(request):
     if request.user.is_authenticated:
@@ -42,28 +43,23 @@ def login_view(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        """ try:
+        try:
             usuario = Usuario.objects.get(email=email)
-        except:
-            messages.warning(request,f"Usuarios com {email} não existe") """
-            
 
+            
+        except:
+            messages.warning(request,f"Usuarios com {email} não existe")
+            
         usuario = authenticate(request, username=email, password=password)
 
         if usuario is not None:
             login(request, usuario)
-            messages.add_message(request, messages.INFO, 'Mensagem de sucesso!') 
-            #messages.success(request,f"Login Feito Com sucesso")
-            if usuario.user_tipo == 'client':
-                return redirect('home')
-            elif usuario.user_tipo == 'funcionario':
-                messages.success(request,f"Login Feito Com sucesso")
-                return redirect('cliDashBoard')
-            """ else:
-                return redirect('home') """
+            messages.add_message(request, messages.INFO, 'Mensagem de sucesso!')
+            return redirect('FuncDashBoard')
         else:
             messages.warning(request, "Usuario não existe crie uma conta")
             return redirect('login')
+        
 
         context = {}
     return render(request, 'Autenticacao/login.html')

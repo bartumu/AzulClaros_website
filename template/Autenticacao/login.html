@@ -32,6 +32,11 @@
                     {% endfor %}
                 </ul>
             {% endif %}
+            <script>
+              setTimeout(() =>{
+                  $(".alert").alert("close");
+              }, 3000)
+            </script>
 
             <form class="form-horizontal my-4" method="POST">
               {% csrf_token %}

@@ -48,9 +48,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Portifolio',
-    'AdminDashboard',
+    'FuncDashboard',
     'UserAutenticacao',
-    'phonenumber_field',
+    'phonenumbers',
 ]
 
 MIDDLEWARE = [

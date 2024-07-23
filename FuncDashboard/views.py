@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
 # Create your views here.
-def cliDashboard(request):
+def FuncDashboard(request):
     usuario = request.user
     context = {
         'usuario':usuario
