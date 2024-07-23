@@ -26,7 +26,7 @@ def addPedido_view(request):
     context = {
         'is_logged': is_logged(request)
     }
-    return render(request, 'Portifolio/PedidoAdd', context)
+    return render(request, 'Portifolio/PedidoAdd.html', context)
 
 def is_logged(request):
     if request.user.is_authenticated:
