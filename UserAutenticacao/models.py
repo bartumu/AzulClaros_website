@@ -13,10 +13,9 @@ class Usuario(AbstractUser):
 
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=30, unique=True)
-    #user_tipo = models.CharField(max_length=14, choices=USER_TYPE_CHOICES, default='cliente')
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'user_tipo']
+    REQUIRED_FIELDS = ['username']
 
     class Meta:
         verbose_name = 'Usuario'

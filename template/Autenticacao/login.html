@@ -14,7 +14,7 @@
           <h3 class="text-center m-0">
             <a href="index.html" class="logo logo-admin"
               ><img
-                src="{% static 'BackEnd/assets/images/Laundry_Icon.ico' %}"
+                src="{% static 'BackEnd/assets/images/Laundry_Icon_Blue.ico' %}"
                 height="60"
                 alt="logo"
                 class="my-3"
@@ -113,7 +113,7 @@
             </form>
             <!-- end form -->
           </div>
-          <div class="m-2 text-center bg-light p-4 text-primary">
+          {% comment %} <div class="m-2 text-center bg-light p-4 text-primary">
             <h4 class="">Não tem Conta ?</h4>
             <p class="font-size-13">Junta-se a <span>Azul Claros</span> Agora</p>
             <a
@@ -121,7 +121,7 @@
               class="btn btn-primary waves-effect waves-light"
               >Registra-se</a
             >
-          </div>
+          </div> {% endcomment %}
           {% include "Autenticacao/layout/footer.html" %}
         </div>
       </div>

@@ -57,6 +57,12 @@
       <div class="container box_1170">
         <div class="section-top-border">
           <h3 class="mb-30">Pedidos</h3>
+
+          {% if reserva %}
+          <ul>
+            <li class="alert alert-danger">Codigo de Reserva: {{ reserva }}</li>
+          </ul>
+          {% endif %}
           {% comment %} Colocar O Pedido Gerado aqui {% endcomment %}
         </div>
       </div>

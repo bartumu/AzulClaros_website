@@ -28,24 +28,50 @@
           <div class="row">
             <div class="col-lg-8 col-md-8">
               <h3 class="mb-30">Faça Pedido de Reserva para Lavar suas Roupas</h3>
-              <form action="#" method="POST">
+              {% if Existe_servico %}
+              
+              
+              <form action="" method="POST">
                 {% csrf_token %}
+                {% if FormCliente.errors %}
+                              <div class="alert alert-danger">
+                                  <strong>{{ FormCliente.errors }}</strong>
+                              </div>
+                {% endif %}
+                {% if formReserva.errors %}
+                              <div class="alert alert-danger">
+                                  <strong>{{ formReserva.errors }}</strong>
+                              </div>
+                {% endif %}
+                {% if FormServicosReservados.errors %}
+                              <div class="alert alert-danger">
+                                  <strong>{{ FormServicosReservados.errors }}</strong>
+                              </div>
+                {% endif %}
                 <div class="mt-10">
                   {{ FormCliente.nome }}
                 </div>
                 <div class="mt-10">
                   {{ FormCliente.numero }}
                 </div>
-                <br>
+
                   <div class="form-select" id="default-select">
                     {{ FormCliente.genero }}
                   </div>
 
+                  <div class="mt-10">
+                    {{ formReserva.data_entrada }}
+                  </div>
+
                   <div class="input-group-icon mt-10">
-                    {{ FormPedido.qtd }}
+                    {{ FormServicosReservados.qtd }}
                   </div>
 
                   <div class="single-element-widget mt-30">
+                    {{ FormServicosReservados.servicos }}
+                  </div>
+
+                  {% comment %} <div class="single-element-widget mt-30">
                     <h3 class="mb-30">Serviços</h3>
                     <div class="switch-wrap d-flex justify-content-between">
                       <p>Lavagem</p>
@@ -69,10 +95,13 @@
                       </div>
                     </div>
 
+                    </div> {% endcomment %}
                     <button type='submit' class="genric-btn primary radius"> Fazer Pedido</button>
-                  </div>
                 </div>
               </form>
+              {% else %}
+              <h2>Não Existe Serviço Cadastrado</h2>
+              {% endif %}
             </div>
           </div>
         </div>

@@ -11,9 +11,10 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Servico(models.Model):
     nome = models.CharField(max_length=20, verbose_name='Nome Do Serviço')
     descricao = models.CharField(max_length=20, verbose_name='Descrição Do Serviço')
+    preco = models.DecimalField(default=0.0,max_digits=10, decimal_places=2, verbose_name='Descrição Do Serviço')
     img = models.ImageField(upload_to='servico/', blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])], verbose_name='Foto do Serviço')
 
-    REQUIRED_FIELDS = ['nome', 'descricao', 'img']
+    REQUIRED_FIELDS = ['nome', 'descricao', 'preco' , 'img']
 
     class Meta:
         verbose_name = 'Serviço'
