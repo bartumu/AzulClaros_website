@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect
+from .forms import FormFazerPedido, FormRegistarCliente
 
 # Create your views here.
 from django.shortcuts import render
@@ -15,17 +16,18 @@ def sobre(request):
     return render(request,'Portifolio/SobreNos.html')
 
 def pedido(request):
-    context = {
-        'is_logged': is_logged(request)
-    }
-    if request.user.is_authenticated:
-        return render(request,'Portifolio/Pedido.html', context)
-    return redirect('login')
+        return render(request,'Portifolio/Pedido.html')
 
 def addPedido_view(request):
+
+    formPedido = FormFazerPedido()
+    formCliente = FormRegistarCliente()
+
     context = {
-        'is_logged': is_logged(request)
+         'FormPedido' : formPedido,
+         'FormCliente': formCliente
     }
+
     return render(request, 'Portifolio/PedidoAdd.html', context)
 
 def is_logged(request):

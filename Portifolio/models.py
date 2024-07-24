@@ -28,6 +28,7 @@ class Pedido (models.Model):
     total = models.DecimalField(max_digits=10, decimal_places=2)
     funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE, related_name='func')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='cli')
+    qtd = models.IntegerField()
     estado = models.BooleanField()
     data_entrada = models.DateField()
     data_saida = models.DateField()
@@ -37,11 +38,10 @@ class Pedido (models.Model):
         return f"Pedido em {self.data_pedido} - Cliente: {self.cliente} - Total: {self.total} - Estado: {self.estado} Na Loja: {self.loja}"
 
 class ItemPedido (models.Model):
-    qtd = models.IntegerField()
     pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name='pedido')
     servico = models.ForeignKey(Servico, on_delete=models.CASCADE, related_name='servico')
 
 
     def __str__(self):
-        return f"Pedido: {self.pedido}, Serviço: {self.servico}, Quantidade: {self.qtd}"
+        return f"Pedido: {self.pedido}, Serviço: {self.servico}"
 

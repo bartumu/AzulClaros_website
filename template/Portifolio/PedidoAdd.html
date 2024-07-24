@@ -28,42 +28,21 @@
           <div class="row">
             <div class="col-lg-8 col-md-8">
               <h3 class="mb-30">Faça Pedido de Reserva para Lavar suas Roupas</h3>
-              <form action="#">
-                {% comment %} <div class="mt-10">
-                  <input type="text" name="first_name" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required class="single-input" />
+              <form action="#" method="POST">
+                {% csrf_token %}
+                <div class="mt-10">
+                  {{ FormCliente.nome }}
                 </div>
                 <div class="mt-10">
-                  <input type="text" name="last_name" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" required class="single-input" />
+                  {{ FormCliente.numero }}
                 </div>
-                <div class="mt-10">
-                  <input type="text" name="last_name" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" required class="single-input" />
-                </div>
-                <div class="mt-10">
-                  <input type="email" name="EMAIL" placeholder="Email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required class="single-input" />
-                </div>
-                <div class="input-group-icon mt-10">
-                  <div class="icon">
-                    <i class="fa fa-thumb-tack" aria-hidden="true"></i>
-                  </div>
-                  <input type="text" name="address" placeholder="Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'" required class="single-input" />
-                </div>
-                <div class="input-group-icon mt-10">
-                  <div class="icon">
-                    <i class="fa fa-plane" aria-hidden="true"></i>
-                  </div> {% endcomment %}
+                <br>
                   <div class="form-select" id="default-select">
-                    <select>
-                      <option value=" 1">Seleccione a Loja</option>
-                      <option value="1">Dhaka</option>
-                      <option value="1">Dilli</option>
-                      <option value="1">Newyork</option>
-                      <option value="1">Islamabad</option>
-                    </select>
+                    {{ FormCliente.genero }}
                   </div>
 
                   <div class="input-group-icon mt-10">
-                    
-                    <input type="text" name="address" placeholder="Quantidade de Cestos" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Quantidade de Cestos'" required class="single-input" />
+                    {{ FormPedido.qtd }}
                   </div>
 
                   <div class="single-element-widget mt-30">
@@ -71,21 +50,21 @@
                     <div class="switch-wrap d-flex justify-content-between">
                       <p>Lavagem</p>
                       <div class="primary-checkbox">
-                        <input type="checkbox" id="default-checkbox" />
+                        <input type="checkbox" id="default-checkbox" name="servico" value "Lavagem" />
                         <label for="default-checkbox"></label>
                       </div>
                     </div>
                     <div class="switch-wrap d-flex justify-content-between">
                       <p>Secagem</p>
                       <div class="primary-checkbox">
-                        <input type="checkbox" id="primary-checkbox" checked />
+                        <input type="checkbox" id="primary-checkbox" name="servico" value "Secagem" checked />
                         <label for="primary-checkbox"></label>
                       </div>
                     </div>
                     <div class="switch-wrap d-flex justify-content-between">
                       <p>Engomagem</p>
                       <div class="primary-checkbox">
-                        <input type="checkbox" id="confirm-checkbox" checked />
+                        <input type="checkbox" id="confirm-checkbox" name="servico" value "Engomagem" checked />
                         <label for="confirm-checkbox"></label>
                       </div>
                     </div>

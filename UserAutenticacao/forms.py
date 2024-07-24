@@ -16,11 +16,10 @@ class FormRegistarUser(UserCreationForm):
 class UsuarioCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Usuario
-        fields = ['email', 'username', 'user_tipo']
+        fields = ['email', 'username']
         labels = {
             'email': 'Endereço de E-mail',
             'username': 'Nome de Usuário',
-            'user_tipo': 'Tipo de Usuário',
         }
         help_texts = {
             'email': 'Digite um endereço de e-mail válido.',
@@ -29,11 +28,10 @@ class UsuarioCreationForm(UserCreationForm):
 class UsuarioChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = Usuario
-        fields = ['email', 'username', 'user_tipo']
+        fields = ['email', 'username']
         labels = {
             'email': 'Endereço de E-mail',
             'username': 'Nome de Usuário',
-            'user_tipo': 'Tipo de Usuário',
         }
         help_texts = {
             'email': 'Digite um endereço de e-mail válido.',

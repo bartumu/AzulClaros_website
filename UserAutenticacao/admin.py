@@ -18,7 +18,7 @@ class UserAdmin(BaseUserAdmin):
             'description': 'Preencha os campos abaixo para criar um novo usuário.'
         }),
     )
-    list_display=['username','email','user_tipo','password']
+    list_display=['username','email','password']
 
 admin.site.register(Usuario, UserAdmin)
 # Register your models here.
