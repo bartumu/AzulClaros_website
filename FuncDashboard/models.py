@@ -30,7 +30,7 @@ class Funcionario(models.Model):
     )
     nome = models.CharField(max_length=20, verbose_name='Nome Completo')
     endereco = models.CharField(max_length=20, verbose_name='Endereço')
-    numero = PhoneNumberField(max_length=9, region='AO', verbose_name='Número de Tel')
+    numero = models.CharField(max_length=9, verbose_name='Número de Tel')
     genero = models.CharField(max_length=9, choices=GENERO , verbose_name='Genero')
     img = models.ImageField(upload_to='func/', blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])], verbose_name='Foto do Serviço')
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, verbose_name='Usuario')

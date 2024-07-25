@@ -9,9 +9,8 @@
               <li class="menu-title">Main</li>
 
               <li>
-                <a href="javascript: void(0);" class="waves-effect">
+                <a href="{% url 'FuncDashBoard' %}" class="waves-effect">
                   <i class="mdi mdi-speedometer"></i>
-                  <span class="badge rounded-pill bg-danger float-end">9+</span>
                   <span>HOME</span>
                 </a>
               </li>
@@ -19,8 +18,9 @@
               <!-- Calender -->
               <li class="menu-title">PÁGINA INICIAL</li>
                 <li>
-                <a href="calendar.html" class="waves-effect">
+                <a href="{% url 'marcacao' %}" class="waves-effect">
                   <i class="mdi mdi-calendar"></i>
+                  <span class="badge rounded-pill bg-danger float-end">9+</span>
                   <span>Marcações</span>
                 </a>
               </li>

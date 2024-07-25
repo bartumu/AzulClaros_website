@@ -13,9 +13,10 @@ def index(request):
 def sobre(request):
     return render(request,'Portifolio/SobreNos.html')
 
+
+
 def pedido(request):
         reserva = request.session.get('reserva')
-
         context = {
             'reserva':reserva
         }
@@ -34,7 +35,6 @@ def addPedido_view(request):
 
             if formReserva.is_valid():
                 reserva = formReserva.save(commit=False)
-                #cliente = Cliente.objects.get(nome=nomeCli)
                 reserva.cliente = cliente
                 reserva.save()
             
@@ -48,15 +48,7 @@ def addPedido_view(request):
                         servicosReservado = formServicosReservados.save(commit=False)
                         servicosReservado.reserva = reserva
                         servicosReservado.servico = servico
-                        servicosReservado.save() 
-                        """ 
-                        """
-                        #ServicosReservado.objects.create(reserva=reserva, servico=servico, qtd=qtd)
-
-                    """ servicosReservado = formServicosReservados.save(commit=False)
-                    servicosReservado.reserva = reserva
-                    servicosReservado.save()
-                    formServicosReservados.save_m2m() """
+                        servicosReservado.save()
 
                     reserva = request.session['reserva'] = reserva.codigo_reserva
                     return redirect("pedido")
