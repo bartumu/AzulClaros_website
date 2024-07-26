@@ -2,11 +2,13 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import FileExtensionValidator
 from UserAutenticacao.models import Usuario
+from django.template.defaultfilters import slugify
 from phonenumber_field.modelfields import PhoneNumberField
 # Create your views here.
 
 #from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
+
 
 class Servico(models.Model):
     nome = models.CharField(max_length=20, verbose_name='Nome Do Serviço')
@@ -17,6 +19,7 @@ class Servico(models.Model):
     REQUIRED_FIELDS = ['nome', 'descricao', 'preco' , 'img']
 
     class Meta:
+        db_table = 'Servico'
         verbose_name = 'Serviço'
         verbose_name_plural = 'Serviços'
 
@@ -32,13 +35,14 @@ class Funcionario(models.Model):
     endereco = models.CharField(max_length=20, verbose_name='Endereço')
     numero = models.CharField(max_length=9, verbose_name='Número de Tel')
     genero = models.CharField(max_length=9, choices=GENERO , verbose_name='Genero')
-    img = models.ImageField(upload_to='func/', blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])], verbose_name='Foto do Serviço')
+    img = models.ImageField(upload_to='Func/', blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])], verbose_name='Foto do Serviço')
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, verbose_name='Usuario')
 
 
     REQUIRED_FIELDS = ['nome', 'endereco', 'numero', 'genero', 'img','usuario','loja']
     
     class Meta:
+        db_table = 'Funcionario'
         verbose_name = 'Funcionario'
         verbose_name_plural = 'Funcionarios'
     

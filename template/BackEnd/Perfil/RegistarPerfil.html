@@ -1,0 +1,133 @@
+
+
+{% extends 'BackEnd/layout/index.html' %} {% load static %} {% block Conteudo %}
+
+<div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">Form Validation</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Amezia</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+                        <li class="breadcrumb-item active">Form Validation</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-md-12 col-xl-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <h5 class="card-title">Bootstrap Custom styles</h5>
+                    <p class="card-title-desc">When attempting to submit, you’ll see the
+                        <code class="highlighter-rouge">:invalid</code> and
+                        <code class="highlighter-rouge">:valid</code> styles applied to your form
+                        controls.
+                    </p>
+                    <!-- <form class="needs-validation" novalidate="" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="mb-3">{{ formCadastrar.nome }}</div>
+
+                        <div class="row">
+                          <div class="col-md-4 mb-3">{{ formCadastrar.numero }}</div>
+                          <div class="col-md-4 mb-3">{{ formCadastrar.endereco }}</div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6 mb-3">
+                            <select class="form-control" name="genero">
+                              {% for genero in formCadastrar.genero %}
+                                <option>{{ genero }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
+                        </div>
+
+                        <label for="">Escolha uma Foto</label>
+                        <div class="mb-3"><input type="file" id="input-file-now-custom-1" name="img" class="dropify" data-default-file="" /></div>
+                        
+                        <div class="mb-3">
+                          <button class="btn btn-primary btn-sm text-light px-4 mt-3 float-end mb-0">Criar Perfil</button>
+                        </div>
+                      </form> -->
+                      {% if formCadastrar.errors %}
+                  <div class="alert alert-danger">
+                    <strong>{{ formCadastrar.errors }}</strong>
+                  </div>
+                {% endif %}
+                      <form class="needs-validation" novalidate="" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row gx-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip01" class="form-label">Nome</label>
+                                    {{ formCadastrar.nome }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip02" class="form-label">Numero Tel</label>
+                                    {{ formCadastrar.numero }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row gx-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip03" class="form-label">Sexo</label>
+                                    <select class="form-control" name="genero">
+                                        {% for genero in formCadastrar.genero %}
+                                          <option>{{ genero }}</option>
+                                        {% endfor %}
+                                      </select>
+                                    </div>
+                            </div>
+                            <!-- end col -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip04" class="form-label">Endereço</label>
+                                    {{ formCadastrar.endereco }}    
+                                </div>
+                            </div>
+                            <!-- end col -->
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="validationTooltip05" class="form-label">Escolha uma Foto</label>
+                                    <input type="file" id="input-file-now-custom-1" name="img" class="dropify" data-default-file="" />
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        <button class="btn btn-light mb-0 w-auto" type="submit">Criar Perfil</button>
+
+                        
+                    </form>
+                    <!-- end form -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <!-- end row -->
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

@@ -37,6 +37,7 @@ def addPedido_view(request):
                 reserva = formReserva.save(commit=False)
                 reserva.cliente = cliente
                 reserva.save()
+                
             
                 if formServicosReservados.is_valid():
 
@@ -44,11 +45,21 @@ def addPedido_view(request):
                     qtd = formServicosReservados.cleaned_data.get('qtd')
 
                     for servico in servicosReservado:
-                        #print(servico.id)
-                        servicosReservado = formServicosReservados.save(commit=False)
+                        print(servico)
+                        subtotal = servico.preco * qtd
+                        total = 0 + subtotal
+                        ServicosReservado.objects.create(
+                            servico=servico,
+                            reserva=reserva,
+                            subtotal=subtotal,
+                            qtd=qtd
+                        )
+                        """ servicosReservado = formServicosReservados.save(commit=False)
                         servicosReservado.reserva = reserva
                         servicosReservado.servico = servico
-                        servicosReservado.save()
+                        servicosReservado.subtotal = subtotal
+                        servicosReservado.save() """
+                        #reserva.atualizar_total()
 
                     reserva = request.session['reserva'] = reserva.codigo_reserva
                     return redirect("pedido")

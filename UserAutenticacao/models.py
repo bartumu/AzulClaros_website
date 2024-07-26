@@ -6,11 +6,6 @@ from FuncDashboard.models import *
 
 
 class Usuario(AbstractUser):
-    """ USER_TYPE_CHOICES = (
-        ('cliente', 'Cliente'),
-        ('funcionario', 'Funcionário'),
-    ) """
-
     email = models.EmailField(unique=True)
     username = models.CharField(max_length=30, unique=True)
 
@@ -18,6 +13,7 @@ class Usuario(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     class Meta:
+        db_table = 'Usuario'
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'
 

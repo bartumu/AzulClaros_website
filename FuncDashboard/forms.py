@@ -1,5 +1,6 @@
 from django import forms
 from .models import Funcionario, Usuario
+from Portifolio.models import *
 
 class FormCadFuncionario(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
@@ -26,14 +27,19 @@ class FormCadFuncionario(forms.ModelForm):
     """ genero = forms.MultipleChoiceField(widget=forms.SelectMultiple(attrs={
             'class': 'form-control'
         })) """
-    img = forms.ImageField(widget=forms.FileInput(attrs={
+    """ img = forms.ImageField(widget=forms.FileInput(attrs={
             'id': 'input-file-now-custom-1',
             'class': 'dropify',
-        }))
+        })) """
     
     class Meta:
         model = Funcionario
-        fields = ['nome','endereco','numero','genero','usuario']
+        fields = ['nome','endereco','numero','genero']
+
+class FormAtender(forms.ModelForm):
+    class Meta:
+        model = Reserva
+        fields = ['data_saida']
 
 class FuncForm(forms.ModelForm):
     class Meta:

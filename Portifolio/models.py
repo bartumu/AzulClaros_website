@@ -19,6 +19,7 @@ class Cliente(models.Model):
     REQUIRED_FIELDS = ['nome', 'endereco', 'numero', 'genero']
 
     class Meta:
+        db_table = 'Cliente'
         verbose_name = 'Cliente'
         verbose_name_plural = 'Clientes'
 
@@ -34,10 +35,22 @@ class Reserva (models.Model):
     data_entrada = models.DateField(null=True)
     data_saida = models.DateField(null=True)
     codigo_reserva = models.CharField(max_length=10, unique=True, editable=False)
+    
     def save(self):
         if not self.codigo_reserva:
             self.codigo_reserva=str(uuid.uuid4())
             return super().save()
+        return super().save()
+    
+    def atualizar_total(self):
+        total = sum(servico.subtotal for servico in self.reserva.all())
+        self.total = total
+        self.save()
+
+    class Meta:
+        db_table = 'Reserva'
+        verbose_name = 'Reserva'
+        verbose_name_plural = 'Reservas'
 
 
     def __str__(self):
@@ -52,4 +65,10 @@ class ServicosReservado (models.Model):
 
     def __str__(self):
         return f"reserva: {self.reserva}, Serviço: {self.servico}"
+    
+
+    class Meta:
+        db_table = 'ServicoReservado'
+        verbose_name = 'ServicoReservado'
+        verbose_name_plural = 'ServicoReservados'    
 
