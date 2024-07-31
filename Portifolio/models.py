@@ -13,12 +13,14 @@ class Cliente(models.Model):
     )
     nome = models.CharField(max_length=20, verbose_name='Nome Completo')
     endereco = models.CharField(max_length=20, verbose_name='Endereço', null=True)
+    email = models.EmailField(unique=True)
     numero = models.CharField(max_length=9, verbose_name='Número de Tel', null=True)
     genero = models.CharField(max_length=2, choices=GENERO , verbose_name='Genero')
 
     REQUIRED_FIELDS = ['nome', 'endereco', 'numero', 'genero']
 
     class Meta:
+        unique_together = ('email', 'numero')
         db_table = 'Cliente'
         verbose_name = 'Cliente'
         verbose_name_plural = 'Clientes'

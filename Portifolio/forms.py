@@ -8,17 +8,37 @@ from phonenumber_field.formfields import PhoneNumberField
 class FormRegistarCliente(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'Nome',
-            'id':'nome' }))
+            'id':'nome',
+             'class': 'single-input' }), required=True)
     numero = forms.CharField(widget=forms.TextInput(attrs={
-            'placeholder': 'Numero de fone'})) 
+            'placeholder': 'Numero de fone',
+            'class': 'single-input'}), required=True) 
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+            'placeholder': 'Email',
+            'class': 'single-input'}), required=True) 
     class Meta:
         model = Cliente
-        fields = ['nome','numero', 'genero']
+        fields = ['nome','numero', 'genero', 'email']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+
+        if email and Cliente.objects.filter(email=email).exists():
+            # Recupera o cliente existente e define self.instance para evitar uma nova inserção
+            cliente = Cliente.objects.get(email=email)
+            self.instance = cliente
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        # Usa a instância atual se um cliente existente foi definido
+        return super().save(commit=commit)
 
 class FormFazerReserva(forms.ModelForm):
     data_entrada = forms.DateField(
-        widget=forms.DateInput(attrs={'type': 'date'}),
-        input_formats=['%Y-%m-%d']  # Opcional: define o formato de entrada aceitável
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'single-input'}),
+        input_formats=['%Y-%m-%d'], required=True  # Opcional: define o formato de entrada aceitável
     )
     class Meta:
         model = Reserva
@@ -28,7 +48,7 @@ class FormFazerReserva(forms.ModelForm):
 class FormReservaServico(forms.ModelForm):
     servicos = forms.ModelMultipleChoiceField(queryset=Servico.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
     qtd = forms.IntegerField(widget=forms.NumberInput(attrs={
-            'placeholder': 'Quantidade de Cesto'}), required=True)
+            'placeholder': 'Quantidade de Cesto','class': 'single-input'}), required=True)
     class Meta:
         model = ServicosReservado
         fields = ['qtd']

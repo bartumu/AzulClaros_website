@@ -17,9 +17,9 @@
                                 <li class="active"><a href="/">Home</a></li>
                                 <li><a href="">Sobre</a></li>
                                 <li><a href="">Serviços</a></li>
-                                <li><a href="">Pedidos</a>
+                                <li><a href="{% url 'reservaAdd' %}">Reservas</a>
                                     <ul class="submenu">
-                                        <li><a href="{% url 'pedido' %}">Consultar</a></li>
+                                        <li><a href="{% url 'reserva' %}">Consultar</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -28,7 +28,7 @@
                 </div>
             </div>
             <div class="header-right d-none d-lg-block">
-               <a href="{% url 'pedidoAdd' %}" class="header-btn2">Pedido</a>
+               <a href="{% url 'reservaAdd' %}" class="header-btn2">Reserva</a>
             </div>
             <!-- Mobile Menu -->
             <div class="col-12">

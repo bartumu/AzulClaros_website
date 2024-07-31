@@ -48,16 +48,19 @@
                                   <strong>{{ FormServicosReservados.errors }}</strong>
                               </div>
                 {% endif %}
-                <div class="mt-10">
+                {% comment %} <div class="mt-10">
                   {{ FormCliente.nome }}
                 </div>
                 <div class="mt-10">
                   {{ FormCliente.numero }}
+                </div> {% endcomment %}
+                <div class="mt-10">
+                  {{ FormCliente.as_p }}
                 </div>
-
+                {% comment %} <br>
                   <div class="form-select" id="default-select">
                     {{ FormCliente.genero }}
-                  </div>
+                  </div> {% endcomment %}
 
                   <div class="mt-10">
                     {{ formReserva.data_entrada }}
@@ -70,32 +73,6 @@
                   <div class="single-element-widget mt-30">
                     {{ FormServicosReservados.servicos }}
                   </div>
-
-                  {% comment %} <div class="single-element-widget mt-30">
-                    <h3 class="mb-30">Serviços</h3>
-                    <div class="switch-wrap d-flex justify-content-between">
-                      <p>Lavagem</p>
-                      <div class="primary-checkbox">
-                        <input type="checkbox" id="default-checkbox" name="servico" value "Lavagem" />
-                        <label for="default-checkbox"></label>
-                      </div>
-                    </div>
-                    <div class="switch-wrap d-flex justify-content-between">
-                      <p>Secagem</p>
-                      <div class="primary-checkbox">
-                        <input type="checkbox" id="primary-checkbox" name="servico" value "Secagem" checked />
-                        <label for="primary-checkbox"></label>
-                      </div>
-                    </div>
-                    <div class="switch-wrap d-flex justify-content-between">
-                      <p>Engomagem</p>
-                      <div class="primary-checkbox">
-                        <input type="checkbox" id="confirm-checkbox" name="servico" value "Engomagem" checked />
-                        <label for="confirm-checkbox"></label>
-                      </div>
-                    </div>
-
-                    </div> {% endcomment %}
                     <button type='submit' class="genric-btn primary radius"> Fazer Pedido</button>
                 </div>
               </form>

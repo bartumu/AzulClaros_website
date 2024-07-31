@@ -15,22 +15,27 @@ def sobre(request):
 
 
 
-def pedido(request):
+def reserva(request):
         reserva = request.session.get('reserva')
         context = {
             'reserva':reserva
         }
-        return render(request,'Portifolio/Pedido.html', context)
+        return render(request,'Portifolio/Reserva.html', context)
 
 
-def addPedido_view(request):
+def addReserva_view(request):
     
     if request.method == 'POST':
          formCliente = FormRegistarCliente(request.POST)
          formReserva = FormFazerReserva(request.POST)
          formServicosReservados = FormReservaServico(request.POST)
          
+         
          if formCliente.is_valid():
+            """ email = formCliente.cleaned_data.get('email')
+            if Cliente.objects.filter(email=email).exists():
+                cliente = Cliente.objects.get(email=email)
+            else: """
             cliente = formCliente.save()
 
             if formReserva.is_valid():
@@ -47,7 +52,6 @@ def addPedido_view(request):
                     for servico in servicosReservado:
                         print(servico)
                         subtotal = servico.preco * qtd
-                        total = 0 + subtotal
                         ServicosReservado.objects.create(
                             servico=servico,
                             reserva=reserva,
@@ -62,7 +66,7 @@ def addPedido_view(request):
                         #reserva.atualizar_total()
 
                     reserva = request.session['reserva'] = reserva.codigo_reserva
-                    return redirect("pedido")
+                    return redirect("reserva")
             
     else:
         formReserva = FormFazerReserva()
@@ -77,7 +81,7 @@ def addPedido_view(request):
          'Existe_servico': Existe_servico()
     }
 
-    return render(request, 'Portifolio/PedidoAdd.html', context)
+    return render(request, 'Portifolio/ReservaAdd.html', context)
 
 def Existe_servico():
     if Servico.objects.exists():
