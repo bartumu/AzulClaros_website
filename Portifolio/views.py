@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import *
-from.models import *
+from FuncDashboard.models import *
 
 # Create your views here.
 from django.shortcuts import render

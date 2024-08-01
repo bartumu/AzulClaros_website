@@ -1,6 +1,6 @@
 from django import forms
 from .models import Funcionario, Usuario
-from Portifolio.models import *
+from .models import *
 
 class FormCadFuncionario(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
@@ -40,6 +40,18 @@ class FormAtender(forms.ModelForm):
     class Meta:
         model = Reserva
         fields = ['data_saida']
+
+class FormPagamento(forms.ModelForm):
+    metodoPagamento = forms.ModelChoiceField(
+        queryset=MetodoPagamento.objects.all(),
+        widget=forms.Select(attrs={'id': 'metodo-pagamento','class': 'form-control'})
+    )
+    class Meta:
+        model = Pagamentos
+        fields=['metodoPagamento']
+        """ widgets = {
+            'metodoPagamento': forms.ModelChoiceField(queryset=MetodoPagamento.objects.all(),attrs={'id': 'metodo-pagamento'})
+        } """
 
 class FuncForm(forms.ModelForm):
     class Meta:

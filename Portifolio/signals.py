@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
-from .models import ServicosReservado
+from FuncDashboard.models import ServicosReservado
 
 @receiver(post_save, sender=ServicosReservado)
 def atualizar_total_reserva_apos_save(sender, instance, **kwargs):

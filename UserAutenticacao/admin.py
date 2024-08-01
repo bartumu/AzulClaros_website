@@ -5,6 +5,7 @@ from UserAutenticacao.forms import *
 
 
 class UserAdmin(BaseUserAdmin):
+    list_display=['username','email','password']
     form = UsuarioChangeForm
     add_form = UsuarioCreationForm
     fieldsets = (
@@ -18,7 +19,6 @@ class UserAdmin(BaseUserAdmin):
             'description': 'Preencha os campos abaixo para criar um novo usuário.'
         }),
     )
-    list_display=['username','email','password']
 
 admin.site.register(Usuario, UserAdmin)
 # Register your models here.

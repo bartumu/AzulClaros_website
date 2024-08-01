@@ -1,7 +1,7 @@
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import *
+from FuncDashboard.models import *
 from phonenumber_field.formfields import PhoneNumberField
 
 

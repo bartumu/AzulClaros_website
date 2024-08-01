@@ -14,10 +14,15 @@
                 <div class="card-body">
                   <h5 class="card-title mb-4">Todas as Reserevas</h5>
                   {% if FormAtender.errors %}
-                            <div class="alert alert-danger">
-                                <strong>{{ FormAtender.errors }}</strong>
-                            </div>
-                            {% endif %}
+                    <div class="alert alert-danger">
+                      <strong>{{ FormAtender.errors }}</strong>
+                    </div>
+                  {% endif %}
+                  {% if FormPagamento.errors %}
+                    <div class="alert alert-danger">
+                      <strong>{{ FormPagamento.errors }}</strong>
+                    </div>
+                  {% endif %}
                   <div class="row">
                     <div class="col-sm-12">
                       <div class="table-responsive">
@@ -41,7 +46,7 @@
                                   <td>{{ Reserva.cliente.nome }}</td>
                                   <td>{{ Reserva.data_reserva }}</td>
                                   <td>{{ Reserva.data_entrada }}</td>
-                                  <td>{{ Reserva.total }}</td>
+                                  <td>{{ Reserva.total }} kz</td>
                                   {% if Reserva.estado %}
                                     <td>
                                       <span class="badge bg-primary">Pago</span>
@@ -52,15 +57,7 @@
                                     </td>
                                   {% endif %}
                                   <td>
-                                    <a href="{% url 'atender' idReserva=Reserva.id %}" id="AtenderButton" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#atenderCliModal"
-                                    data-codigo="{{ Reserva.codigo_reserva }}" 
-                                    data-nome="{{ Reserva.cliente.nome }}"
-                                    data-data_reserva="{{ Reserva.data_reserva }}"
-                                    data-data_entrada="{{ Reserva.data_entrada }}"
-                                    data-total="{{ Reserva.total }}"
-                                    data-estado="{{ Reserva.estado }}"
-                                    data-total = "{{ Total }}">
-                          Atender</a>
+                                    <a href="{% url 'atender' idReserva=Reserva.id %}" id="AtenderButton" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#atenderCliModal" data-codigo="{{ Reserva.codigo_reserva }}" data-nome="{{ Reserva.cliente.nome }}" data-data_reserva="{{ Reserva.data_reserva }}" data-data_entrada="{{ Reserva.data_entrada }}" data-total="{{ Reserva.total }}" data-estado="{{ Reserva.estado }}" ">Atender</a>
                                   </td>
                                 </tr>
                               {% endfor %}
@@ -100,21 +97,21 @@
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="field-1" class="form-label">Cod Reserva</label>
-                  
+
                   <p id="codigo_reserva">Nnnsnsnsn</p>
                 </div>
                 <div class="mb-3">
                   <label for="field-1" class="form-label">Nome do Cli</label>
                   <p id="cliente_nome">Nnnsnsnsn</p>
                 </div>
-                
+
                 <div class="mb-3">
                   <label for="field-2" class="form-label">Data da Reserva</label>
                   <p id="data_reserva">sdsdsd</p>
                 </div>
               </div>
               <!-- end col -->
-  
+
               <div class="col-md-6">
                 <div class="mb-3">
                   <label for="field-2" class="form-label">Data de Entrada</label>
@@ -124,36 +121,45 @@
                   <label for="field-1" class="form-label">Total</label>
                   <p id="total">Nnnsnsnsn</p>
                 </div>
-                
-                  <div class="mb-3">
-                    <label for="field-1" class="form-label">Data de Saida</label>
-                    
-                    <input type="date" required class="form-control" name="data_saida">
-                  </div>
+
+                <div class="mb-3">
+                  <label for="field-1" class="form-label">Data de Saida</label>
+
+                  <input type="date" required class="form-control" name="data_saida" />
+                </div>
               </div>
-              
+
               <!-- end col -->
             </div>
             <!-- end row -->
-  
+
             <div class="row">
               <div class="col-md-12">
                 <div class="mb-3">
-                  <label for="field-3" class="form-label">Pagamento</label>
+                  <label for="field-3" class="form-label">PAGAMENTO</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="field-3" class="form-label">Método</label>
+                  {{ FormPagamento.metodoPagamento }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <div class="mb-3" id="divRef" style="display:none;">
+                    <label for="field-3" class="form-label">Referência Bancaria</label>
+                    
+                      <h3><strong id="ref">Nnnsnsnsn</strong></h3>
+                    
+                  </div>
+                  <div class="mb-3" id="divPag" style="display:none;">
+                    <label for="field-3" class="form-label">Pagamento</label>
+                    <h3 id="totalPagamento">Nnnsnsnsn</h3>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- end row -->
-  
-            <div class="row">
-              <div class="col-md-12">
-                <div class="mb-3 no-margin">
-                  <label for="field-7" class="form-label">Personal Info</label>
-                  <textarea class="form-control" id="field-7" placeholder="Write something about yourself" style="margin-top: 0px; margin-bottom: 0px; height: 137px"></textarea>
-                </div>
-              </div>
-            </div>
-            <!-- end row -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Fechar</button>
@@ -164,5 +170,4 @@
     </div>
   </div>
   <!-- end modal -->
-
 {% endblock %}

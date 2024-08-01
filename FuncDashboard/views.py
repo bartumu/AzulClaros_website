@@ -50,13 +50,15 @@ def perfil_view(request):
 def marcacao_view(request):
     if request.user.is_authenticated:
         if Funcionario.objects.filter(usuario=request.user).exists():
+            formPagamento = FormPagamento()
             reservas = Reserva.objects.filter(estado=False)
             tem_reservas = Reserva.objects.exists()
 
             context = {
                 'Reservas':reservas,
                 'tem_reservas':tem_reservas,
-                'usuario':request.user
+                'usuario':request.user,
+                'FormPagamento':formPagamento
             }
 
             return render(request,'BackEnd/Marcacao.html', context)
@@ -68,6 +70,7 @@ def atender_view(request,idReserva):
     if request.method == 'POST':
        reservas = get_object_or_404(Reserva,id=idReserva)
        func = get_object_or_404(Funcionario, usuario=request.user)
+       formPagamento = FormPagamento(request.POST)
        atenderF = FormAtender(request.POST) 
        if atenderF.is_valid():
             data_saida = atenderF.cleaned_data.get('data_saida')
@@ -78,18 +81,22 @@ def atender_view(request,idReserva):
             reservas.estado = True
             reservas.funcionario = func
             reservas.save()
-
-            
-            return redirect('marcacao')
+            if formPagamento.is_valid():
+                Pag = formPagamento.save(commit=False)
+                Pag.reserva = reservas
+                Pag.valor = Calcular_Total(idReserva)
+                Pag.save()
+                return redirect('marcacao')
        else:
            return HttpResponse("Formulário invalido", status=400)
     else:
         Total = Calcular_Total(idReserva)
         atenderF = FormAtender()
+        formPagamento = FormPagamento()
        
     context = {
-        'Total': Total,
-        'FormAtender': atenderF
+        'FormAtender': atenderF,
+        'FormPagamento':formPagamento
     }
     return render(request,'BackEnd/Marcacao.html', context)
 
