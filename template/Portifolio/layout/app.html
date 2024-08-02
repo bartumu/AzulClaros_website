@@ -3,61 +3,32 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>AZUL Claros | {% block titulo %} {% endblock%}</title>
-    
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-      href="{% static 'frontEnd/assets/img/Laundry_Icon_Blue.ico' %}"
-    />
+    <title>
+      AZUL Claros |{% block titulo %}
+
+      {% endblock %}
+    </title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'frontEnd/assets/img/Laundry_Icon_Blue.ico' %}" />
 
     <!-- Bootstrap Css -->
-    <link
-      href="{% static 'frontEnd/assets/css/bootstrap.min.css' %}"
-      id="bootstrap-style"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <link href="{% static 'frontEnd/assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <!-- Icons Css -->
-    <link
-      href="{% static 'BackEnd/assets/css/icons.min.css' %}"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <!-- App Css-->
-    <link
-      href="{% static 'BackEnd/assets/css/app.min.css' %}"
-      id="app-style"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <link href="{% static 'BackEnd/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <!-- App Css -->
+    <link href="{% static 'BackEnd/assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
 
     <!-- CSS here -->
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/bootstrap.min.css' %}" />
-    <link
-      rel="stylesheet"
-      href="{% static 'frontEnd/assets/css/owl.carousel.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'frontEnd/assets/css/owl.carousel.min.css' %}" />
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/slicknav.css' %}" />
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/flaticon.css' %}" />
-    <link
-      rel="stylesheet"
-      href="{% static 'frontEnd/assets/css/progressbar_barfiller.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'frontEnd/assets/css/progressbar_barfiller.css' %}" />
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/gijgo.css' %}" />
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/animate.min.css' %}" />
-    <link
-      rel="stylesheet"
-      href="{% static 'frontEnd/assets/css/animated-headline.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'frontEnd/assets/css/magnific-popup.css' %}"
-    />
-    <link
-      rel="stylesheet"
-      href="{% static 'frontEnd/assets/css/fontawesome-all.min.css' %}"
-    />
+    <link rel="stylesheet" href="{% static 'frontEnd/assets/css/animated-headline.css' %}" />
+    <link rel="stylesheet" href="{% static 'frontEnd/assets/css/magnific-popup.css' %}" />
+    <link rel="stylesheet" href="{% static 'frontEnd/assets/css/fontawesome-all.min.css' %}" />
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/themify-icons.css' %}" />
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/slick.css' %}" />
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/nice-select.css' %}" />
@@ -77,17 +48,17 @@
       </div>
     </div>
     <!-- Preloader Start -->
-    {% include "Portifolio/layout/menu.html" %} 
+     
+    {% include 'Portifolio/layout/menu.html' %}
 
-    {% block Conteudo %} 
-
+    {% block Conteudo %}
 
     {% endblock %}
 
-    {% include "Portifolio/layout/footer.html" %} 
+    {% include 'Portifolio/layout/footer.html' %}
     <!-- Scroll Up -->
     <div id="back-top">
-      <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+      <a title="Go to Top" href="#"><i class="fas fa-level-up-alt"></i></a>
     </div>
 
     <!-- JS here -->

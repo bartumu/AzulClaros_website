@@ -10,6 +10,7 @@ mysqlclient = "*"
 pillow = "*"
 django-phonenumber-field = "*"
 django-phonenumbers = "*"
+xhtml2pdf = "*"
 
 [dev-packages]
 

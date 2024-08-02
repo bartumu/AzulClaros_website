@@ -15,8 +15,8 @@
                         <nav>
                             <ul id="navigation">
                                 <li class="active"><a href="/">Home</a></li>
-                                <li><a href="">Sobre</a></li>
-                                <li><a href="">Serviços</a></li>
+                                <li><a href="{% url 'sobreNos' %}">Sobre</a></li>
+                                <li><a href="{% url 'nossoServico' %}">Serviços</a></li>
                                 <li><a href="{% url 'reservaAdd' %}">Reservas</a>
                                     <ul class="submenu">
                                         <li><a href="{% url 'reserva' %}">Consultar</a></li>

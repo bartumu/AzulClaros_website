@@ -36,16 +36,22 @@
     <div class="whole-wrap">
       <div class="container box_1170">
         <div class="section-top-border text-right">
-          <div class="mb-30">
-            <input class="form-control" name="subject" id="subject" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Coloque o Código'" placeholder="Coloque o Código">
-          </div>
-          {% comment %} <h3 class="mb-30">Right Aligned</h3> {% endcomment %}
+          
           <div class="row">
             <div class="col-md-9">
               <p class="text-right">
                 Se Já Fez seu pedido para os nossos serviços <br>
                 Pesquise o código aqui para saber o estado do seu pedido
               </p>
+              <form method="POST" action="{% url 'buscar_reserva' %}" style="display: flex;
+  align-items: center;
+  justify-content: flex-end; width: 100%; ">
+              {% csrf_token %}
+              <input class="single-input" name="codigo_reserva" id="pesqCod" type="text" onfocus="this.placeholder = ''" 
+              onblur="this.placeholder = 'Pesquise o Código de Sua Reserva'" placeholder="Coloque o Código"
+              style="width: 300px;">
+              <button type="submit" class="genric-btn btn btn-primary radius" style="flex-shrink: 0;">Pesquisar</button>
+            </form>
              </div>
           </div>
           </div>
@@ -58,11 +64,27 @@
         <div class="section-top-border">
           <h3 class="mb-30">Pedidos</h3>
 
-          {% if reserva %}
+          {% if Reserva %}
           <ul>
-            <li class="alert alert-danger">Codigo de Reserva: {{ reserva }}</li>
-          </ul>
-          {% endif %}
+            <li><h3>Codigo de Reserva: {{ Reserva.codigo_reserva }}</h3></li>
+            <li><h3>Data de Entrada: {{ Reserva.data_entrada }}</h3></li>
+            <li><h3>Cliente: {{ Reserva.cliente.nome }}</h3></li>
+            <li><h3>Serviços</h3></li>
+              <ol>
+                {% for SR in servicoReservado %}
+                <li><h3>{{ SR.servico.nome }}</h3></li>
+                {% endfor %}
+              </ol>
+            <li><h3>Total a Pagar: {{ Reserva.total }}</h3></li>
+            {% if Reserva.estado %}
+            <li><h3>Estado: Atendido</h3></li>
+            {% else %}
+            <li><h3>Estado: Pendente</h3></li>
+            <li><h3><p>Desloca-se a nossa loja para por poder fazer o uso dos serviço, 
+              para baixar o comprovativo de reserva <a href="{% url 'gerarPDF' Reserva.id %}">clique aqui</a> </p></h3></li>
+            {% endif %}
+            </ul>
+            {% endif %}
           {% comment %} Colocar O Pedido Gerado aqui {% endcomment %}
         </div>
       </div>

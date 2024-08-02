@@ -102,7 +102,7 @@ class Reserva (models.Model):
 
 
     def __str__(self):
-        return f"reserva em {self.data_reserva} - Cliente: {self.cliente} - Total: {self.total} - Estado: {self.estado} Na Loja: {self.loja}"
+        return f"reserva em {self.data_reserva} - Cliente: {self.cliente} - Total: {self.total} - Estado: {self.estado}"
 
 class ServicosReservado (models.Model):
     reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE, related_name='reserva')

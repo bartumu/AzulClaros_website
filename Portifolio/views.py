@@ -1,5 +1,12 @@
+import os
+from django.conf import settings
 from django.shortcuts import render,redirect
+from django.http import HttpResponse, JsonResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+from io import BytesIO
 from .forms import *
+import json
 from FuncDashboard.models import *
 
 # Create your views here.
@@ -13,12 +20,40 @@ def index(request):
 def sobre(request):
     return render(request,'Portifolio/SobreNos.html')
 
+def servico(request):
+    return render(request,'Portifolio/nossoServico.html')
+
+
+def buscar_reserva(request):
+    reserva = None
+    servicosReservados = []
+
+    if request.method == 'POST':
+        codigo_reserva = request.POST.get('codigo_reserva')
+        try:
+            reserva = Reserva.objects.get(codigo_reserva=codigo_reserva)
+            servicosReservados = ServicosReservado.objects.filter(reserva=reserva)
+        except Reserva.DoesNotExist:
+            reserva = None
+
+    context = {
+        'Reserva': reserva,
+        'servicoReservado': servicosReservados
+    }
+    return render(request, 'Portifolio/Reserva.html', context)
 
 
 def reserva(request):
-        reserva = request.session.get('reserva')
+        reserva_id = request.session.get('reserva_id')
+        if reserva_id:
+            reserva = Reserva.objects.get(id=reserva_id)
+            servicosReservado = ServicosReservado.objects.filter(reserva=reserva)
+        else:
+            reserva=0
+            servicosReservado=0
         context = {
-            'reserva':reserva
+            'Reserva':reserva,
+            'servicoReservado':servicosReservado
         }
         return render(request,'Portifolio/Reserva.html', context)
 
@@ -32,10 +67,6 @@ def addReserva_view(request):
          
          
          if formCliente.is_valid():
-            """ email = formCliente.cleaned_data.get('email')
-            if Cliente.objects.filter(email=email).exists():
-                cliente = Cliente.objects.get(email=email)
-            else: """
             cliente = formCliente.save()
 
             if formReserva.is_valid():
@@ -50,7 +81,7 @@ def addReserva_view(request):
                     qtd = formServicosReservados.cleaned_data.get('qtd')
 
                     for servico in servicosReservado:
-                        print(servico)
+                        
                         subtotal = servico.preco * qtd
                         ServicosReservado.objects.create(
                             servico=servico,
@@ -58,15 +89,9 @@ def addReserva_view(request):
                             subtotal=subtotal,
                             qtd=qtd
                         )
-                        """ servicosReservado = formServicosReservados.save(commit=False)
-                        servicosReservado.reserva = reserva
-                        servicosReservado.servico = servico
-                        servicosReservado.subtotal = subtotal
-                        servicosReservado.save() """
-                        #reserva.atualizar_total()
 
-                    reserva = request.session['reserva'] = reserva.codigo_reserva
-                    return redirect("reserva")
+                        reserva = request.session['reserva_id'] = reserva.id                
+                        return redirect('reserva')
             
     else:
         formReserva = FormFazerReserva()
@@ -83,9 +108,65 @@ def addReserva_view(request):
 
     return render(request, 'Portifolio/ReservaAdd.html', context)
 
+    
+def gerarPDF(request, idReserva):
+    reserva = Reserva.objects.get(id=idReserva)
+    servicosReservados = ServicosReservado.objects.filter(reserva=reserva)
+
+    template_path = 'BackEnd/Cliente/FacturaPag.html'
+    context = {
+        'Reserva': reserva,
+        'servicosReservados': servicosReservados
+    }
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="Reserva_{reserva.codigo_reserva}.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('Temos algum erro <pre>' + html + '</pre>')
+    return response
+
 def Existe_servico():
     if Servico.objects.exists():
         return True
     else:
         return False
+
+
+""" def save_pdf(template_src,context_dict):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+    if not pdf.err:
+        return result.getvalue()
+    return None
     
+def pdf():
+    codigo = 00000
+    template_path = 'BackEnd/Cliente/FacturaPag.html'
+    context = {'codigo': '00000'}
+
+    pdf_file = save_pdf(template_path, context)
+    if pdf_file:
+        file_path = os.path.join(settings.MEDIA_ROOT, 'pdfs',f'Reserva_{codigo}.pdf') 
+        with open(file_path, 'wb') as f:
+            f.write(pdf_file)
+        BaixarComprovante()
+        return JsonResponse({'url':f'{settings.MEDIA_URL}pdfs/Reserva_{codigo}.pdf'})
+    
+    return HttpResponse('Erro Em gerar Pdf', status=500) 
+
+def BaixarComprovante():
+    response = pdf()
+    if response.status_code == 200:
+        response_data= json.loads(response.content)
+        pdf_url = response_data.get('url')
+        return redirect(pdf_url)
+    else:
+        return HttpResponse('Erro gerando PDF', status=500)
+ """

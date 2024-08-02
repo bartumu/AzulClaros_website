@@ -1,7 +1,13 @@
+{% extends 'Portifolio/layout/app.html' %} 
+
 {% load static %}
 
+{% block titulo %}
+  Pedidos
+{% endblock %}
 
-    <div class="slider-area2 section-bg2 hero-overly" data-background="{% static 'assets/img/hero/hero2.png' %}">
+{% block Conteudo %}
+    <div class="slider-area2 section-bg2 hero-overly" data-background="{% static 'frontEnd/assets/img/hero/hero2.png' %}">
         <div class="slider-height2 d-flex align-items-center">
             <div class="container">
                 <div class="row">
@@ -16,17 +22,18 @@
     </div>
     <!-- Hero End -->
     <!--? About Area  -->
-    {% include "frontEnd/SobreNos.html" %}
+    {% include "Portifolio/Sobre.html" %}
     <!-- About Area End -->
     <!--? Services Area Start -->
-    {% include "frontEnd/nossoProcesso.html" %}
+    {% include "Portifolio/nossoProcesso.html" %}
     <!-- Services End -->
     <!--? Want To work -->
-    {% include "frontEnd/Reservas.html" %}
+    {% include "Portifolio/Reservas.html" %}
     <!-- Want To work End -->
     <!--? Testimonials_start -->
-    {% include "frontEnd/FeedBacks.html" %}
+    {% include "Portifolio/FeedBacks.html" %}
     <!-- Testimonials_end -->
     <!--? Company achievement Start -->
-    {% include "frontEnd/Estatistica.html" %}
+    {% include "Portifolio/Estatistica.html" %}
     <!-- Company achievement End -->
+{% endblock %}
