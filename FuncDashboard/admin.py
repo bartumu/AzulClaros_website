@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from FuncDashboard.models import *
 from .forms import FuncForm
-from Portifolio.forms import CliForm
 
 
 
@@ -19,7 +18,6 @@ class FuncAdmin(admin.ModelAdmin):
     list_display=['nome','genero', 'endereco']
 
 class CliAdmin(admin.ModelAdmin):
-    form = CliForm
     list_display=['nome','genero', 'endereco' ]
 
 class ServicoAdmin(admin.ModelAdmin):

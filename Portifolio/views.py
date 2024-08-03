@@ -1,10 +1,7 @@
-import os
-from django.conf import settings
 from django.shortcuts import render,redirect
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from io import BytesIO
 from .forms import *
 import json
 from FuncDashboard.models import *
@@ -14,7 +11,6 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-
     return render(request,'Portifolio/index.html')
 
 def sobre(request):
@@ -42,15 +38,24 @@ def buscar_reserva(request):
     }
     return render(request, 'Portifolio/Reserva.html', context)
 
+def buscarReserva(request, codigo_):
+    
+    try:
+        reserva = Reserva.objects.get(id=codigo_)
+        servicosReservados = ServicosReservado.objects.filter(reserva=reserva)
+    except Reserva.DoesNotExist:
+        reserva = None
+
+    context = {
+        'Reserva': reserva,
+        'servicoReservado': servicosReservados
+    }
+    return render(request, 'Portifolio/Reserva.html', context)
+
 
 def reserva(request):
-        reserva_id = request.session.get('reserva_id')
-        if reserva_id:
-            reserva = Reserva.objects.get(id=reserva_id)
-            servicosReservado = ServicosReservado.objects.filter(reserva=reserva)
-        else:
-            reserva=0
-            servicosReservado=0
+        reserva=0
+        servicosReservado=0
         context = {
             'Reserva':reserva,
             'servicoReservado':servicosReservado
@@ -90,8 +95,9 @@ def addReserva_view(request):
                             qtd=qtd
                         )
 
-                        reserva = request.session['reserva_id'] = reserva.id                
-                        return redirect('reserva')
+                    resera = request.session['reserva_id'] = reserva.id
+                    print(reserva.id)           
+                    return buscarReserva(request,resera)
             
     else:
         formReserva = FormFazerReserva()

@@ -53,12 +53,14 @@ def marcacao_view(request):
             formPagamento = FormPagamento()
             reservas = Reserva.objects.filter(estado=False)
             tem_reservas = Reserva.objects.exists()
+            FuncObj = Funcionario.objects.get(usuario=request.user)
 
             context = {
                 'Reservas':reservas,
                 'tem_reservas':tem_reservas,
                 'usuario':request.user,
-                'FormPagamento':formPagamento
+                'FormPagamento':formPagamento,
+                'Func': FuncObj
             }
 
             return render(request,'BackEnd/Marcacao.html', context)

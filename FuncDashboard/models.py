@@ -87,7 +87,6 @@ class Reserva (models.Model):
     def save(self):
         if not self.codigo_reserva:
             self.codigo_reserva=str(uuid.uuid4())
-            return super().save()
         return super().save()
     
     def atualizar_total(self):
