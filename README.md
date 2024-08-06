@@ -1,6 +1,6 @@
 # Modulo de Atendimento ao Cliente Para Azul Claros
 
-![django]()
+
 
 Aplicação Web "MAC Azul Claros" usando Python "Django Framework"
 ## Sobre a aplicação web:
