@@ -95,3 +95,7 @@ python manage.py createsuperuser
 
 - No seu navegador acesse (http://127.0.0.1:8000/login)
 - Entre com as credenciais criadas do usuário
+
+3- Você Pode fazer as reservas no Menu Reserva no [Painel Inicial do Site] >>
+
+- No seu navegador acesse (http://127.0.0.1:8000/)
