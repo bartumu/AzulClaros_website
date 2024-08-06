@@ -37,7 +37,7 @@ Aplicação Web "MAC Azul Claros" que permite:
   \*\* deve ser v.3 ou acima
 
 
-3- Execute o seu servidor mysql e crie um novo esquema em seu SGBD com o nome "MAC" 
+3- Execute o seu servidor mysql e crie um novo esquema em seu SGBD com o nome "azulClarosDjango" 
 
 4- Abra o projecto no VS Code
 
@@ -89,14 +89,9 @@ python manage.py createsuperuser
 
 - No seu navegador (http://127.0.0.1:8000/admin)
 - Digite o nome de usuário e a senha criada
-- Adicione algumas categorias e tags
-- Você pode apresentar projectos aqui
+- Adicione um novo usuário, servicos e metodo de pagamento
 
-2- Para acessar o [Painel dos Funcioncionários] >>
+2- Para acessar o [Painel dos Funcionários] >>
 
-- No seu navegador acesse (http://127.0.0.1:8000/admin)
-- Entre com as credenciais do superuser
-- Adicione um novo usuário
-- Termine a sessão
 - No seu navegador acesse (http://127.0.0.1:8000/login)
 - Entre com as credenciais criadas do usuário
