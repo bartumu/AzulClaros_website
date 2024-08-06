@@ -44,7 +44,6 @@ def FuncDashboard(request):
                 'CliAtendido': reservas.count(),
                 'reservaPendente': reservaPendente,
                 'reservaProc': reservaProc,
-                'TotalVendido': reservas.aggregate(Sum('total'))['total__sum'],
                 'usuario':request.user,
                 'reservas_por_estado': 'Relactorios/reservas_por_estado.png',
                 'counts': reservas_por_estadoJS(request),
@@ -225,6 +224,8 @@ def Relatorio(request):
     today = date.today()
     start_date = today.replace(day=1)
     end_date = today
+    Clientes = Cliente.objects.all().count()
+    CliAtendido = Reserva.objects.filter(estado=2).count()
 
     # Filtrar reservas no intervalo de datas
     reservas = Reserva.objects.filter(data_reserva__range=[start_date, end_date])
@@ -255,6 +256,8 @@ def Relatorio(request):
         categorias=categorias,
         categoriasF=categoriasF,
         valoresF=valoresF,
-        valores=valores
+        valores=valores,
+        CliAtendido=CliAtendido,
+        ValorVendido=Reserva.objects.all().aggregate(Sum('total'))['total__sum']
     )
     return render(request, 'Admin/Relactorios.html', context)

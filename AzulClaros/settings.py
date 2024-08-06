@@ -164,7 +164,7 @@ JAZZMIN_SETTINGS = {
     'copyright': 'Azul Claros',
     'topmenu_links': [  
         # Outros links...  
-        {"name": "Minha Página", "url": "/relatorio/", "icon": "fas fa-newspaper"},  # Adicione aqui  
+        {"name": "Relactorios", "url": "/relatorio/", "icon": "fas fa-newspaper"},  # Adicione aqui  
     ],
     'search_model': 'auth.User',
     'user_avatar': None,
