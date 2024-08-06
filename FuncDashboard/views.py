@@ -14,9 +14,6 @@ def FuncDashboard(request):
     if request.user.is_authenticated:
         if Funcionario.objects.filter(usuario=request.user).exists():
             FuncObj = Funcionario.objects.get(usuario=request.user)
-            gerar_relatorio()
-            gerar_analise_vendas_por_servico()
-            reservas_por_estado()
             reservas = Reserva.objects.filter(estado=2, funcionario_id=FuncObj.id)
             reservaPendente = Reserva.objects.filter(estado=0).count()
             reservaProc = Reserva.objects.filter(estado=1).count()

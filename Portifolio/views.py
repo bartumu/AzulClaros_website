@@ -11,10 +11,18 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request):
-    return render(request,'Portifolio/index.html')
+    sobre = Sobre.objects.get()
+    context = {
+        "Sobre":sobre
+    }
+    return render(request,'Portifolio/index.html', context)
 
 def sobre(request):
-    return render(request,'Portifolio/SobreNos.html')
+    sobre = Sobre.objects.get()
+    context = {
+        "Sobre":sobre
+    }
+    return render(request,'Portifolio/SobreNos.html', context)
 
 def servico(request):
     return render(request,'Portifolio/nossoServico.html')

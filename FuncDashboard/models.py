@@ -10,6 +10,21 @@ import uuid
 #from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
     
+class Sobre(models.Model):
+    texto="Somos uma lavandaria com um sistema totalmente diferenciado no mercado angolano, a maior parte das lavandarias no país, o que elas fazem não é serviço de lavandaria, mas de tinturaria, Pois oferecemos serviços de lavagem, secagem e engomagem de forma conjunta bem como segregada, por intermédio de cestos de roupas tu consegues fazer a lavagem, secagem ou engomagem de suas roupas em nossas lavandaria.Aqui a lavagem é feita em quantidade, pois acreditamos que o custo de lavagem de produção de uma única lavagem é o mesmo em quantidade."
+    titulo = models.CharField(max_length=20, default='Sobre a Empresa', verbose_name='Título')
+    descricao = models.TextField(max_length=20, default=texto, verbose_name='Descrição')
+
+    
+    class Meta:
+        db_table = 'Sobre'
+        verbose_name = 'Sobre'
+        verbose_name_plural = 'Sobres'
+    
+    def __str__(self):
+        return self.titulo
+    
+
 class Funcionario(models.Model):
     GENERO = (
         ('M', 'Masculino'),
