@@ -15,6 +15,7 @@ django-environ = "*"
 pandas = "*"
 matplotlib = "*"
 seaborn = "*"
+xhtml2pdf = "*"
 
 [dev-packages]
 
