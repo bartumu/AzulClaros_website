@@ -72,7 +72,10 @@ def addReserva_view(request):
          
          
          if formCliente.is_valid():
+            #tel = formCliente.clean_telefone()
             cliente = formCliente.save()
+            """ cliente.numero = tel
+            cliente.save() """
 
             if formReserva.is_valid():
                 reserva = formReserva.save(commit=False)
@@ -119,7 +122,7 @@ def gerarPDF(request, idReserva):
     reserva = Reserva.objects.get(id=idReserva)
     servicosReservados = ServicosReservado.objects.filter(reserva=reserva)
 
-    template_path = 'BackEnd/Cliente/FacturaPag.html'
+    template_path = 'BackEnd/Cliente/ComprovRes.html'
     context = {
         'Reserva': reserva,
         'servicosReservados': servicosReservados

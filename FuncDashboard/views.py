@@ -3,22 +3,56 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from Portifolio.models import *
 from FuncDashboard.forms import *
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from datetime import date
+from django.db.models import Sum
+from FuncDashboard.relactorio import *
+from decimal import Decimal
 
 # Create your views here.
 def FuncDashboard(request):
     if request.user.is_authenticated:
         if Funcionario.objects.filter(usuario=request.user).exists():
             FuncObj = Funcionario.objects.get(usuario=request.user)
-            usuario = request.user
-            context = {
-                'usuario':usuario,
-                'Func':FuncObj
-            }
-            return render(request,'BackEnd/home.html', context)
-        else:
+            gerar_relatorio()
+            gerar_analise_vendas_por_servico()
+            reservas_por_estado()
+            reservas = Reserva.objects.filter(estado=2, funcionario_id=FuncObj.id)
+            reservaPendente = Reserva.objects.filter(estado=0).count()
+            reservaProc = Reserva.objects.filter(estado=1).count()
+            tem_reservas = Reserva.objects.filter(estado=2).exists()
+            clientes = Cliente.objects.count()
+            percentagemCli = 0
+            percentagemReserva = 0
+            percentagemProc = 0
+            if clientes!=0: 
+                percentagemCli = (reservas.count() * 100) // clientes
+            if reservaProc!=0: 
+                percentagemReserva = (reservaPendente * 100) // reservaProc
+            if reservaPendente!=0:
+                percentagemProc = (reservaProc * 100)//reservaPendente
             
-            return redirect('Regperfil')
+
+
+            print(reservas.aggregate(Sum('total'))['total__sum'])
+            context = {
+                'Reservas':reservas,
+                'tem_reservas':tem_reservas,
+                'CliPercentagem': percentagemCli,
+                'percentagemReserva': percentagemReserva,
+                'percetagemProc': percentagemProc,
+                'CliAtendido': reservas.count(),
+                'reservaPendente': reservaPendente,
+                'reservaProc': reservaProc,
+                'TotalVendido': reservas.aggregate(Sum('total'))['total__sum'],
+                'usuario':request.user,
+                'reservas_por_estado': 'Relactorios/reservas_por_estado.png',
+                'counts': reservas_por_estadoJS(request),
+                'Func': FuncObj
+            }
+
+            return render(request,'BackEnd/home.html', context)
+        return redirect('Regperfil')
     return redirect('login')
 
 def perfil_view(request):
@@ -37,7 +71,7 @@ def perfil_view(request):
                     Func.img = img
                     Func.usuario = request.user
                     Func.save()
-                    return redirect('marcacao')
+                    return redirect('reserva')
 
             context = {
                 'formCadastrar':formCadastrar,
@@ -47,12 +81,12 @@ def perfil_view(request):
         return redirect('Regperfil')
     return redirect('login')
 
-def marcacao_view(request):
+def listReserva_view(request):
     if request.user.is_authenticated:
         if Funcionario.objects.filter(usuario=request.user).exists():
             formPagamento = FormPagamento()
             reservas = Reserva.objects.filter(estado=False)
-            tem_reservas = Reserva.objects.exists()
+            tem_reservas = Reserva.objects.filter(estado=0).exists()
             FuncObj = Funcionario.objects.get(usuario=request.user)
 
             context = {
@@ -63,7 +97,27 @@ def marcacao_view(request):
                 'Func': FuncObj
             }
 
-            return render(request,'BackEnd/Marcacao.html', context)
+            return render(request,'BackEnd/ListReservas.html', context)
+        return redirect('Regperfil')
+    return redirect('login')
+
+def Levantamento_view(request):
+    if request.user.is_authenticated:
+        if Funcionario.objects.filter(usuario=request.user).exists():
+            formPagamento = FormPagamento()
+            reservas = Reserva.objects.filter(estado=1)
+            tem_reservas_Sair = Reserva.objects.filter(estado=1).exists()
+            FuncObj = Funcionario.objects.get(usuario=request.user)
+
+            context = {
+                'Reservas':reservas,
+                'tem_reservas_Sair':tem_reservas_Sair,
+                'usuario':request.user,
+                'FormPagamento':formPagamento,
+                'Func': FuncObj
+            }
+
+            return render(request,'BackEnd/Levantamento.html', context)
         return redirect('Regperfil')
     return redirect('login')
 
@@ -88,7 +142,7 @@ def atender_view(request,idReserva):
                 Pag.reserva = reservas
                 Pag.valor = Calcular_Total(idReserva)
                 Pag.save()
-                return redirect('marcacao')
+                return redirect('reserva')
        else:
            return HttpResponse("Formulário invalido", status=400)
     else:
@@ -100,7 +154,37 @@ def atender_view(request,idReserva):
         'FormAtender': atenderF,
         'FormPagamento':formPagamento
     }
-    return render(request,'BackEnd/Marcacao.html', context)
+    return render(request,'BackEnd/ListReserva.html', context)
+
+
+def levantar_view(request,idReserva):
+    
+    if request.method == 'POST':
+       reservas = get_object_or_404(Reserva,id=idReserva)
+       func = get_object_or_404(Funcionario, usuario=request.user)
+       levantarF = FormAtender(request.POST) 
+       #data_Hoje = levantarF.cleaned_data.get('data_saida')
+       data_saida_BD = reservas.data_saida
+       data_Hoje = date.today()
+       print("Passou aqui")
+       if data_saida_BD == data_Hoje:
+            reservas.estado = 2
+            reservas.funcionario = func
+            reservas.save()
+       else:
+            reservas.data_saida=data_Hoje
+            reservas.estado = 2
+            reservas.funcionario = func
+            reservas.save()
+       
+            return redirect('levantamento')
+    else:
+        levantarF = FormAtender
+       
+    context = {
+        'FormLevantar': levantarF,
+    }
+    return render(request,'BackEnd/Levantamento.html', context)
 
 
 
@@ -123,7 +207,7 @@ def RegistarPerfil(request):
             Func.img = img
             Func.usuario = request.user
             Func.save()
-            return redirect('marcacao')
+            return redirect('reserva')
     else:
         formCadastrar = FormCadFuncionario()
         usuario = request.user
@@ -134,3 +218,43 @@ def RegistarPerfil(request):
         'usuario':usuario
     }
     return render(request,'BackEnd/Perfil/RegistarPerfil.html', context)
+
+
+def Relatorio(request):
+    from django.db.models import Count
+    today = date.today()
+    start_date = today.replace(day=1)
+    end_date = today
+
+    # Filtrar reservas no intervalo de datas
+    reservas = Reserva.objects.filter(data_reserva__range=[start_date, end_date])
+
+    # Contar as reservas por estado
+    counts = [
+        reservas.filter(estado=0).count(),  # Pendente
+        reservas.filter(estado=1).count(),  # Em Processamento
+        reservas.filter(estado=2).count()   # Atendidos
+    ]
+
+   # Agregar os dados de pagamentos por serviço
+    dados = ServicosReservado.objects.values('servico__nome').annotate(total=Sum('subtotal')).order_by('servico__nome')
+
+    # Formatar os dados para o gráfico
+    categorias = [item['servico__nome'] for item in dados]
+    valores = [str(item['total']) for item in dados] 
+
+    # Agregar os dados de reservas por funcionário
+    dadosF = Reserva.objects.values('funcionario__nome').annotate(total=Count('id')).order_by('funcionario__nome')
+
+    # Formatar os dados para o gráfico
+    categoriasF = [itemF['funcionario__nome'] for itemF in dadosF]
+    valoresF = [str(itemF['total']) for itemF in dadosF]  # Convertendo para string
+
+    context = dict(
+        counts=counts,
+        categorias=categorias,
+        categoriasF=categoriasF,
+        valoresF=valoresF,
+        valores=valores
+    )
+    return render(request, 'Admin/Relactorios.html', context)

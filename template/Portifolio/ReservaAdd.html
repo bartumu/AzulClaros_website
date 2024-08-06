@@ -34,9 +34,11 @@
               <form action="" method="POST">
                 {% csrf_token %}
                 {% if FormCliente.errors %}
+                {% for error in FormCliente.errors %}
                               <div class="alert alert-danger">
-                                  <strong>{{ FormCliente.errors }}</strong>
+                                  <strong>{{ error }}</strong>
                               </div>
+                {% endfor %}
                 {% endif %}
                 {% if formReserva.errors %}
                               <div class="alert alert-danger">
@@ -62,7 +64,8 @@
                     {{ FormCliente.genero }}
                   </div> {% endcomment %}
 
-                  <div class="mt-10">
+                  <div class="mt-1<0">
+                    <label>{{ formReserva.data_entrada.label }}</label>
                     {{ formReserva.data_entrada }}
                   </div>
 

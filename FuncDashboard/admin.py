@@ -2,6 +2,9 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from FuncDashboard.models import *
 from .forms import FuncForm
+from django.urls import path
+from FuncDashboard.relactorio import *
+from django.shortcuts import render
 
 
 
@@ -24,10 +27,8 @@ class ServicoAdmin(admin.ModelAdmin):
     list_display=['nome','descricao','preco']
 
 
-
 admin.site.register(Cliente, CliAdmin)
 admin.site.register(Servico, ServicoAdmin)
 admin.site.register(Funcionario, FuncAdmin)
 admin.site.register(MetodoPagamento, MetodoPagamentoAdmin)
-
 # Register your models here.

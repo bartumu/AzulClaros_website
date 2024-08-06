@@ -3,22 +3,29 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from FuncDashboard.models import *
 from phonenumber_field.formfields import PhoneNumberField
+from django.core.exceptions import ValidationError
+import re
 
 
 class FormRegistarCliente(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
-            'placeholder': 'Nome',
+            'placeholder': 'insira o seu Nome Completo',
             'id':'nome',
              'class': 'single-input' }), required=True)
     numero = forms.CharField(widget=forms.TextInput(attrs={
-            'placeholder': 'Numero de fone',
+            'placeholder': 'Insira o Número de Telefone',
             'class': 'single-input'}), required=True) 
     email = forms.EmailField(widget=forms.EmailInput(attrs={
-            'placeholder': 'Email',
+            'placeholder': 'Insira o Endereço de Email',
             'class': 'single-input'}), required=True) 
     class Meta:
         model = Cliente
         fields = ['nome','numero', 'genero', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super(FormRegistarCliente, self).__init__(*args, **kwargs)
+        self.fields['numero'].label = 'Telefone'
+        self.fields['nome'].label = 'Nome Completo'
 
     def clean(self):
         cleaned_data = super().clean()
@@ -30,8 +37,13 @@ class FormRegistarCliente(forms.ModelForm):
             self.instance = cliente
 
         return cleaned_data
+    
+    
 
     def save(self, commit=True):
+        #telefone = self.cleaned_data.get('numero')
+        #if not re.match(r'^9\d{8}$', telefone):
+        #    raise ValidationError("Por favor, insira um número de telemóvel válido com 9 dígitos, começando com 9.")
         # Usa a instância atual se um cliente existente foi definido
         return super().save(commit=commit)
 
@@ -43,6 +55,10 @@ class FormFazerReserva(forms.ModelForm):
     class Meta:
         model = Reserva
         fields = ['data_entrada']
+
+    def __init__(self, *args, **kwargs):
+        super(FormFazerReserva, self).__init__(*args, **kwargs)
+        self.fields['data_entrada'].label = 'Data de Entrada na Lavandaria'
         
 
 class FormReservaServico(forms.ModelForm):

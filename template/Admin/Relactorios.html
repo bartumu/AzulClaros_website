@@ -1,0 +1,336 @@
+{% extends 'admin/base_site.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>150</h3>
+
+            <p>New Orders</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-bag"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+            <p>Bounce Rate</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-stats-bars"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>44</h3>
+
+            <p>User Registrations</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-person-add"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3>65</h3>
+
+            <p>Unique Visitors</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-pie-graph"></i>
+          </div>
+          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+      <!-- Left col -->
+      <section class="col-lg-7 connectedSortable">
+        <!-- Custom tabs (Charts with tabs)-->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-chart-pie mr-1"></i>
+              Sales
+            </h3>
+            <div class="card-tools">
+              <ul class="nav nav-pills ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" href="#chart" data-toggle="tab">Pizza</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#chart-2" data-toggle="tab">Barra</a>
+                </li>
+              </ul>
+            </div>
+          </div><!-- /.card-header -->
+          <div class="card-body">
+            <div class="tab-content p-0">
+              <!-- Morris chart - Sales -->
+              <div class="chart tab-pane active" id="chart"
+                   style="position: relative; height: 300px;">
+               </div>
+              <div class="chart tab-pane" id="chart-2" style="position: relative; height: 300px;">
+              </div>
+            </div>
+          </div><!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        
+      </section>
+      <!-- /.Left col -->
+      <!-- right col (We are only adding the ID to make the widgets sortable)-->
+      <section class="col-lg-5 connectedSortable">
+
+        <!-- Map card -->
+        <div class="card bg-gradient-primary">
+          <div class="card-header border-0">
+            <h3 class="card-title">
+              <i class="fas fa-map-marker-alt mr-1"></i>
+              Visitors
+            </h3>
+            <!-- card tools -->
+            <div class="card-tools">
+              <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
+                <i class="far fa-calendar-alt"></i>
+              </button>
+              <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+            <!-- /.card-tools -->
+          </div>
+          <div class="card-body">
+            <div id="chart-3" style="height: 250px; width: 100%;"></div>
+          </div>
+        </div>
+        <!-- /.card -->
+
+        <!-- solid sales graph -->
+        <div class="card bg-gradient-info">
+          <div class="card-header border-0">
+            <h3 class="card-title">
+              <i class="fas fa-th mr-1"></i>
+              Sales Graph
+            </h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer bg-transparent">
+            <div class="row">
+              <div class="col-4 text-center">
+                <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
+                       data-fgColor="#39CCCC">
+
+                <div class="text-white">Mail-Orders</div>
+              </div>
+              <!-- ./col -->
+              <div class="col-4 text-center">
+                <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
+                       data-fgColor="#39CCCC">
+
+                <div class="text-white">Online</div>
+              </div>
+              <!-- ./col -->
+              <div class="col-4 text-center">
+                <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
+                       data-fgColor="#39CCCC">
+
+                <div class="text-white">In-Store</div>
+              </div>
+              <!-- ./col -->
+            </div>
+            <!-- /.row -->
+          </div>
+          <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+
+        
+        <!-- /.card -->
+      </section>
+      <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+  </div><!-- /.container-fluid -->
+</section>
+
+  <h1>Reservas por Estado</h1>
+  <div id="chart-2"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script>
+        // Obtém os dados do contexto Django
+        var counts = {{ counts|safe }};
+
+        var options = {
+          series: counts,
+          chart: {
+            type: 'polarArea',
+          },
+          labels: ['Pendente', 'Em Processamento', 'Atendidos'],
+          stroke: {
+            colors: ['#fff']
+          },
+          fill: {
+            opacity: 0.8
+          },
+          responsive: [{
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+
+        //REnderizar ou GRÀFICO
+        var categorias = {{ categorias|safe }};
+            var valores = {{ valores|safe }};
+
+            var options2 = {
+                series: [{
+                    name: 'Total de Pagamentos',
+                    data: valores
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded'
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent']
+                },
+                xaxis: {
+                    categories: categorias,
+                },
+                yaxis: {
+                    title: {
+                        text: 'kz (Mil)'
+                    }
+                },
+                fill: {
+                    opacity: 1
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return "kz " + val + " Mil"
+                        }
+                    }
+                }
+            };
+
+            var chart2 = new ApexCharts(document.querySelector("#chart-2"), options2);
+            chart2.render();
+
+
+        //GRAFICO DE FUNCIONARIO
+         // Obtendo os dados do contexto Django
+         var categoriasF = {{ categoriasF|safe }};
+            var valores_str = {{ valoresF|safe }};
+            
+            // Convertendo strings de volta para números
+            var valoresF = valores_str.map(function(val) {
+                return parseInt(val);
+            });
+
+            var options3 = {
+                series: [{
+                    name: 'Reservas Atendidas',
+                    data: valoresF
+                }],
+                chart: {
+                    type: 'line',
+                    height: 350
+                },
+                stroke: {
+                    width: 7,
+                    curve: 'smooth'
+                },
+                xaxis: {
+                    categories: categoriasF,
+                    title: {
+                        text: 'Funcionários'
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Reservas Atendidas'
+                    }
+                },
+                markers: {
+                    size: 4
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return val + " reservas atendidas"
+                        }
+                    }
+                }
+            };
+
+            var chart3 = new ApexCharts(document.querySelector("#chart-3"), options3);
+            chart3.render();
+    </script>
+
+
+{% endblock %}

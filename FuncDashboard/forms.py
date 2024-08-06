@@ -53,6 +53,7 @@ class FormPagamento(forms.ModelForm):
             'metodoPagamento': forms.ModelChoiceField(queryset=MetodoPagamento.objects.all(),attrs={'id': 'metodo-pagamento'})
         } """
 
+
 class FuncForm(forms.ModelForm):
     class Meta:
         model = Funcionario
@@ -62,3 +63,12 @@ class FuncForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # Filtrar o campo `user` para mostrar apenas usuários do tipo "funcionário"
         self.fields['usuario'].queryset = Usuario.objects.filter(is_staff=False)
+
+class FeedbackForm(forms.ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['avaliacao', 'comentario']
+        labels = {
+            'avaliacao': 'Avaliação (1 a 5)',
+            'comentario': 'Comentário'
+        }

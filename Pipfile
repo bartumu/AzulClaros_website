@@ -12,6 +12,9 @@ django-phonenumber-field = "*"
 django-phonenumbers = "*"
 environ = "*"
 django-environ = "*"
+pandas = "*"
+matplotlib = "*"
+seaborn = "*"
 
 [dev-packages]
 

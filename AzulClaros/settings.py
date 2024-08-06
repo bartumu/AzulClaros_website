@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import environ
 import os
+from django.urls import reverse
 
 
 # Initialise environment variables
@@ -161,6 +162,10 @@ JAZZMIN_SETTINGS = {
     'site_brand': 'Azul Claros',
     'welcome_sign': 'Bem-vindo ao Painel de Administração da Azul Claros',
     'copyright': 'Azul Claros',
+    'topmenu_links': [  
+        # Outros links...  
+        {"name": "Minha Página", "url": "/relatorio/", "icon": "fas fa-newspaper"},  # Adicione aqui  
+    ],
     'search_model': 'auth.User',
     'user_avatar': None,
     'show_sidebar': True,
@@ -177,4 +182,5 @@ JAZZMIN_SETTINGS = {
     'custom_css': None,
     'custom_js': None,
     'show_ui_builder': False,
+    
 }

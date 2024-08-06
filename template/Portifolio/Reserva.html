@@ -76,13 +76,15 @@
                 {% endfor %}
               </ol>
             <li><h3>Total a Pagar: {{ Reserva.total }}</h3></li>
-            {% if Reserva.estado %}
-            <li><h3>Estado: Atendido</h3></li>
-            {% else %}
-            <li><h3>Estado: Pendente</h3></li>
+            {% if Reserva.estado == 1 %}
+            <li><h3>Estado: <strong style="color:yellow">EM PROCESSAMENTO</strong></h3></li>
+            {% elif Reserva.estado == 0 %}
+            <li><h3>Estado: <strong style="color:red">PENDENTE</strong></h3></li>
             <li><h3><p>Desloca-se a nossa loja para por poder fazer o uso dos serviço, 
               para baixar o comprovativo de reserva <a href="{% url 'gerarPDF' Reserva.id %}">clique aqui</a> </p></h3></li>
-            {% endif %}
+              {% else %}
+              <li><h3>Estado: <strong style="color:yellow">ATENDIDO</strong></h3></li>
+              {% endif %}
             </ul>
             {% endif %}
           {% comment %} Colocar O Pedido Gerado aqui {% endcomment %}
