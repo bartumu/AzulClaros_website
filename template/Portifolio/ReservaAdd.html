@@ -35,46 +35,71 @@
                 {% csrf_token %}
                 {% if FormCliente.errors %}
                 {% for error in FormCliente.errors %}
-                              <div class="alert alert-danger">
-                                  <strong>{{ error }}</strong>
-                              </div>
+                    <div class="alert alert-danger">
+                        <strong>{{ error }}</strong>
+                    </div>
                 {% endfor %}
                 {% endif %}
                 {% if formReserva.errors %}
-                              <div class="alert alert-danger">
-                                  <strong>{{ formReserva.errors }}</strong>
-                              </div>
+                    <div class="alert alert-danger">
+                        <strong>{{ formReserva.errors }}</strong>
+                    </div>
                 {% endif %}
                 {% if FormServicosReservados.errors %}
-                              <div class="alert alert-danger">
-                                  <strong>{{ FormServicosReservados.errors }}</strong>
-                              </div>
+                    <div class="alert alert-danger">
+                        <strong>{{ FormServicosReservados.errors }}</strong>
+                    </div>
                 {% endif %}
-                {% comment %} <div class="mt-10">
+                
+                <div class="mt-10">
+                  <label for="">{{ FormCliente.nome.label }}</label>
                   {{ FormCliente.nome }}
                 </div>
                 <div class="mt-10">
-                  {{ FormCliente.numero }}
-                </div> {% endcomment %}
-                <div class="mt-10">
-                  {{ FormCliente.as_p }}
+                  <label for="">{{ FormCliente.email.label }}</label>
+                  {{ FormCliente.email }}
                 </div>
-                {% comment %} <br>
-                  <div class="form-select" id="default-select">
-                    {{ FormCliente.genero }}
-                  </div> {% endcomment %}
 
-                  <div class="mt-1<0">
-                    <label>{{ formReserva.data_entrada.label }}</label>
-                    {{ formReserva.data_entrada }}
+                <div class="row gx-3">
+                  <div class="col-md-6">
+                      <div class="mb-3">
+                        
+                  <label for="">{{ FormCliente.numero.label }}</label>
+                  {{ FormCliente.numero }}
+                      </div>
                   </div>
-
-                  <div class="input-group-icon mt-10">
-                    {{ FormServicosReservados.qtd }}
+                  <div class="col-md-6">
+                    <label for="">{{ FormCliente.genero.label }}</label>
+                      <div class="mb-3">
+                  {{ FormCliente.genero }}
+                      </div>
                   </div>
+                </div>
+                
+                <div class="row gx-3">
+                  <div class="col-md-6">
+                      <div class="mb-3">
+                        <label>{{ formReserva.data_entrada.label }}</label>
+                        {{ formReserva.data_entrada }}
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="mb-3">
+                        <label for="">Quantidade p/ Cesto</label>
+                        {{ FormServicosReservados.qtd }}
+                      </div>
+                  </div>
+                </div>
 
                   <div class="single-element-widget mt-30">
-                    {{ FormServicosReservados.servicos }}
+
+                    <label for="">{{ FormServicosReservados.servicos.label }}</label>
+                    <h4>
+
+                      {{ FormServicosReservados.servicos }}
+                    </h4>
+                    <br>
+                    <br>
                   </div>
                     <button type='submit' class="genric-btn primary radius"> Fazer Pedido</button>
                 </div>
