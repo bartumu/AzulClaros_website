@@ -27,6 +27,10 @@ def sobre(request):
 def servico(request):
     return render(request,'Portifolio/nossoServico.html')
 
+""" def reserva(request):
+    context = request.session.get('context',{})
+    return render(request,'Portifolio/Reserva.html', context) """
+
 
 def buscar_reserva(request):
     reserva = None
@@ -44,6 +48,7 @@ def buscar_reserva(request):
         'Reserva': reserva,
         'servicoReservado': servicosReservados
     }
+    request.session['context'] = context
     return render(request, 'Portifolio/Reserva.html', context)
 
 def buscarReserva(request, codigo_):
