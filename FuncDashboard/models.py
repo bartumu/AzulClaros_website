@@ -53,7 +53,7 @@ class Servico(models.Model):
     nome = models.CharField(max_length=20, verbose_name='Nome Do Serviço')
     descricao = models.TextField(verbose_name='Descrição Do Serviço')
     preco = models.DecimalField(default=0.0,max_digits=10, decimal_places=2, verbose_name='Descrição Do Serviço')
-    img = models.ImageField(upload_to='servico/', blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])], verbose_name='Foto do Serviço')
+    img = models.ImageField(default="", upload_to='servico/', blank=True, null=True, validators=[FileExtensionValidator(['jpg', 'png', 'jpeg'])], verbose_name='Foto do Serviço')
 
     REQUIRED_FIELDS = ['nome', 'descricao', 'preco' , 'img']
 
@@ -99,11 +99,13 @@ class Reserva (models.Model):
     obs = models.TextField(null=True)
     codigo_reserva = models.CharField(max_length=10, unique=True, editable=False)
     
-    def save(self):
-        if not self.codigo_reserva:
-            self.codigo_reserva=str(uuid.uuid4())
-        return super().save()
     
+    def save(self, *args, **kwargs):
+        if not self.codigo_reserva:
+            self.codigo_reserva = str(uuid.uuid4())
+        super().save(*args, **kwargs)
+
+
     def atualizar_total(self):
         total = sum(servico.subtotal for servico in self.reserva.all())
         self.total = total

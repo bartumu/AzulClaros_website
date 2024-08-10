@@ -44,8 +44,8 @@
                 Pesquise o código aqui para saber o estado do seu pedido
               </p>
               <form method="POST" action="{% url 'buscar_reserva' %}" style="display: flex;
-  align-items: center;
-  justify-content: flex-end; width: 100%; ">
+                            align-items: center;
+                            justify-content: flex-end; width: 100%; ">
               {% csrf_token %}
               <input class="single-input" name="codigo_reserva" id="pesqCod" type="text" onfocus="this.placeholder = ''" 
               onblur="this.placeholder = 'Pesquise o Código de Sua Reserva'" placeholder="Coloque o Código"

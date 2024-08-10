@@ -6,10 +6,9 @@
 
 <section class="content">
   <div class="container-fluid">
-    <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-lg-3 col-6">
-        <!-- small box -->
+        <!-- ESTATISTICA -->
         <div class="small-box bg-info">
           <div class="inner">
             <h3>{{ CliAtendido }}</h3>
@@ -19,27 +18,25 @@
           <div class="icon">
             <i class="ion ion-bag"></i>
           </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          <!--<a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>-->
         </div>
       </div>
-      <!-- ./col -->
       <div class="col-lg-3 col-6">
-        <!-- small box -->
         <div class="small-box bg-success">
           <div class="inner">
+            {% if ValorVendido %}
             <h3>{{ ValorVendido }}<sup style="font-size: 20px"></sup></h3>
-
+            {% else %}
+            <h3>0<sup style="font-size: 20px"></sup></h3>
+            {% endif %}
             <p>Total Arrecadado</p>
           </div>
           <div class="icon">
             <i class="ion ion-stats-bars"></i>
           </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <!-- ./col -->
       <div class="col-lg-3 col-6">
-        <!-- small box -->
         <div class="small-box bg-warning">
           <div class="inner">
             <h3>44</h3>
@@ -49,12 +46,9 @@
           <div class="icon">
             <i class="ion ion-person-add"></i>
           </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <!-- ./col -->
       <div class="col-lg-3 col-6">
-        <!-- small box -->
         <div class="small-box bg-danger">
           <div class="inner">
             <h3>65</h3>
@@ -64,138 +58,354 @@
           <div class="icon">
             <i class="ion ion-pie-graph"></i>
           </div>
-          <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <!-- ./col -->
     </div>
-    <!-- /.row -->
-    <!-- Main row -->
+    <!-- FIM ESTATISTICA -->
+
     <div class="row">
-      <!-- Left col -->
-      <section class="col-lg-7 connectedSortable">
-        <!-- Custom tabs (Charts with tabs)-->
+      <div class="col-lg-6">
         <div class="card">
+          <div class="card-header border-0">
+            <div class="d-flex justify-content-between">
+              <h3 class="card-title">Vendas X Serviços</h3>
+              <a href="javascript:void(0);">View Report</a>
+            </div>
+          </div>
+
+          <div class="position-relative mb-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+              <div id="chart-2" height="100" width="424" style="display: block; width: 424px; height: 100px;" class="chartjs-render-monitor"></div>
+          </div>
+
+        </div>
+        <!-- /.card -->
+
+        {% comment %} <div class="card">
+          <div class="card-header border-0">
+            <h3 class="card-title">Products</h3>
+            <div class="card-tools">
+              <a href="#" class="btn btn-tool btn-sm">
+                <i class="fas fa-download"></i>
+              </a>
+              <a href="#" class="btn btn-tool btn-sm">
+                <i class="fas fa-bars"></i>
+              </a>
+            </div>
+          </div>
+          <div class="card-body table-responsive p-0">
+            <table class="table table-striped table-valign-middle">
+              <thead>
+              <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Sales</th>
+                <th>More</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>
+                  <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
+                  Some Product
+                </td>
+                <td>$13 USD</td>
+                <td>
+                  <small class="text-success mr-1">
+                    <i class="fas fa-arrow-up"></i>
+                    12%
+                  </small>
+                  12,000 Sold
+                </td>
+                <td>
+                  <a href="#" class="text-muted">
+                    <i class="fas fa-search"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
+                  Another Product
+                </td>
+                <td>$29 USD</td>
+                <td>
+                  <small class="text-warning mr-1">
+                    <i class="fas fa-arrow-down"></i>
+                    0.5%
+                  </small>
+                  123,234 Sold
+                </td>
+                <td>
+                  <a href="#" class="text-muted">
+                    <i class="fas fa-search"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
+                  Amazing Product
+                </td>
+                <td>$1,230 USD</td>
+                <td>
+                  <small class="text-danger mr-1">
+                    <i class="fas fa-arrow-down"></i>
+                    3%
+                  </small>
+                  198 Sold
+                </td>
+                <td>
+                  <a href="#" class="text-muted">
+                    <i class="fas fa-search"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
+                  Perfect Item
+                  <span class="badge bg-danger">NEW</span>
+                </td>
+                <td>$199 USD</td>
+                <td>
+                  <small class="text-success mr-1">
+                    <i class="fas fa-arrow-up"></i>
+                    63%
+                  </small>
+                  87 Sold
+                </td>
+                <td>
+                  <a href="#" class="text-muted">
+                    <i class="fas fa-search"></i>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div> {% endcomment %}
+        <!-- /.card -->
+      </div>
+      <!-- /.col-md-6 -->
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-header border-0">
+            <div class="d-flex justify-content-between">
+              <h3 class="card-title">Vendas</h3>
+              <a href="javascript:void(0);">View Report</a>
+            </div>
+          </div>
+          
+            <div class="position-relative mb-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+              <div id="chart" height="100" width="424" style="display: block; width: 424px; height: 100px;" class="chartjs-render-monitor"></div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /.card -->
+
+        {% comment %} <div class="card">
+          <div class="card-header border-0">
+            <h3 class="card-title">Online Store Overview</h3>
+            <div class="card-tools">
+              <a href="#" class="btn btn-sm btn-tool">
+                <i class="fas fa-download"></i>
+              </a>
+              <a href="#" class="btn btn-sm btn-tool">
+                <i class="fas fa-bars"></i>
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+              <p class="text-success text-xl">
+                <i class="ion ion-ios-refresh-empty"></i>
+              </p>
+              <p class="d-flex flex-column text-right">
+                <span class="font-weight-bold">
+                  <i class="ion ion-android-arrow-up text-success"></i> 12%
+                </span>
+                <span class="text-muted">CONVERSION RATE</span>
+              </p>
+            </div>
+            <!-- /.d-flex -->
+            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
+              <p class="text-warning text-xl">
+                <i class="ion ion-ios-cart-outline"></i>
+              </p>
+              <p class="d-flex flex-column text-right">
+                <span class="font-weight-bold">
+                  <i class="ion ion-android-arrow-up text-warning"></i> 0.8%
+                </span>
+                <span class="text-muted">SALES RATE</span>
+              </p>
+            </div>
+            <!-- /.d-flex -->
+            <div class="d-flex justify-content-between align-items-center mb-0">
+              <p class="text-danger text-xl">
+                <i class="ion ion-ios-people-outline"></i>
+              </p>
+              <p class="d-flex flex-column text-right">
+                <span class="font-weight-bold">
+                  <i class="ion ion-android-arrow-down text-danger"></i> 1%
+                </span>
+                <span class="text-muted">REGISTRATION RATE</span>
+              </p>
+            </div>
+            <!-- /.d-flex -->
+          </div>
+        </div> {% endcomment %}
+      </div>
+      <!-- /.col-md-6 -->
+    </div>
+      
+
+    <div class="row">
+      <div class="col-md-6">
+        <!-- AREA CHART -->
+        <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title">
-              <i class="fas fa-chart-pie mr-1"></i>
-              Sales
-            </h3>
-            <div class="card-tools">
-              <ul class="nav nav-pills ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#chart" data-toggle="tab">Pizza</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#chart-2" data-toggle="tab">Barra</a>
-                </li>
-              </ul>
-            </div>
-          </div><!-- /.card-header -->
-          <div class="card-body">
-            <div class="tab-content p-0">
-              <!-- Morris chart - Sales -->
-              <div class="chart tab-pane active" id="chart"
-                   style="position: relative; height: 300px;">
-               </div>
-              <div class="chart tab-pane" id="chart-2" style="position: relative; height: 300px;">
-              </div>
-            </div>
-          </div><!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-        
-      </section>
-      <!-- /.Left col -->
-      <!-- right col (We are only adding the ID to make the widgets sortable)-->
-      <section class="col-lg-5 connectedSortable">
+            <h3 class="card-title">Atendimento X Cliente</h3>
 
-        <!-- Map card -->
-        <div class="card bg-gradient-primary">
-          <div class="card-header border-0">
-            <h3 class="card-title">
-              <i class="fas fa-map-marker-alt mr-1"></i>
-              Visitors
-            </h3>
-            <!-- card tools -->
             <div class="card-tools">
-              <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                <i class="far fa-calendar-alt"></i>
-              </button>
-              <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
               </button>
-            </div>
-            <!-- /.card-tools -->
-          </div>
-          <div class="card-body">
-            <div id="chart-3" style="height: 250px; width: 100%;"></div>
-          </div>
-        </div>
-        <!-- /.card -->
-
-        <!-- solid sales graph -->
-        <div class="card bg-gradient-info">
-          <div class="card-header border-0">
-            <h3 class="card-title">
-              <i class="fas fa-th mr-1"></i>
-              Sales Graph
-            </h3>
-
-            <div class="card-tools">
-              <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
                 <i class="fas fa-times"></i>
               </button>
             </div>
           </div>
           <div class="card-body">
-            <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+              <div id="chart-3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250"></div>
+            </div>
           </div>
           <!-- /.card-body -->
-          <div class="card-footer bg-transparent">
-            <div class="row">
-              <div class="col-4 text-center">
-                <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                       data-fgColor="#39CCCC">
-
-                <div class="text-white">Mail-Orders</div>
-              </div>
-              <!-- ./col -->
-              <div class="col-4 text-center">
-                <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                       data-fgColor="#39CCCC">
-
-                <div class="text-white">Online</div>
-              </div>
-              <!-- ./col -->
-              <div class="col-4 text-center">
-                <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                       data-fgColor="#39CCCC">
-
-                <div class="text-white">In-Store</div>
-              </div>
-              <!-- ./col -->
-            </div>
-            <!-- /.row -->
-          </div>
-          <!-- /.card-footer -->
         </div>
         <!-- /.card -->
 
-        
+        <!-- DONUT CHART -->
+        <div class="card card-danger">
+          <div class="card-header">
+            <h3 class="card-title">Donut Chart</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body" style="display: block;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <canvas id="chart-3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250" class="chartjs-render-monitor"></canvas>
+          </div>
+          <!-- /.card-body -->
+        </div>
         <!-- /.card -->
-      </section>
-      <!-- right col -->
+
+        <!-- PIE CHART -->
+        <div class="card card-danger">
+          <div class="card-header">
+            <h3 class="card-title">Reservas Por Dia</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body" style="display: block;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <div id="chart-reservas-dia" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250" class="chartjs-render-monitor"></div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <!-- /.col (LEFT) -->
+      <div class="col-md-6">
+        <!-- LINE CHART -->
+        <div class="card card-info">
+          <div class="card-header">
+            <h3 class="card-title">Reservas Por Cliente</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+              <div id="chart-reservas-cliente" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250" class="chartjs-render-monitor"></div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+        <!-- BAR CHART -->
+        <div class="card card-success">
+          <div class="card-header">
+            <h3 class="card-title">Receitas Por Periodo</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+              <div id="receitaPeriodochart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250" class="chartjs-render-monitor"></div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+        <!-- STACKED BAR CHART -->
+        <div class="card card-success">
+          <div class="card-header">
+            <h3 class="card-title">Stacked Bar Chart</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+              <canvas id="stackedBarChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250" class="chartjs-render-monitor"></canvas>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <!-- /.col (RIGHT) -->
     </div>
-    <!-- /.row (main row) -->
+    <!-- /.row -->
   </div><!-- /.container-fluid -->
 </section>
 
-  <h1>Reservas por Estado</h1>
-  <div id="chart-2"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
@@ -330,6 +540,132 @@
 
             var chart3 = new ApexCharts(document.querySelector("#chart-3"), options3);
             chart3.render();
+
+            //GRÁFICOS DE PADRÕES DE RESERVAS
+            // Dados fornecidos pelo Django
+        const reservasPorDia = {{ reservas_por_dia|safe }};
+        const reservasPorCliente = {{ reservas_por_cliente|safe }};
+
+        const categoriasDia = reservasPorDia.map(item => item.data_reserva);
+        const quantidadesDia = reservasPorDia.map(item => item.quantidade);
+
+        var optionsDia = {
+            series: [{
+                name: "Reservas",
+                data: quantidadesDia
+            }],
+            chart: {
+                height: 350,
+                type: 'line',
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'straight'
+            },
+            title: {
+                text: 'Padrões de Reservas por Dia',
+                align: 'left'
+            },
+            grid: {
+                row: {
+                    colors: ['#f3f3f3', 'transparent'], // cores alternadas nas linhas
+                    opacity: 0.5
+                },
+            },
+            xaxis: {
+                categories: categoriasDia,  // datas das reservas
+            }
+        };
+
+        var chart_reservas_dia = new ApexCharts(document.querySelector("#chart-reservas-dia"), optionsDia);
+        chart_reservas_dia.render();
+      
+
+        // Transformando os dados para o gráfico de frequência de reservas por cliente
+        const seriesCliente = reservasPorCliente.map(item => ({
+            x: item.cliente__nome,
+            y: item.quantidade
+        }));
+
+        // Gráfico de barras para frequência de reservas por cliente
+        const optionsCliente = {
+            chart: {
+                type: 'bar',
+                height: 350
+            },
+            series: [{
+                name: 'Reservas',
+                data: seriesCliente
+            }],
+            xaxis: {
+                type: 'category',
+                title: {
+                    text: 'Clientes'
+                }
+            },
+            title: {
+                text: 'Frequência de Reservas por Cliente (Mês Atual)'
+            }
+        };
+
+        const chartCliente = new ApexCharts(document.querySelector("#chart-reservas-cliente"), optionsCliente);
+        chartCliente.render();
+
+        //GRAFICO RECEITAS POR PERIODO
+        const receitaPorMes = {{ receita_por_mes|safe }};
+        
+        // Extrair meses e total de receita
+        const meses = receitaPorMes.map(item => item.mes);
+        const totalReceita = receitaPorMes.map(item => item.total_receita);
+
+        var optionsMes = {
+            series: [{
+                name: "Receita",
+                data: totalReceita
+            }],
+            chart: {
+                height: 350,
+                type: 'area',
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            title: {
+                text: 'Análise de Receita por Mês',
+                align: 'left'
+            },
+            grid: {
+                row: {
+                    colors: ['#f3f3f3', 'transparent'], // cores alternadas nas linhas
+                    opacity: 0.5
+                },
+            },
+            xaxis: {
+                categories: meses,  // meses das receitas
+                title: {
+                    text: 'Meses'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Total da Receita'
+                }
+            }
+        };
+
+        var receitaPeriodochart = new ApexCharts(document.querySelector("#receitaPeriodochart"), optionsMes);
+        receitaPeriodochart.render();
     </script>
 
 

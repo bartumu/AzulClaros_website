@@ -7,35 +7,38 @@
 {% endblock %}
 
 {% block Conteudo %}
-
-
-    <!--? Hero Start -->
-    <div class="slider-area2 section-bg2 hero-overly" data-background="{% static 'frontEnd/assets/img/hero/hero2.png' %}">
-        <div class="slider-height2 d-flex align-items-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="hero-cap hero-cap2">
-                            <h2>Nossos Serviços</h2>
+<section class="services-area pt-top border-bottom pb-20 mb-60">
+    <div class="container">
+        <!--? Hero Start -->
+        <div class="slider-area2 section-bg2 hero-overly" data-background="{% static 'frontEnd/assets/img/hero/hero2.png' %}">
+            <div class="slider-height2 d-flex align-items-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="hero-cap hero-cap2">
+                                <h2>Nossos Serviços</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Hero End -->
+        <!--? Services Area Start -->
+        {% include "Portifolio/nossoProcesso.html" %}
+        <!-- Services End -->
+        <!--? Offer-services Start  -->
+        {% include "Portifolio/Servico.html" %}
+        
+        <!-- Offer-services End  -->
+        <!--? Want To work -->
+        {% include "Portifolio/Reservas.html" %}
+        <!-- Want To work End -->
+        <!--? Testimonials_start -->
+        <!-- Testimonials_end -->
     </div>
-    <!-- Hero End -->
-    <!--? Services Area Start -->
-    {% include "Portifolio/nossoProcesso.html" %}
-    <!-- Services End -->
-    <!--? Offer-services Start  -->
-    {% include "Portifolio/Servico.html" %}
-    
-    <!-- Offer-services End  -->
-    <!--? Want To work -->
-    {% include "Portifolio/Reservas.html" %}
-    <!-- Want To work End -->
-    <!--? Testimonials_start -->
-    <!-- Testimonials_end -->
+</section>
+
     
 
 

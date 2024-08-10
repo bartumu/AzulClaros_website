@@ -13,7 +13,7 @@ urlpatterns = [
     path('func/reserva/<int:idReserva>',views.atender_view,name="atender"),
     path('func/reservaLev',views.Levantamento_view,name="levantamento"),
     path('func/levantar/<int:idReserva>',views.levantar_view,name="Levantar"),
-    path('func/perfil',views.perfil_view,name="perfil"),
+    path('func/perfil',views.RegistarPerfil,name="perfil"),
     path('func/Regperfil',views.RegistarPerfil,name="Regperfil"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

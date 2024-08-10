@@ -133,26 +133,26 @@
             src="{{ Func.img.url }}"
             alt="Header Avatar"
           />
-          <span class="d-none d-xl-inline-block ms-1">{{ usuario.username }}</span>
+          <span class="d-none d-xl-inline-block ms-1">{{ Func.usuario.username }}</span>
           <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
         </button>
         <div class="dropdown-menu dropdown-menu-end">
           <!-- item-->
           <a class="dropdown-item" href="{% url 'perfil' %}"
             ><i class="dripicons-user d-inline-block text-muted me-2"></i>
-            Profile</a
+            Perfill</a
           >
           <a
             class="dropdown-item d-block right-bar-toggle waves-effect"
             href="#"
             ><i class="dripicons-gear d-inline-block text-muted me-2"></i>
-            Settings</a
+            Configuração</a
           >
 
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="{% url 'logout' %}"
             ><i class="dripicons-exit d-inline-block text-muted me-2"></i>
-            Logout</a
+            Sair</a
           >
         </div>
       </div>
