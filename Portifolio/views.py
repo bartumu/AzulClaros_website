@@ -5,7 +5,9 @@ from xhtml2pdf import pisa
 from .forms import *
 import json
 from FuncDashboard.models import *
-
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from threading import Thread
 # Create your views here.
 from django.shortcuts import render
 
@@ -27,9 +29,25 @@ def sobre(request):
 def servico(request):
     return render(request,'Portifolio/nossoServico.html')
 
-""" def reserva(request):
-    context = request.session.get('context',{})
-    return render(request,'Portifolio/Reserva.html', context) """
+def contacto(request):
+    if request.method == 'POST':  
+        form = FeedbackForm(request.POST)  
+        if form.is_valid():  
+            email = form.cleaned_data['email']  
+            cliente = Cliente.objects.get(email=email)  
+            
+            feedback = form.save(commit=False)  
+            feedback.cliente = cliente  
+            feedback.save() 
+            return redirect('home') 
+
+
+    form = FeedbackForm() 
+
+    context = {
+        'Form': form
+    }
+    return render(request,'Portifolio/Contacto.html', context)
 
 
 def buscar_reserva(request):
@@ -48,7 +66,6 @@ def buscar_reserva(request):
         'Reserva': reserva,
         'servicoReservado': servicosReservados
     }
-    request.session['context'] = context
     return render(request, 'Portifolio/Reserva.html', context)
 
 def buscarReserva(request, codigo_):
@@ -111,8 +128,19 @@ def addReserva_view(request):
                             qtd=qtd
                         )
 
-                    resera = request.session['reserva_id'] = reserva.id
-                    print(reserva.id)           
+                    # Envio do email ao cliente
+                    subject = 'Comprovante da sua Reserva | Azul Claros'
+                    cliente_email = cliente.email
+                    html = 'BackEnd/Cliente/ComprovEmail.html'
+                    context = {
+                        'Reserva': Reserva.objects.get(id=reserva.id),
+                        'servicosReservados': ServicosReservado.objects.filter(reserva=reserva),
+                        'Qtd':qtd
+                    }
+                    Thread(target=Enviar_fatura_email, args=(html,subject, context, cliente_email)).start()
+
+
+                    resera = request.session['reserva_id'] = reserva.id      
                     return buscarReserva(request,resera)
             
     else:
@@ -158,6 +186,11 @@ def Existe_servico():
     else:
         return False
 
+def Enviar_fatura_email(html,subject, context, cliente_email):
+    message = render_to_string(html, context)
+    email = EmailMessage(subject, message, to=[cliente_email])
+    email.content_subtype = 'html'
+    email.send()
 
 """ def save_pdf(template_src,context_dict):
     template = get_template(template_src)

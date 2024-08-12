@@ -288,7 +288,7 @@
         <!-- DONUT CHART -->
         <div class="card card-danger">
           <div class="card-header">
-            <h3 class="card-title">Donut Chart</h3>
+            <h3 class="card-title">Gráfico de Satisfação</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -300,7 +300,7 @@
             </div>
           </div>
           <div class="card-body" style="display: block;"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-            <canvas id="chart-3" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250" class="chartjs-render-monitor"></canvas>
+            <div id="chartSat" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250" class="chartjs-render-monitor"></div>
           </div>
           <!-- /.card-body -->
         </div>
@@ -379,7 +379,7 @@
         <!-- STACKED BAR CHART -->
         <div class="card card-success">
           <div class="card-header">
-            <h3 class="card-title">Stacked Bar Chart</h3>
+            <h3 class="card-title">Gráfico De Periodo</h3>
 
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -392,7 +392,7 @@
           </div>
           <div class="card-body">
             <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-              <canvas id="stackedBarChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250" class="chartjs-render-monitor"></canvas>
+              <div id="chart-timeline" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 397px;" width="397" height="250" class="chartjs-render-monitor"></div>
             </div>
           </div>
           <!-- /.card-body -->
@@ -666,6 +666,31 @@
 
         var receitaPeriodochart = new ApexCharts(document.querySelector("#receitaPeriodochart"), optionsMes);
         receitaPeriodochart.render();
+
+        //GRÀFICO DE SATISFAÇÂO
+        var optionsS = {
+          series: {{ seriesS|safe }},
+          chart: {
+            width: 380,
+            type: 'pie',
+          },
+          labels: {{ labelsS|safe }},
+          responsive: [{
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                position: 'bottom'
+              }
+            }
+          }]
+        };
+
+        var chartS = new ApexCharts(document.querySelector("#chartSat"), optionsS);
+        chartS.render();
+      
     </script>
 
 

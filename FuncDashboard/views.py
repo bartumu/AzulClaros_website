@@ -8,6 +8,10 @@ from datetime import date
 from django.db.models import Sum, Count
 from FuncDashboard.relactorio import *
 from datetime import date, timedelta
+from Portifolio.views import Enviar_fatura_email
+from threading import Thread
+from django.db.models.functions import TruncMonth
+import json
 
 # Create your views here.
 def FuncDashboard(request):
@@ -85,7 +89,7 @@ def Levantamento_view(request):
                 'tem_reservas_Sair':tem_reservas_Sair,
                 'usuario':request.user,
                 'FormPagamento':formPagamento,
-                'Func': FuncObj
+                'Func': FuncObj,
             }
 
             return render(request,'BackEnd/Levantamento.html', context)
@@ -113,6 +117,18 @@ def atender_view(request,idReserva):
                 Pag.reserva = reservas
                 Pag.valor = Calcular_Total(idReserva)
                 Pag.save()
+
+                # Envio do email ao cliente
+                subject = 'Factura | Azul Claros'
+                cliente_email = reservas.cliente.email
+                html = 'BackEnd/Cliente/FacturaPag.html'
+                context = {
+                    'Reserva': Reserva.objects.get(id=reservas.id),
+                    'servicosReservados': ServicosReservado.objects.filter(reserva=reservas),
+                    'Pagamento': Pagamentos.objects.get(reserva=reservas)
+                }
+                Thread(target=Enviar_fatura_email, args=(html,subject, context, cliente_email)).start()
+
                 return redirect('reserva')
        else:
            return HttpResponse("Formulário invalido", status=400)
@@ -126,7 +142,6 @@ def atender_view(request,idReserva):
         'FormPagamento':formPagamento
     }
     return render(request,'BackEnd/ListReserva.html', context)
-
 
 def levantar_view(request,idReserva):
     
@@ -183,7 +198,9 @@ def RegistarPerfil(request):
 
             return render(request, 'BackEnd/Perfil/PerfilPag.html', {'form': form,'Func':funcionario})
         else:
-            funcionario = Funcionario.objects.get(usuario_id=request.user or None)
+            formCadastrar = FormCadFuncionario()
+            usuario = request.user
+
             if request.method == 'POST':
                 usuario = request.user
                 formCadastrar = FormCadFuncionario(request.POST, request.FILES)
@@ -194,29 +211,24 @@ def RegistarPerfil(request):
                     Func.usuario = request.user
                     Func.save()
                     return redirect('reserva')
-                else:
-                    formCadastrar = FormCadFuncionario()
-                    usuario = request.user
+                
 
 
             context = {
                 'formCadastrar':formCadastrar,
                 'usuario':usuario,
                 'EditarPerfil':EditarPerfil,
-                'Func':funcionario
+                'Func':None
             }
             return render(request,'BackEnd/Perfil/RegistarPerfil.html', context)
     
     else:
         return redirect('login')
-        
-        
-
 
 def Relatorio(request):
     today = date.today()
-    start_date = today.replace(day=1)  # Início do mês atual
-    end_date = today  # Data atual
+    start_date = today.replace(day=1) 
+    end_date = today 
 
     # Total de Clientes Atendidos no mês atual
     CliAtendido = Reserva.objects.filter(estado=2, data_reserva__range=[start_date, end_date]).count()
@@ -275,6 +287,22 @@ def Relatorio(request):
         for item in receita_por_semana
     ]
 
+   # Mapeamento das expressões para as avaliações
+    avaliacao_labels = {
+        1: 'Péssimo',
+        2: 'Mal',
+        3: 'Bom',
+        4: 'Muito Bom',
+        5: 'Excelente'
+    }
+
+    # Agregando os dados de satisfação
+    feedback_data = Feedback.objects.values('avaliacao').annotate(total=models.Count('avaliacao')).order_by('avaliacao')
+
+    # Preparando os dados para o ApexCharts
+    labelsS = [avaliacao_labels[data['avaliacao']] for data in feedback_data]
+    seriesS = [data['total'] for data in feedback_data]
+
 
     context = dict(
         counts=counts,
@@ -288,6 +316,8 @@ def Relatorio(request):
         reservas_por_cliente=list(reservas_por_cliente),
         receita_por_mes= receita_por_mes,
         receita_por_semana= receita_por_semana,
+        labelsS= labelsS,
+        seriesS= seriesS
     )
     
     return render(request, 'Admin/Relactorios.html', context)

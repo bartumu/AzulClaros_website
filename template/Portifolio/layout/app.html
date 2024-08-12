@@ -33,6 +33,35 @@
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/slick.css' %}" />
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/nice-select.css' %}" />
     <link rel="stylesheet" href="{% static 'frontEnd/assets/css/style.css' %}" />
+
+    <style>
+      .star-rating input {
+        display: none;
+      }
+      
+      .star-rating label {
+          color: gray;
+          font-size: 24px;
+          padding: 0;
+          cursor: pointer;
+          display: inline-block;
+      }
+      
+      .star-rating label:before {
+          content: "\2605";  /* Unicode estrela vazia */
+      }
+      
+      .star-rating input:checked ~ label,
+      .star-rating input:hover ~ label,
+      .star-rating label:hover ~ label {
+          color: gold;
+      }
+      
+      .star-rating input:checked ~ label:hover,
+      .star-rating input:checked ~ label:hover ~ label {
+          color: orange;
+      }
+    </style>
   </head>
 
   <body>

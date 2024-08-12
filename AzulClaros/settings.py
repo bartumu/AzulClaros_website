@@ -184,3 +184,12 @@ JAZZMIN_SETTINGS = {
     'show_ui_builder': False,
     
 }
+
+#CONFIGURAÇÂO DE EMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_EMAIL_FROM = 'Azul Claros - Lavandaria'
+EMAIL_HOST_USER = 'benartur.ab@gmail.com'
+EMAIL_HOST_PASSWORD = 'nvanhlgtygodaddd'

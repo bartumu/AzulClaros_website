@@ -8,14 +8,14 @@ class FormCadFuncionario(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'Nome',
             'onfocus': "this.placeholder = ''",
-            'onblur': "this.placeholder = 'Nome'",
+            'onblur': "this.placeholder = 'Insira o Nome Completo'",
             'required': True,
             'class': 'form-control'
         }))
     numero = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'Numero de Tel',
             'onfocus': "this.placeholder = ''",
-            'onblur': "this.placeholder = 'Número de Tel'",
+            'onblur': "this.placeholder = 'Insira o Número de Telemóvel'",
             'required': True,
             'class': 'form-control'
         }))
@@ -27,6 +27,16 @@ class FormCadFuncionario(forms.ModelForm):
             'class': 'form-control'
         }))
     
+    class Meta:
+        model = Funcionario
+        fields = ['nome','endereco','numero','genero']
+
+    def __init__(self, *args, **kwargs):
+        super(FormCadFuncionario, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if field_name == 'genero':
+                field.widget.attrs.update({'class': 'form-control'})
+
     def clean_numero(self):
         numero = self.cleaned_data.get('numero')
         
@@ -36,9 +46,7 @@ class FormCadFuncionario(forms.ModelForm):
 
         return numero
     
-    class Meta:
-        model = Funcionario
-        fields = ['nome','endereco','numero','genero']
+    
 
 class FuncionarioPerfilForm(forms.ModelForm):
     password = forms.CharField(

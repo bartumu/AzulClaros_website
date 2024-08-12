@@ -164,7 +164,6 @@ class Pagamentos (models.Model):
 
 class Feedback(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    reserva = models.ForeignKey(Reserva, on_delete=models.CASCADE)
     avaliacao = models.IntegerField(choices=[(i, i) for i in range(1, 6)], verbose_name='Avaliação (1 a 5)')
     comentario = models.TextField(blank=True, null=True, verbose_name='Comentário')
     data = models.DateTimeField(auto_now_add=True, verbose_name='Data do Feedback')
@@ -175,4 +174,4 @@ class Feedback(models.Model):
         verbose_name_plural = 'Feedbacks'
 
     def __str__(self):
-        return f"Feedback de {self.cliente} para a reserva {self.reserva}"
+        return f"Feedback de {self.cliente}"

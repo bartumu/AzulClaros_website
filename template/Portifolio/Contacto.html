@@ -1,0 +1,99 @@
+{% extends 'Portifolio/layout/app.html' %}
+
+{% load static %}
+
+{% block titulo %}
+  Contactos
+{% endblock %}
+
+{% block Conteudo %}
+  <main>
+    <!-- ? Hero Start -->
+    <div class="slider-area2 section-bg2 hero-overly" data-background="{% static 'frontEnd/assets/img/hero/hero2.png' %}">
+      <div class="slider-height2 d-flex align-items-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-12">
+              <div class="hero-cap hero-cap2">
+                <h2>Contacte-nos</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Hero End -->
+    
+
+    <!--?  Contact Area start  -->
+    <section class="contact-section">
+      <div class="container">
+          <div class="row">
+              <div class="col-12">
+                  <h2 class="contact-title">Deixe seu comentário sobre nossos Serviços</h2>
+              </div>
+              <div class="col-lg-8">
+                  <form class="form-contact contact_form" action="" method="post">
+                    {% csrf_token %} 
+                      <div class="row">
+                          <div class="col-12">
+                              <div class="form-group">
+                                  {{ Form.comentario }}
+                              </div>
+                          </div>
+                          <div class="col-12">
+                            <br/>
+                          </div>
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                                  <input class="form-control valid" required name="name" type="text" 
+                                  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insira o seu Nome'" placeholder="Insira o seu Nome">
+                              </div>
+                          </div>
+                          <div class="col-sm-6">
+                              <div class="form-group">
+                                  <input class="form-control valid" required name="email" type="email" 
+                                  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Insira seu Email'" placeholder="Email">
+                              </div>
+                          </div>
+                          <div class="col-12">
+                            {{ Form.avaliacao.label }}
+                              <div class="form-group">
+                                  {{ Form.avaliacao }}
+                              </div>
+                          </div>
+                      </div>
+                      <div class="form-group mt-3">
+                          <button type="submit" class="button button-contactForm boxed-btn">Enviar</button>
+                      </div>
+                  </form>
+              </div>
+              <div class="col-lg-3 offset-lg-1">
+                <div class="media contact-info">
+                  <span class="contact-info__icon"><i class="ti-home"></i></span>
+                  <div class="media-body">
+                    <h3>Luanda, Angola.</h3>
+                    <p>Mártires, CA 91770</p>
+                  </div>
+                </div>
+                <div class="media contact-info">
+                  <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                  <div class="media-body">
+                    <h3>+222 53 565 2365</h3>
+                    <p>Seg a Sex 08h00 à 18:30</p>
+                  </div>
+                </div>
+                <div class="media contact-info">
+                  <span class="contact-info__icon"><i class="ti-email"></i></span>
+                  <div class="media-body">
+                    <h3>support@azulclaros.com</h3>
+                    <p>Mande-nos as tuas recomendações</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- Contact Area End -->
+  </main>
+{% endblock %}

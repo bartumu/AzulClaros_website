@@ -79,6 +79,20 @@ class FormReservaServico(forms.ModelForm):
         
     
 class FeedbackForm(forms.ModelForm):
+    email = forms.EmailField(widget=forms.TextInput(attrs={
+            'placeholder': 'Insira o Email',
+            'onfocus': "this.placeholder = ''",
+            'onblur': "this.placeholder = 'Insira o Email'",
+            'required': True,
+        })) 
+    comentario = forms.CharField(widget=forms.Textarea(attrs={
+            'placeholder': 'Deixe seu comentário',
+            'onfocus': "this.placeholder = ''",
+            'onblur': "this.placeholder = 'Deixe seu comentário'",
+            'required': True,
+        }))
+    
+    
     class Meta:
         model = Feedback
         fields = ['avaliacao', 'comentario']
@@ -86,6 +100,11 @@ class FeedbackForm(forms.ModelForm):
             'avaliacao': 'Avaliação (1 a 5)',
             'comentario': 'Comentário'
         }
+
+    def __init__(self, *args, **kwargs):
+        super(FeedbackForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
 
 
 

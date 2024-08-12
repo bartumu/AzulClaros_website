@@ -1,0 +1,150 @@
+{% load static %}
+<html lang="pt-BR">
+
+    <head>
+
+        <meta charset="utf-8" />
+        <title>Basic Action Email | Amezia - Admin & Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="Themesbrand" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+       <!-- Bootstrap Css -->
+        <link href="{% static 'BackEnd/assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="{% static 'BackEnd/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <!-- App Css -->
+        <link href="{% static 'BackEnd/assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body data-topbar="dark">
+        
+        <!-- Begin page -->
+        <div id="layout-wrapper">
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table class="body-wrap"
+                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; margin: 0;">
+                                    <tr
+                                        style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                        <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;"
+                                            valign="top"></td>
+                                        <td class="container" width="600"
+                                            style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; display: block !important; max-width: 600px !important; clear: both !important; margin: 0 auto;"
+                                            valign="top">
+                                            <div class="content"
+                                                style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">
+                                                <table class="main" width="100%" cellpadding="0" cellspacing="0"
+                                                    itemprop="action" itemscope itemtype="http://schema.org/ConfirmAction"
+                                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; background-color: #fff; margin: 0; border: 3px solid #44a2d2;"
+                                                    bg-color="#fff">
+
+                                                    <tr
+                                                        style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                        <td class="content-wrap"
+                                                            style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 20px;"
+                                                            valign="top">
+                                                            <meta itemprop="name" content="Confirm Email"
+                                                                style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;" />
+                                                            <table width="100%" cellpadding="0" cellspacing="0"
+                                                                style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                                <tr>
+                                                                    <td><a href="#"><img src="{% static 'BackEnd/assets/images/logo-sm.png' %}"
+                                                                                alt=""
+                                                                                style="margin-left: auto; margin-right: auto; display:block; margin-bottom: 10px; height: 60px;"></a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr
+                                                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                                    <td class="content-block"
+                                                                        style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; color: #44a2d2; font-size: 24px; font-weight: 700; text-align: center; vertical-align: top; margin: 0; padding: 0 0 10px;"
+                                                                        valign="top">
+                                                                        Bem-Vindo a Azul Claros
+                                                                    </td>
+                                                                </tr>
+                                                                <tr
+                                                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                                    <td class="content-block"
+                                                                        style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; color: #888; font-size: 14px; vertical-align: top; margin: 0; padding: 10px 10px;"
+                                                                        valign="top">
+                                                                        Esse é um Comprovativo de sua Reserva de serviços.
+                                                                    </td>
+                                                                </tr>
+                                                                <tr
+                                                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                                    <td class="content-block"
+                                                                        style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 10px 10px;"
+                                                                        valign="top">
+                                                                        Saudações, Senhor(a) {{ Reserva.cliente.nome }}, 
+                                                                        Acabou de fazer uma reserva com o código {{ Reserva.codigo_reserva }}
+                                                                        feito em {{ Reserva.data_reserva }} com data de entrada na lavandaria
+                                                                        em  {{ Reserva.data_entrada }} que totaliza {{ Reserva.total }} kz
+                                                                        para os seguintes serviços:
+                                                                        <ul>
+                                                                            {% for SR in servicosReservados %}
+                                                                            <li>{{ SR.servico.nome }} Á {{ SR.servico.preco }}</li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr
+                                                                    style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
+                                                                    <td class="content-block"
+                                                                        style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; padding-top: 5px; vertical-align: top; margin: 0; text-align: right;"
+                                                                        valign="top">
+                                                                        &mdash; <b>Lavandaria </b> - Azul Claros
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                            <!-- end table -->
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <!-- end table -->
+
+                                            </div>
+                                        </td>
+                                        <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;"
+                                            valign="top"></td>
+                                    </tr>
+                                </table>
+                                <!-- table -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+                <!-- End Page-content -->
+
+            </div>
+            <!-- end main content-->
+
+        </div>
+        <!-- END layout-wrapper -->
+
+        <!-- Right bar overlay-->
+        <div class="rightbar-overlay"></div>
+
+        <!-- JAVASCRIPT -->
+        <script src="{% static 'BackEnd/assets/libs/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'BackEnd/assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'BackEnd/assets/libs/metismenu/metisMenu.min.js' %}"></script>
+        <script src="{% static 'BackEnd/assets/libs/simplebar/simplebar.min.js' %}"></script>
+        <script src="{% static 'BackEnd/assets/libs/node-waves/waves.min.js' %}"></script>
+
+        <script src="{% static 'BackEnd/assets/js/app.js' %}"></script>
+
+    </body>
+
+</html>
