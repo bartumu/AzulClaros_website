@@ -128,7 +128,7 @@ def atender_view(request,idReserva):
                     'Pagamento': Pagamentos.objects.get(reserva=reservas)
                 }
                 Thread(target=Enviar_fatura_email, args=(html,subject, context, cliente_email)).start()
-
+                messages.success(request, f'{ reservas.cliente.nome } atendido com sucesso e notificado por Email')
                 return redirect('reserva')
        else:
            return HttpResponse("Formulário invalido", status=400)
@@ -157,12 +157,14 @@ def levantar_view(request,idReserva):
             reservas.estado = 2
             reservas.funcionario = func
             reservas.save()
+            messages.success(request, f'{ reservas.cliente.nome } atendido com sucesso.')
+
        else:
             reservas.data_saida=data_Hoje
             reservas.estado = 2
             reservas.funcionario = func
             reservas.save()
-       
+            messages.success(request, f'{ reservas.cliente.nome } atendido com sucesso.')
             return redirect('levantamento')
     else:
         levantarF = FormAtender
@@ -210,6 +212,9 @@ def RegistarPerfil(request):
                     Func.img = img
                     Func.usuario = request.user
                     Func.save()
+
+                    messages.success(request, 'Perfil Criado Com Sucesso.')
+
                     return redirect('reserva')
                 
 
@@ -224,6 +229,9 @@ def RegistarPerfil(request):
     
     else:
         return redirect('login')
+
+def RegistarCliente(request):
+    return 'a'
 
 def Relatorio(request):
     today = date.today()

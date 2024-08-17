@@ -58,8 +58,12 @@
                           </div>
                           <div class="col-12">
                             {{ Form.avaliacao.label }}
-                              <div class="form-group">
-                                  {{ Form.avaliacao }}
+                              
+                              <div class="star-rating">
+                                {% for i in "54321" %}
+                                    <input type="radio" name="avaliacao" id="star{{ i }}" value="{{ i }}">
+                                    <label for="star{{ i }}">&#9733;</label>
+                                {% endfor %}
                               </div>
                           </div>
                       </div>

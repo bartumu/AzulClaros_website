@@ -197,7 +197,11 @@
 
       {% comment %} GErar Gráficos {% endcomment %}
       // Obtém os dados do contexto Django
-      
+      {% if messages %}
+    {% for message in messages %}
+      toastr.{{ message.tags }}("{{ message }}");
+    {% endfor %}
+    {% endif %}
     </script>
   </body>
 </html>

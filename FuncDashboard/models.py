@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import FileExtensionValidator
 from UserAutenticacao.models import Usuario
-from phonenumber_field.modelfields import PhoneNumberField
 import uuid
 
 # Create your views here.

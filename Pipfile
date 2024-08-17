@@ -8,14 +8,11 @@ django-jazzmin = "*"
 mysql-client = "*"
 mysqlclient = "*"
 pillow = "*"
-django-phonenumber-field = "*"
-django-phonenumbers = "*"
 environ = "*"
 django-environ = "*"
-pandas = "*"
-matplotlib = "*"
 seaborn = "*"
 xhtml2pdf = "*"
+django-rating = "*"
 
 [dev-packages]
 

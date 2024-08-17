@@ -15,6 +15,7 @@ urlpatterns = [
     path('func/levantar/<int:idReserva>',views.levantar_view,name="Levantar"),
     path('func/perfil',views.RegistarPerfil,name="perfil"),
     path('func/Regperfil',views.RegistarPerfil,name="Regperfil"),
+    path('func/Cliente',views.RegistarCliente,name="RegCliente"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

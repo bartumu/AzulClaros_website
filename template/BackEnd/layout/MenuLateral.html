@@ -18,12 +18,18 @@
               <!-- Calender -->
               <li class="menu-title">PÁGINA INICIAL</li>
                 <li>
+                <a href="{% url 'RegCliente' %}" class="waves-effect">
+                  <i class="mdi mdi-user"></i>
+                  <span>Clientes</span>
+                </a>
+                </li>
+                <li>
                 <a href="{% url 'reserva' %}" class="waves-effect">
                   <i class="mdi mdi-calendar"></i>
                   <span class="badge rounded-pill bg-danger float-end">9+</span>
                   <span>Reservas</span>
                 </a>
-              </li>
+                </li>
                 <li>
                 <a href="{% url 'levantamento' %}" class="waves-effect">
                   <i class="mdi mdi-calendar"></i>

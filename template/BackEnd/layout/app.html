@@ -187,7 +187,13 @@
         }
     </script>
     @endif {% endcomment %}
-
+    {% if messages %}
+      <script type="text/javascript">
+    {% for message in messages %}
+      toastr.{{ message.tags }}("{{ message }}");
+    {% endfor %}
+      </script>
+    {% endif %}
 </body>
 
 </html>

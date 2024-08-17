@@ -8,14 +8,15 @@ from FuncDashboard.models import *
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from threading import Thread
-# Create your views here.
+from django.contrib import messages
 from django.shortcuts import render
 
 # Create your views here.
 def index(request):
     sobre = Sobre.objects.get()
     context = {
-        "Sobre":sobre
+        "Sobre":sobre,
+        "Tem_Sobre":Existe_servico(),
     }
     return render(request,'Portifolio/index.html', context)
 
@@ -33,14 +34,17 @@ def contacto(request):
     if request.method == 'POST':  
         form = FeedbackForm(request.POST)  
         if form.is_valid():  
-            email = form.cleaned_data['email']  
-            cliente = Cliente.objects.get(email=email)  
-            
-            feedback = form.save(commit=False)  
-            feedback.cliente = cliente  
-            feedback.save() 
-            return redirect('home') 
-
+            try:
+                email = form.cleaned_data['email']  
+                cliente = Cliente.objects.get(email=email)  
+                
+                feedback = form.save(commit=False)  
+                feedback.cliente = cliente  
+                feedback.save() 
+                return redirect('home') 
+            except:
+                messages.warning(request, 'Faça no mínimo uma reserva para ser Apto a Dar FeedBack')
+                return redirect('home')
 
     form = FeedbackForm() 
 
@@ -138,6 +142,8 @@ def addReserva_view(request):
                         'Qtd':qtd
                     }
                     Thread(target=Enviar_fatura_email, args=(html,subject, context, cliente_email)).start()
+
+                    messages.success(request, 'Reserva realizada com sucesso! O comprovante foi enviado para o seu email.')
 
 
                     resera = request.session['reserva_id'] = reserva.id      

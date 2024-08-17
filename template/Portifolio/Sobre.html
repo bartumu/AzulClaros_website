@@ -11,13 +11,14 @@
             </div>
             <div class="col-lg-4 col-md-12">
                 <div class="about-caption mb-50">
+                    {% if Tem_Sobre %}
                     <!-- Section Tittle -->
                     <div class="section-tittle mb-25">
                         <h2>{{ Sobre.titulo }}</h2>
                     </div>
                     <p class="mb-20">
                         {{ Sobre.descricao }}</p>
-
+                    {% endif %}
                     <a href="{% url 'sobreNos' %}" class="btn">Sobre Nós</a>
                 </div>
             </div>

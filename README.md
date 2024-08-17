@@ -37,6 +37,11 @@ Aplicação Web "MAC Azul Claros" que permite:
   \*\* deve ser v.3 ou acima
 
 
+- [verifique a versão do MariaDB do MySQL]
+
+  \*\* deve ser v.10.6 ou acima
+
+
 3- Execute o seu servidor mysql e crie um novo esquema em seu SGBD com o nome "azulClarosDjango"
 
 4- Abra o projecto no VS Code

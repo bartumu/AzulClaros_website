@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'Portifolio',
     'FuncDashboard',
     'UserAutenticacao',
-    'phonenumbers',
 ]
 
 MIDDLEWARE = [
