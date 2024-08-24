@@ -35,9 +35,17 @@
     <script src="{% static 'BackEnd/assets/libs/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'BackEnd/assets/libs/metismenu/metisMenu.min.js' %}"></script>
     <script src="{% static 'BackEnd/assets/libs/simplebar/simplebar.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{% static 'BackEnd/assets/libs/node-waves/waves.min.js' %}"></script>
 
     <script src="{% static 'BackEnd/assets/js/app.js' %}"></script>
+    {% if messages %}
+      <script type="text/javascript">
+    {% for message in messages %}
+      toastr.{{ message.tags }}("{{ message }}");
+    {% endfor %}
+      </script>
+    {% endif %}
 
 </body>
 

@@ -35,7 +35,7 @@
             <script>
               setTimeout(() =>{
                   $(".alert").alert("close");
-              }, 3000)
+              }, 6000)
             </script>
 
             <form class="form-horizontal my-4" method="POST">
@@ -90,7 +90,7 @@
                 </div>
                 <!-- end col -->
                 <div class="col-sm-6 text-end">
-                  <a href="Auth/recuperar.html" class="text-muted font-size-13"
+                  <a href="{% url 'recuperarSenha' %}" class="text-muted font-size-13"
                     ><i class="mdi mdi-lock"></i> Esqueceu a Senha?</a
                   >
                 </div>

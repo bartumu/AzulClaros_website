@@ -25,21 +25,37 @@ Recuperar Conta {% endblock %} {% block Conteudo %}
 
             <form class="form-horizontal my-4" method="POST">
               {% csrf_token %}
-              <div class="mb-0">
-                <label class="form-label" for="username">Email</label>
+              <div class="mb-3">
+                <label class="form-label" for="userpassword">Senha</label>
                 <div class="input-group">
-                  <span class="input-group-text" id="basic-addon1"
-                    ><i class="far fa-envelope"></i
-                  ></span>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="email"
-                    id="username"
-                    placeholder="Endereço de Email"
-                    required
-                  />
+                    <span class="input-group-text" id="basic-addon3"><i
+                            class="fas fa-lock"></i></span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="password"
+                      id="username"
+                      placeholder="Nova Senha"
+                      required
+                    />
                 </div>
+              </div>
+
+              <div class="mb-3">
+                  <label class="form-label" for="userpassword">Confirmar Senha</label>
+                  <div class="input-group mb-3">
+                      <span class="input-group-text" id="basic-addon4"><i
+                              class="fas fa-key"></i></span>
+                      
+                      <input
+                      type="text"
+                      class="form-control"
+                      name="password_confirm"
+                      id="username"
+                      placeholder="Confirme a Senha"
+                      required
+                    />
+                  </div>
               </div>
 
               <div class="mb-0 row">
@@ -48,7 +64,7 @@ Recuperar Conta {% endblock %} {% block Conteudo %}
                     class="btn btn-primary w-100 waves-effect waves-light"
                     type="submit"
                   >
-                    Enviar <i class="fas fa-sign-in-alt ms-1"></i>
+                    Repor <i class="fas fa-sign-in-alt ms-1"></i>
                   </button>
                 </div>
               </div>

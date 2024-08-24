@@ -69,7 +69,9 @@ def listReserva_view(request):
                 'tem_reservas':tem_reservas,
                 'usuario':request.user,
                 'FormPagamento':formPagamento,
-                'Func': FuncObj
+                'Func': FuncObj,
+                'reservaPendente' : Reserva.objects.filter(estado=0).count(),
+                'reservaProc' : Reserva.objects.filter(estado=1).count(),
             }
 
             return render(request,'BackEnd/ListReservas.html', context)
@@ -83,8 +85,12 @@ def Levantamento_view(request):
             reservas = Reserva.objects.filter(estado=1)
             tem_reservas_Sair = Reserva.objects.filter(estado=1).exists()
             FuncObj = Funcionario.objects.get(usuario=request.user)
+            reservaPendente = Reserva.objects.filter(estado=0).count()
+            reservaProc = Reserva.objects.filter(estado=1).count()
 
             context = {
+                'reservaPendente':reservaPendente,
+                'reservaProc':reservaProc,
                 'Reservas':reservas,
                 'tem_reservas_Sair':tem_reservas_Sair,
                 'usuario':request.user,
@@ -131,13 +137,16 @@ def atender_view(request,idReserva):
                 messages.success(request, f'{ reservas.cliente.nome } atendido com sucesso e notificado por Email')
                 return redirect('reserva')
        else:
-           return HttpResponse("Formulário invalido", status=400)
+                messages.warning(request, 'Verifique a Data de Saida')
+                return redirect('reserva')
     else:
         Total = Calcular_Total(idReserva)
         atenderF = FormAtender()
         formPagamento = FormPagamento()
        
     context = {
+        'reservaPendente' : Reserva.objects.filter(estado=0).count(),
+        'reservaProc' : Reserva.objects.filter(estado=1).count(),
         'FormAtender': atenderF,
         'FormPagamento':formPagamento
     }

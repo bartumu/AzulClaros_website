@@ -26,14 +26,14 @@
                 <li>
                 <a href="{% url 'reserva' %}" class="waves-effect">
                   <i class="mdi mdi-calendar"></i>
-                  <span class="badge rounded-pill bg-danger float-end">9+</span>
+                  <span class="badge rounded-pill bg-danger float-end">{{ reservaPendente }}</span>
                   <span>Reservas</span>
                 </a>
                 </li>
                 <li>
                 <a href="{% url 'levantamento' %}" class="waves-effect">
                   <i class="mdi mdi-calendar"></i>
-                  <span class="badge rounded-pill bg-danger float-end">9+</span>
+                  <span class="badge rounded-pill bg-danger float-end">{{ reservaProc }}</span>
                   <span>Levantamento</span>
                 </a>
               </li>

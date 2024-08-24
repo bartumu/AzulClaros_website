@@ -3,6 +3,7 @@ from .models import Funcionario, Usuario
 from .models import *
 from django.core.exceptions import ValidationError
 import re
+from datetime import date
 
 class FormCadFuncionario(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
@@ -120,6 +121,16 @@ class FormAtender(forms.ModelForm):
     class Meta:
         model = Reserva
         fields = ['data_saida']
+
+    def clean(self):
+        cleaned_data = super().clean()
+        data_saida = cleaned_data.get('data_saida')
+
+        # Verifica se a data é anterior à data de hoje
+        if data_saida and data_saida < date.today():
+            self.add_error('data_saida', "A data de Saida não pode ser anterior à data de hoje.")
+
+        return cleaned_data
 
 class FormPagamento(forms.ModelForm):
     metodoPagamento = forms.ModelChoiceField(

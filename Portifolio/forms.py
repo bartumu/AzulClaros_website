@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from FuncDashboard.models import *
 from django.core.exceptions import ValidationError
 import re
+from datetime import date
 
 class FormRegistarCliente(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
@@ -31,7 +32,7 @@ class FormRegistarCliente(forms.ModelForm):
         
         # Verifica se o número está no formato correto
         if not re.match(r'^9\d{8}$', numero):
-            raise ValidationError('O numero deve começar com 9 e ter 9 dígitos no total.')
+            self.add_error('numero','O numero deve começar com 9 e ter 9 dígitos no total.')
 
         return numero
 
@@ -66,6 +67,16 @@ class FormFazerReserva(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FormFazerReserva, self).__init__(*args, **kwargs)
         self.fields['data_entrada'].label = 'Data de Entrada na Lavandaria'
+
+    def clean(self):
+        cleaned_data = super().clean()
+        data_entrada = cleaned_data.get('data_entrada')
+
+        # Verifica se a data é anterior à data de hoje
+        if data_entrada and data_entrada < date.today():
+            self.add_error('data_entrada', "A data de Entrada não pode ser anterior à data de hoje.")
+
+        return cleaned_data
         
 
 class FormReservaServico(forms.ModelForm):
