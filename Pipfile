@@ -13,6 +13,8 @@ django-environ = "*"
 seaborn = "*"
 xhtml2pdf = "*"
 django-rating = "*"
+locust = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 

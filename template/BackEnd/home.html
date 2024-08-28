@@ -32,18 +32,18 @@
                 <div class="col-xl-8">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title mb-3">Reservas Por Estado</h5>
-                            
-                            <div id="chart" class="morris-charts project-budget-chart" dir="ltr">
+                            <div class="card-body">            
+                                <h5 class="card-title">Reservas por Estado</h5>
+                                <p class="card-title-desc d-inline-block text-truncate w-100">Gráfico de barraas que apresenta as reservas atendidas, em processamento e Pendentes
+                                    mensais para poder entender o crescimento do negócio.
+                                </p>            
+                                <canvas id="bar" height="300"></canvas>            
+                            </div>
+                            {% comment %} <div id="chart" class="morris-charts project-budget-chart" dir="ltr">
                                 <!-- <center><img src="{% static reservas_por_estado %}" height="350"></center> -->
                             </div>
-                            <ul class="list-unstyled text-center text-muted mb-0 mt-2">
-                                <!-- <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 align-middle text-primary me-2"></i>Total Budget
-                                </li>
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 align-middle text-success me-2"></i>Amount Used
-                                </li>
-                                <li class="list-inline-item font-size-13"><i class="mdi mdi-album font-size-16 align-middle text-secondary me-2"></i>Target Amount
-                                </li> -->
+                            <ul class="list-unstyled text-center text-muted mb-0 mt-2"> {% endcomment %}
+                                
                             </ul>
                         </div>
                     </div>

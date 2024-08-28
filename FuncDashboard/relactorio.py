@@ -36,8 +36,10 @@ def reservas_por_estadoJS(request):
         reservas.filter(estado=1, funcionario_id=FuncObj.id).count(),  # Em Processamento
         reservas.filter(estado=2, funcionario_id=FuncObj.id).count()   # Atendidos
     ]
-
-    return counts
+    if counts:
+        return counts
+    else:
+        return 0
 
 def reservas_por_estado():
     today = date.today()

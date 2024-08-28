@@ -1,6 +1,51 @@
 from django.dispatch import receiver
 from .models import Sobre, Servico, MetodoPagamento
 from django.db.models.signals import post_migrate
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils.timezone import now
+from .models import Reserva, ReservaEstatistica
+
+@receiver(post_save, sender=Reserva)
+def atualizar_estatisticas(sender, instance, created, **kwargs):
+    # Obtém o mês e o ano da reserva
+    mes = instance.data_reserva.replace(day=1)
+    novo_estado = instance.estado
+
+    if created:
+        # Caso a reserva tenha sido criada, incrementa a quantidade do estado correspondente
+        estatistica, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado)
+        estatistica.quantidade += 1
+        estatistica.save()
+    else:
+        # Caso a reserva tenha sido editada, verifica se o estado foi alterado
+        reserva_antiga = Reserva.objects.get(pk=instance.pk)
+        reserva_estati = ReservaEstatistica.objects.all()
+
+        for res in reserva_estati:
+            if res.estado == 1:
+                if res.mes == mes:
+                    reserva_estati.quantidade += 1
+                    reserva_estati.save()
+                    break
+            elif novo_estado == 1:
+                estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado)
+                estatistica_nova.quantidade += 1
+                estatistica_nova.save()
+                break
+
+            if res.estado == 2: 
+                if res.mes == mes:
+                    reserva_estati.quantidade += 1
+                    reserva_estati.save()
+                    break
+            elif novo_estado == 2:
+                estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado)
+                estatistica_nova.quantidade += 1
+                estatistica_nova.save()
+                break
+
+
 
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):

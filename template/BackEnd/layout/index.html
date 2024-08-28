@@ -4,32 +4,88 @@
     <meta charset="utf-8" />
     <title>Dashboard | Azul Claros</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta
+      content="Premium Multipurpose Admin & Dashboard Template"
+      name="description"
+    />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{% static 'BackEnd/assets/images/Laundry_Icon_Blue.ico' %}" />
+    <link
+      rel="shortcut icon"
+      href="{% static 'BackEnd/assets/images/Laundry_Icon_Blue.ico' %}"
+    />
 
-    <link href="{% static 'BackEnd/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.css' %}" rel="stylesheet" type="text/css" />
+    <link
+      href="{% static 'BackEnd/assets/libs/metrojs/release/MetroJs.Full/MetroJs.min.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
 
     <!-- Bootstrap Css -->
-    <link href="{% static 'BackEnd/assets/css/bootstrap.min.css' %}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <link
+      href="{% static 'BackEnd/assets/css/bootstrap.min.css' %}"
+      id="bootstrap-style"
+      rel="stylesheet"
+      type="text/css"
+    />
     <!-- Icons Css -->
-    <link href="{% static 'BackEnd/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+    <link
+      href="{% static 'BackEnd/assets/css/icons.min.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
     <!-- App Css -->
-    <link href="{% static 'BackEnd/assets/css/app.min.css' %}" id="app-style" rel="stylesheet" type="text/css" />
+    <link
+      href="{% static 'BackEnd/assets/css/app.min.css' %}"
+      id="app-style"
+      rel="stylesheet"
+      type="text/css"
+    />
 
     <!-- Plugins css -->
-    <link href="{% static 'BackEnd/assets/libs/dropzone/min/dropzone.min.css' %}" rel="stylesheet" type="text/css" />
-    <link href="{% static 'BackEnd/assets/libs/dropify/css/dropify.min.css' %}" rel="stylesheet" type="text/css" />
+    <link
+      href="{% static 'BackEnd/assets/libs/dropzone/min/dropzone.min.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="{% static 'BackEnd/assets/libs/dropify/css/dropify.min.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
 
     <!-- Sweet Alert -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="{% static 'BackEnd/assets/libs/sweetalert2/sweetalert2.min.css' %}" rel="stylesheet" type="text/css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+      integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="{% static 'BackEnd/assets/libs/sweetalert2/sweetalert2.min.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
 
-    <link href="{% static 'BackEnd/assets/libs/select2/css/select2.min.css' %}" rel="stylesheet" type="text/css" />
-    <link href="{% static 'BackEnd/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'BackEnd/assets/libs/spectrum-colorpicker2/spectrum.min.css' %}" rel="stylesheet" type="text/css" />
-    <link href="{% static 'BackEnd/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}" rel="stylesheet" />
+    <link
+      href="{% static 'BackEnd/assets/libs/select2/css/select2.min.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="{% static 'BackEnd/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css' %}"
+      rel="stylesheet"
+    />
+    <link
+      href="{% static 'BackEnd/assets/libs/spectrum-colorpicker2/spectrum.min.css' %}"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="{% static 'BackEnd/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css' %}"
+      rel="stylesheet"
+    />
   </head>
 
   <body data-topbar="dark">
@@ -45,9 +101,7 @@
       <!-- ============================================================== -->
       <!-- Start right Content here -->
       <!-- ============================================================== -->
-      {% block Conteudo %}
-
-      {% endblock %}
+      {% block Conteudo %} {% endblock %}
       <!-- end main content -->
     </div>
     <!-- END layout-wrapper -->
@@ -56,7 +110,9 @@
     <div class="right-bar">
       <div data-simplebar class="h-100">
         <div class="rightbar-title px-3 py-4">
-          <a href="javascript:void(0);" class="right-bar-toggle float-end"><i class="mdi mdi-close noti-icon"></i></a>
+          <a href="javascript:void(0);" class="right-bar-toggle float-end"
+            ><i class="mdi mdi-close noti-icon"></i
+          ></a>
           <h5 class="m-0">Configuração</h5>
         </div>
 
@@ -66,19 +122,42 @@
 
         <div class="p-4">
           <div class="mb-2">
-            <img src="{% static 'BackEnd/assets/images/layouts/layout-1.jpg' %}" class="img-fluid img-thumbnail" alt="" />
+            <img
+              src="{% static 'BackEnd/assets/images/layouts/layout-1.jpg' %}"
+              class="img-fluid img-thumbnail"
+              alt=""
+            />
           </div>
           <div class="form-check form-switch mb-3">
-            <input type="checkbox" class="form-check-input theme-choice" id="light-mode-switch" checked />
-            <label class="custom-control-label" for="light-mode-switch">Modo Claro</label>
+            <input
+              type="checkbox"
+              class="form-check-input theme-choice"
+              id="light-mode-switch"
+              checked
+            />
+            <label class="custom-control-label" for="light-mode-switch"
+              >Modo Claro</label
+            >
           </div>
 
           <div class="mb-2">
-            <img src="{% static 'BackEnd/assets/images/layouts/layout-2.jpg' %}" class="img-fluid img-thumbnail" alt="" />
+            <img
+              src="{% static 'BackEnd/assets/images/layouts/layout-2.jpg' %}"
+              class="img-fluid img-thumbnail"
+              alt=""
+            />
           </div>
           <div class="form-check form-switch mb-3">
-            <input type="checkbox" class="form-check-input theme-choice" id="dark-mode-switch" data-bsStyle="{% static 'BackEnd/assets/css/bootstrap-dark.min.css' %}" data-appStyle="{% static 'BackEnd/assets/css/app-dark.min.css' %}" />
-            <label class="custom-control-label" for="dark-mode-switch">Modo Escuro</label>
+            <input
+              type="checkbox"
+              class="form-check-input theme-choice"
+              id="dark-mode-switch"
+              data-bsStyle="{% static 'BackEnd/assets/css/bootstrap-dark.min.css' %}"
+              data-appStyle="{% static 'BackEnd/assets/css/app-dark.min.css' %}"
+            />
+            <label class="custom-control-label" for="dark-mode-switch"
+              >Modo Escuro</label
+            >
           </div>
         </div>
       </div>
@@ -118,17 +197,11 @@
 
     <!-- Sweet alert init js -->
     <script src="{% static 'BackEnd/assets/js/pages/sweet-alerts.init.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{% static 'BackEnd/assets/libs/select2/js/select2.min.js' %}"></script>
     <script src="{% static 'BackEnd/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js' %}"></script>
     <script src="{% static 'BackEnd/assets/libs/spectrum-colorpicker2/spectrum.min.js' %}"></script>
     <script src="{% static 'BackEnd/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js' %}"></script>
     <script src="{% static 'BackEnd/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js' %}"></script>
-    <!-- google maps api -->
-    <script src="https://maps.google.com/maps/api/js?key=AIzaSyCtSAR45TFgZjOs4nBFFZnII-6mMHLfSYI"></script>
-
-    <!-- Gmaps file -->
-    <script src="{% static 'BackEnd/assets/libs/gmaps/gmaps.min.js' %}"></script>
 
     <script src="{% static 'BackEnd/assets/libs/dropify/js/dropify.min.js' %}"></script>
 
@@ -137,60 +210,69 @@
 
     <!-- Chart JS -->
     <script src="{% static 'BackEnd/assets/libs/chart.js/Chart.bundle.min.js' %}"></script>
-
-    <script src="{% static 'BackEnd/assets/js/pages/profile.init.js' %}"></script>
     <script src="{% static 'BackEnd/assets/js/pages/allModals.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
-    {% if messages %}
-      <script type="text/javascript">
-    {% for message in messages %}
-      toastr.{{ message.tags }}("{{ message }}");
-    {% endfor %}
-      </script>
-    {% endif %}
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"
+      integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
 
     <script>
-      var counts = {{ counts|safe }};
+            window.chartData = {{ ResChart | safe }};
+            console.log(window.chartData);
 
-        var options = {
-          series: counts,
-          chart: {
-            type: 'polarArea',
-          },
-          labels: ['Pendente', 'Em Processamento', 'Atendidos'],
-          stroke: {
-            colors: ['#fff']
-          },
-          fill: {
-            opacity: 0.8
-          },
-          responsive: [{
-            breakpoint: 480,
-            options: {
-              chart: {
-                width: 100
-              },
-              legend: {
-                position: 'bottom'
-              }
+        (function (l) {
+        "use strict";
+        function e() {}
+        (e.prototype.respChart = function (e, r, a, o) {
+          (Chart.defaults.global.defaultFontColor = "#86889a"),
+            (Chart.defaults.scale.gridLines.color = "rgba(108, 120, 151, 0.1)");
+          var t = e.get(0).getContext("2d"),
+            n = l(e).parent();
+          function s() {
+            e.attr("width", l(n).width());
+            switch (r) {
+              case "Bar":
+                new Chart(t, { type: "bar", data: a, options: o });
+                break;
             }
-          }]
-        };
-
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-
-
-      {% comment %} GErar Gráficos {% endcomment %}
-      // Obtém os dados do contexto Django
-      {% if messages %}
-    {% for message in messages %}
-      toastr.{{ message.tags }}("{{ message }}");
-    {% endfor %}
-    {% endif %}
+          }
+          l(window).resize(s), s();
+        }),
+          (e.prototype.init = function () {
+            var chart = window.chartData;
+            this.respChart(
+              l("#bar"),
+              "Bar",
+              chart,
+              {
+                responsive: !0,
+                scales: {
+                  xAxes: [
+                    { barPercentage: 0.8, categoryPercentage: 0.4, display: !0 },
+                  ],
+                },
+              }
+            );
+          }),
+          (l.ChartJs = new e()),
+          (l.ChartJs.Constructor = e);
+      })(window.jQuery),
+        (function () {
+          "use strict";
+          window.jQuery.ChartJs.init();
+        })();
     </script>
+
+    {% if messages %}
+    <script type="text/javascript">
+      {% for message in messages %}
+        toastr.{{ message.tags }}("{{ message }}");
+      {% endfor %}
+    </script>
+    {% endif %}
   </body>
 </html>

@@ -174,3 +174,18 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f"Feedback de {self.cliente}"
+    
+
+class ReservaEstatistica(models.Model):
+    mes = models.DateField()
+    estado = models.IntegerField()
+    quantidade = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('mes', 'estado')
+        db_table = 'reserva_estatistica'
+        verbose_name = 'Estatística de Reserva'
+        verbose_name_plural = 'Estatísticas de Reservas'
+
+    def __str__(self):
+        return f"{self.mes.strftime('%Y-%m')} - Estado: {self.estado} - Quantidade: {self.quantidade}"

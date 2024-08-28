@@ -10,7 +10,7 @@ from FuncDashboard.relactorio import *
 from datetime import date, timedelta
 from Portifolio.views import Enviar_fatura_email
 from threading import Thread
-from django.db.models.functions import TruncMonth
+from django.utils.safestring import mark_safe
 import json
 
 # Create your views here.
@@ -23,6 +23,7 @@ def FuncDashboard(request):
             reservaProc = Reserva.objects.filter(estado=1).count()
             tem_reservas = Reserva.objects.filter(estado=2).exists()
             clientes = Cliente.objects.count()
+            ChartRes = mark_safe(json.dumps(preparar_dados_grafico()))
             percentagemCli = 0
             percentagemReserva = 0
             percentagemProc = 0
@@ -47,7 +48,7 @@ def FuncDashboard(request):
                 'reservaProc': reservaProc,
                 'usuario':request.user,
                 'reservas_por_estado': 'Relactorios/reservas_por_estado.png',
-                'counts': reservas_por_estadoJS(request),
+                'ResChart': ChartRes,
                 'Func': FuncObj
             }
 
@@ -338,3 +339,65 @@ def Relatorio(request):
     )
     
     return render(request, 'Admin/Relactorios.html', context)
+
+
+def obter_dados_estatisticas_reservas():
+    estatisticas = ReservaEstatistica.objects.all().order_by('mes', 'estado')
+
+    dados_por_mes = {}
+
+    for estatistica in estatisticas:
+        mes = estatistica.mes.strftime('%Y-%m')
+        estado = estatistica.estado
+        quantidade = estatistica.quantidade
+
+        if mes not in dados_por_mes:
+            dados_por_mes[mes] = {0: 0, 1: 0, 2: 0}
+
+        dados_por_mes[mes][estado] = quantidade
+
+    return dados_por_mes
+
+def preparar_dados_grafico():
+    estatisticas = ReservaEstatistica.objects.all().order_by('mes', 'estado')
+
+    labels = []
+    dados_pendentes = []
+    dados_processamento = []
+    dados_atendido = []
+
+    for estatistica in estatisticas:
+        mes = estatistica.mes.strftime('%Y-%m')
+        if mes not in labels:
+            labels.append(mes)
+
+        if estatistica.estado == 0:
+            dados_pendentes.append(estatistica.quantidade)
+        elif estatistica.estado == 1:
+            dados_processamento.append(estatistica.quantidade)
+        elif estatistica.estado == 2:
+            dados_atendido.append(estatistica.quantidade)
+
+    return {
+        'labels': labels,
+        'datasets': [
+            {
+                'label': 'Pendentes',
+                'backgroundColor': 'rgba(255, 99, 132, 0.4)',
+                'borderColor': 'rgba(255, 99, 132, 1)',
+                'data': dados_pendentes,
+            },
+            {
+                'label': 'Em Processamento',
+                'backgroundColor': 'rgba(54, 162, 235, 0.4)',
+                'borderColor': 'rgba(54, 162, 235, 1)',
+                'data': dados_processamento,
+            },
+            {
+                'label': 'Atendido',
+                'backgroundColor': 'rgba(75, 192, 192, 0.4)',
+                'borderColor': 'rgba(75, 192, 192, 1)',
+                'data': dados_atendido,
+            }
+        ]
+    }
