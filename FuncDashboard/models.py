@@ -180,6 +180,7 @@ class ReservaEstatistica(models.Model):
     mes = models.DateField()
     estado = models.IntegerField()
     quantidade = models.IntegerField(default=0)
+    funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Funcionario')
 
     class Meta:
         unique_together = ('mes', 'estado')

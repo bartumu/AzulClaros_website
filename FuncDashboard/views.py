@@ -23,7 +23,7 @@ def FuncDashboard(request):
             reservaProc = Reserva.objects.filter(estado=1).count()
             tem_reservas = Reserva.objects.filter(estado=2).exists()
             clientes = Cliente.objects.count()
-            ChartRes = mark_safe(json.dumps(preparar_dados_grafico()))
+            ChartRes = mark_safe(json.dumps(preparar_dados_grafico(request)))
             percentagemCli = 0
             percentagemReserva = 0
             percentagemProc = 0
@@ -358,25 +358,33 @@ def obter_dados_estatisticas_reservas():
 
     return dados_por_mes
 
-def preparar_dados_grafico():
-    estatisticas = ReservaEstatistica.objects.all().order_by('mes', 'estado')
+def preparar_dados_grafico(request):
+    func = Funcionario.objects.get(usuario=request.user)
+    estatisticasPendente = ReservaEstatistica.objects.all().order_by('mes', 'estado')
 
     labels = []
     dados_pendentes = []
     dados_processamento = []
     dados_atendido = []
 
-    for estatistica in estatisticas:
+    for estatistica in estatisticasPendente:
         mes = estatistica.mes.strftime('%Y-%m')
         if mes not in labels:
             labels.append(mes)
-
         if estatistica.estado == 0:
             dados_pendentes.append(estatistica.quantidade)
-        elif estatistica.estado == 1:
-            dados_processamento.append(estatistica.quantidade)
-        elif estatistica.estado == 2:
-            dados_atendido.append(estatistica.quantidade)
+
+    if ReservaEstatistica.objects.filter(funcionario=func.id).exists():
+        estatisticas = ReservaEstatistica.objects.filter(funcionario=func.id).order_by('mes', 'estado')
+        for estatistica in estatisticas:
+            
+
+            if estatistica.estado == 1:
+                dados_processamento.append(estatistica.quantidade)
+            elif estatistica.estado == 2:
+                dados_atendido.append(estatistica.quantidade)
+        
+    
 
     return {
         'labels': labels,

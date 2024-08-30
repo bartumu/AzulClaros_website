@@ -2,10 +2,11 @@ from django.shortcuts import redirect, render
 from UserAutenticacao.forms import FormRegistarUser
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from django.conf import settings
+from django.urls import reverse
 from .models import Usuario
 from Portifolio.views import Enviar_fatura_email
 from threading import Thread
+
 # Create your views here.
 
 #Usuario = settings.AUTH_USER_MODEL
@@ -29,7 +30,12 @@ def login_view(request):
         if usuario is not None:
             login(request, usuario)
             messages.success(request, f"Bem-vindo {usuario.username}!")
-            return redirect('FuncDashBoard')
+
+            if usuario.is_superuser:
+                return redirect(reverse('admin:index'))  # Redireciona para o dashboard do admin jazzmin
+            else:
+                return redirect('FuncDashBoard')
+            
         else:
             messages.warning(request, "Senha incorreta ou conta não existe.")
             return redirect('login')

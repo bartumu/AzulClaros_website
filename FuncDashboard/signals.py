@@ -11,6 +11,7 @@ def atualizar_estatisticas(sender, instance, created, **kwargs):
     # Obtém o mês e o ano da reserva
     mes = instance.data_reserva.replace(day=1)
     novo_estado = instance.estado
+    func = instance.funcionario
 
     if created:
         # Caso a reserva tenha sido criada, incrementa a quantidade do estado correspondente
@@ -29,7 +30,7 @@ def atualizar_estatisticas(sender, instance, created, **kwargs):
                     reserva_estati.save()
                     break
             elif novo_estado == 1:
-                estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado)
+                estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
                 estatistica_nova.quantidade += 1
                 estatistica_nova.save()
                 break
@@ -40,7 +41,7 @@ def atualizar_estatisticas(sender, instance, created, **kwargs):
                     reserva_estati.save()
                     break
             elif novo_estado == 2:
-                estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado)
+                estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
                 estatistica_nova.quantidade += 1
                 estatistica_nova.save()
                 break

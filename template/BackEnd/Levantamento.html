@@ -12,8 +12,10 @@
           <div class="row">
             <div class="col-xl-12">
               <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-4">Todas as Reserevas Por Levantar</h5>
+
+                <div class="card-body table-responsive">
+                  <h5 class="card-title">AS RESERVAS POR LEVANTAR</h5>
+    
                   {% if FormAtender.errors %}
                     <div class="alert alert-danger">
                       <strong>{{ FormAtender.errors }}</strong>
@@ -24,32 +26,103 @@
                       <strong>{{ FormPagamento.errors }}</strong>
                     </div>
                   {% endif %}
-                  <div class="row">
-                    <div class="col-sm-12">
-                      <div class="table-responsive">
-                        {% if tem_reservas_Sair %}
-                          <table id="tabela" class="table table-hover table-centered table-nowrap mb-0">
+    
+                  <div class="table-responsive">
+                    <div
+                      id="datatable2_wrapper"
+                      class="dataTables_wrapper dt-bootstrap4 no-footer"
+                    >
+                      </div>
+                      <div class="row">
+                        <div class="col-sm-12">
+                          {% if tem_reservas_Sair %}
+                          <table
+                            id="datatable2"
+                            class="table dataTable no-footer"
+                            aria-describedby="datatable2_info"
+                          >
                             <thead>
-                              <tr>
-                                <th>Cod Reserva</th>
-                                <th>Nome</th>
-                                <th>Data da Marcação</th>
-                                <th>Data de Saida</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th>Progress</th>
+                              <tr class="">
+                                <th
+                                  class="sorting"
+                                  tabindex="0"
+                                  aria-controls="datatable2"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Cod Reserva: activate to sort column ascending"
+                                  style="width: 120.5px"
+                                >
+                                Cod Reserva
+                                </th>
+                                <th
+                                  class="sorting"
+                                  tabindex="0"
+                                  aria-controls="datatable2"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Nome: activate to sort column ascending"
+                                  style="width: 120.891px"
+                                >
+                                Nome
+                                </th>
+                                <th
+                                  class="sorting"
+                                  tabindex="0"
+                                  aria-controls="datatable2"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Data de Saida: activate to sort column ascending"
+                                  style="width: 120.891px"
+                                >
+                                Data de Saida
+                                </th>
+                                <th
+                                  class="sorting"
+                                  tabindex="0"
+                                  aria-controls="datatable2"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Data de Entrada: activate to sort column ascending"
+                                  style="width: 120.891px"
+                                >
+                                Total
+                                </th>
+                                <th
+                                  class="sorting"
+                                  tabindex="0"
+                                  aria-controls="datatable2"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Total: activate to sort column ascending"
+                                  style="width: 106.297px"
+                                >
+                                Estado
+                                </th>
+                                <th
+                                  class="sorting sorting_asc"
+                                  tabindex="0"
+                                  aria-controls="datatable2"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="accao: activate to sort column descending"
+                                  style="width: 96.7031px"
+                                  aria-sort="ascending"
+                                >
+                                Acção
+                                </th>
                               </tr>
                             </thead>
+    
                             <tbody>
-                              {% for Reserva in Reservas %}
-                                <tr>
-                                  <td>{{ Reserva.codigo_reserva }}</td>
-                                  <td>{{ Reserva.cliente.nome }}</td>
-                                  <td>{{ Reserva.data_reserva }}</td>
-                                  <td>{{ Reserva.data_saida }}</td>
-                                  <td>{{ Reserva.total }} kz</td>
-                                  {% if Reserva.estado == 1 %}
-                                    <td>
+                                    
+                            {% for Reserva in Reservas %}
+                              <tr class="odd">
+                                <td class="">{{ Reserva.codigo_reserva }}</td>
+                                <td class="">{{ Reserva.cliente.nome }}</td>
+                                <td>{{ Reserva.data_saida }}</td>
+                                <td>{{ Reserva.total }} kz</td>
+                                {% if Reserva.estado == 1 %}
+                                    <td class="sorting_1">
                                       <span class="badge bg-warning">Por Levantar</span>
                                     </td>
                                   {% elif Reserva.estado == 2 %}
@@ -64,17 +137,18 @@
                                     data-data_saida="{{ Reserva.data_saida }}" data-total="{{ Reserva.total }}" 
                                     data-estado="{{ Reserva.estado }}">Levantar</a>
                                   </td>
-                                </tr>
-                              {% endfor %}
+                              </tr>
+                            {% endfor %}
+                              
                             </tbody>
                           </table>
                         {% else %}
                           <h1>Não tem Roupas por Se levantar</h1>
                         {% endif %}
+                        </div>
                       </div>
-                      <!-- end table-responsive -->
+                      
                     </div>
-                  </div>
                 </div>
               </div>
             </div>

@@ -1,179 +1,268 @@
-{% extends 'BackEnd/layout/index.html' %}
-
-{% load static %}
-
-{% block Conteudo %}
+{% extends 'BackEnd/layout/index.html' %} {% load static %} {% block Conteudo %}
 {% comment %} TABELA PARA AS RESERVAS PENDENTES {% endcomment %}
-  <div class="main-content">
-    <div class="page-content">
-      <div class="container-fluid">
-        <!-- start page title -->
-        <div class="row">
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title mb-4">Todas as Reserevas</h5>
-                  {% if FormAtender.errors %}
-                    <div class="alert alert-danger">
-                      <strong>{{ FormAtender.errors }}</strong>
-                    </div>
-                  {% endif %}
-                  {% if FormPagamento.errors %}
-                    <div class="alert alert-danger">
-                      <strong>{{ FormPagamento.errors }}</strong>
-                    </div>
-                  {% endif %}
+<div class="main-content">
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body table-responsive">
+              <h5 class="card-title">AS RESERVAS PENDENTES</h5>
+              
+
+              {% if FormAtender.errors %}
+              <div class="alert alert-danger">
+                <strong>{{ FormAtender.errors }}</strong>
+              </div>
+              {% endif %} {% if FormPagamento.errors %}
+              <div class="alert alert-danger">
+                <strong>{{ FormPagamento.errors }}</strong>
+              </div>
+              {% endif %}
+
+              <div class="table-responsive">
+                <div
+                  id="datatable2_wrapper"
+                  class="dataTables_wrapper dt-bootstrap4 no-footer"
+                >
+                  </div>
                   <div class="row">
                     <div class="col-sm-12">
-                      <div class="table-responsive">
-                        {% if tem_reservas %}
-                          <table id="tabela" class="table table-hover table-centered table-nowrap mb-0">
-                            <thead>
-                              <tr>
-                                <th>Cod Reserva</th>
-                                <th>Nome</th>
-                                <th>Data da Marcação</th>
-                                <th>Data de Entrada</th>
-                                <th>Total</th>
-                                <th>Status</th>
-                                <th>Progress</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {% for Reserva in Reservas %}
-                                <tr>
-                                  <td>{{ Reserva.codigo_reserva }}</td>
-                                  <td>{{ Reserva.cliente.nome }}</td>
-                                  <td>{{ Reserva.data_reserva }}</td>
-                                  <td>{{ Reserva.data_entrada }}</td>
-                                  <td>{{ Reserva.total }} kz</td>
-                                  {% if Reserva.estado %}
-                                    <td>
-                                      <span class="badge bg-primary">Pago</span>
-                                    </td>
-                                  {% else %}
-                                    <td>
-                                      <span class="badge bg-danger">Pendente</span>
-                                    </td>
-                                  {% endif %}
-                                  <td>
-                                    <a href="{% url 'atender' idReserva=Reserva.id %}" id="AtenderButton" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#atenderCliModal" data-codigo="{{ Reserva.codigo_reserva }}" data-nome="{{ Reserva.cliente.nome }}" data-data_reserva="{{ Reserva.data_reserva }}" data-data_entrada="{{ Reserva.data_entrada }}" data-total="{{ Reserva.total }}" data-estado="{{ Reserva.estado }}">Atender</a>
-                                  </td>
-                                </tr>
-                              {% endfor %}
-                            </tbody>
-                          </table>
-                        {% else %}
-                          <h1>Não tem marcações por enquanto</h1>
-                        {% endif %}
-                      </div>
-                      <!-- end table-responsive -->
+                      {% if tem_reservas %}
+                      <table
+                        id="datatable2"
+                        class="table dataTable no-footer"
+                        aria-describedby="datatable2_info"
+                      >
+                        <thead>
+                          <tr class="">
+                            <th
+                              class="sorting"
+                              tabindex="0"
+                              aria-controls="datatable2"
+                              rowspan="1"
+                              colspan="1"
+                              aria-label="Cod Reserva: activate to sort column ascending"
+                              style="width: 120.5px"
+                            >
+                            Cod Reserva
+                            </th>
+                            <th
+                              class="sorting"
+                              tabindex="0"
+                              aria-controls="datatable2"
+                              rowspan="1"
+                              colspan="1"
+                              aria-label="Nome: activate to sort column ascending"
+                              style="width: 120.891px"
+                            >
+                            Nome
+                            </th>
+                            <th
+                              class="sorting"
+                              tabindex="0"
+                              aria-controls="datatable2"
+                              rowspan="1"
+                              colspan="1"
+                              aria-label="Data da Marcação: activate to sort column ascending"
+                              style="width: 120.891px"
+                            >
+                            Data da Marcação
+                            </th>
+                            <th
+                              class="sorting"
+                              tabindex="0"
+                              aria-controls="datatable2"
+                              rowspan="1"
+                              colspan="1"
+                              aria-label="Data de Entrada: activate to sort column ascending"
+                              style="width: 120.891px"
+                            >
+                            Data de Entrada
+                            </th>
+                            <th
+                              class="sorting"
+                              tabindex="0"
+                              aria-controls="datatable2"
+                              rowspan="1"
+                              colspan="1"
+                              aria-label="Total: activate to sort column ascending"
+                              style="width: 106.297px"
+                            >
+                            Estado
+                            </th>
+                            <th
+                              class="sorting sorting_asc"
+                              tabindex="0"
+                              aria-controls="datatable2"
+                              rowspan="1"
+                              colspan="1"
+                              aria-label="accao: activate to sort column descending"
+                              style="width: 96.7031px"
+                              aria-sort="ascending"
+                            >
+                            Acção
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                                
+                        {% for Reserva in Reservas %}
+                          <tr class="odd">
+                            <td class="">{{ Reserva.codigo_reserva }}</td>
+                            <td class="">{{ Reserva.cliente.nome }}</td>
+                            <td>{{ Reserva.data_reserva }}</td>
+                            <td>{{ Reserva.data_entrada }}</td>
+                            {% if Reserva.estado %}
+                            <td class="sorting_1">
+                              <span class="badge bg-primary">Pago</span>
+                            </td>
+                            {% else %}
+                            <td class="sorting_1">
+                              <span class="badge bg-danger">Pendente</span>
+                            </td>
+                            {% endif %}
+                            <td><a
+                              href="{% url 'atender' idReserva=Reserva.id %}"
+                              id="AtenderButton"
+                              class="btn btn-light"
+                              data-bs-toggle="modal"
+                              data-bs-target="#atenderCliModal"
+                              data-codigo="{{ Reserva.codigo_reserva }}"
+                              data-nome="{{ Reserva.cliente.nome }}"
+                              data-data_reserva="{{ Reserva.data_reserva }}"
+                              data-data_entrada="{{ Reserva.data_entrada }}"
+                              data-total="{{ Reserva.total }}"
+                              data-estado="{{ Reserva.estado }}"
+                              >Atender</a
+                            ></td>
+                          </tr>
+                        {% endfor %}
+                          
+                        </tbody>
+                      </table>
+                      {% else %}
+                      <h1>Não tem marcações por enquanto</h1>
+                      {% endif %}
                     </div>
                   </div>
+                  
                 </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--end row-->
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="atenderCliModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title align-self-center" id="atenderCliModal1">
+          Atender Cliente
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form id="FormAtender" action="" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="field-1" class="form-label">Cod Reserva</label>
+
+                <p id="codigo_reserva">Nnnsnsnsn</p>
+              </div>
+              <div class="mb-3">
+                <label for="field-1" class="form-label">Nome do Cli</label>
+                <p id="cliente_nome">Nnnsnsnsn</p>
+              </div>
+
+              <div class="mb-3">
+                <label for="field-2" class="form-label">Data da Reserva</label>
+                <p id="data_reserva">sdsdsd</p>
               </div>
             </div>
             <!-- end col -->
+
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="field-2" class="form-label">Data de Entrada</label>
+                <p id="data_entrada">sdsdsd</p>
+              </div>
+              <div class="mb-3">
+                <label for="field-1" class="form-label">Total</label>
+                <p id="total">Nnnsnsnsn</p>
+              </div>
+
+              <div class="mb-3">
+                <label for="field-1" class="form-label">Data de Saida</label>
+
+                <input
+                  type="date"
+                  required
+                  class="form-control"
+                  name="data_saida"
+                />
+              </div>
+            </div>
+
+            <!-- end col -->
           </div>
           <!-- end row -->
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Modal -->
-
-  <div class="modal fade" id="atenderCliModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title align-self-center" id="atenderCliModal1">Atender Cliente</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form id="FormAtender" action="" method="POST">
-          {% csrf_token %}
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="field-1" class="form-label">Cod Reserva</label>
-
-                  <p id="codigo_reserva">Nnnsnsnsn</p>
-                </div>
-                <div class="mb-3">
-                  <label for="field-1" class="form-label">Nome do Cli</label>
-                  <p id="cliente_nome">Nnnsnsnsn</p>
-                </div>
-
-                <div class="mb-3">
-                  <label for="field-2" class="form-label">Data da Reserva</label>
-                  <p id="data_reserva">sdsdsd</p>
-                </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="mb-3">
+                <label for="field-3" class="form-label">PAGAMENTO</label>
               </div>
-              <!-- end col -->
-
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="field-2" class="form-label">Data de Entrada</label>
-                  <p id="data_entrada">sdsdsd</p>
-                </div>
-                <div class="mb-3">
-                  <label for="field-1" class="form-label">Total</label>
-                  <p id="total">Nnnsnsnsn</p>
-                </div>
-
-                <div class="mb-3">
-                  <label for="field-1" class="form-label">Data de Saida</label>
-
-                  <input type="date" required class="form-control" name="data_saida" />
-                </div>
-              </div>
-
-              <!-- end col -->
             </div>
-            <!-- end row -->
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="field-3" class="form-label">Método</label>
+                {{ FormPagamento.metodoPagamento }}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <div class="mb-3" id="divRef" style="display: none">
+                  <label for="field-3" class="form-label"
+                    >Referência Bancaria</label
+                  >
 
-            <div class="row">
-              <div class="col-md-12">
-                <div class="mb-3">
-                  <label for="field-3" class="form-label">PAGAMENTO</label>
+                  <h3><strong id="ref">Nnnsnsnsn</strong></h3>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <label for="field-3" class="form-label">Método</label>
-                  {{ FormPagamento.metodoPagamento }}
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="mb-3">
-                  <div class="mb-3" id="divRef" style="display:none;">
-                    <label for="field-3" class="form-label">Referência Bancaria</label>
-                    
-                      <h3><strong id="ref">Nnnsnsnsn</strong></h3>
-                    
-                  </div>
-                  <div class="mb-3" id="divPag" style="display:none;">
-                    <label for="field-3" class="form-label">Pagamento</label>
-                    <h3 id="totalPagamento">Nnnsnsnsn</h3>
-                  </div>
+                <div class="mb-3" id="divPag" style="display: none">
+                  <label for="field-3" class="form-label">Pagamento</label>
+                  <h3 id="totalPagamento">Nnnsnsnsn</h3>
                 </div>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary">Atender</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            Fechar
+          </button>
+          <button type="submit" class="btn btn-primary">Atender</button>
+        </div>
+      </form>
     </div>
   </div>
-  <!-- end modal -->
+</div>
+<!-- end modal -->
 
-{% comment %} FIM  TABELA PARA AS RESERVAS PENDENTES {% endcomment %}
-
-
-
+{% comment %} FIM TABELA PARA AS RESERVAS PENDENTES {% endcomment %} 
 {% endblock %}

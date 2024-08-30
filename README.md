@@ -92,11 +92,12 @@ python manage.py createsuperuser
 
 1- Você pode acessar o [Painel de Administração] por:
 
-- No seu navegador (http://127.0.0.1:8000/admin)
+- No seu navegador (http://127.0.0.1:8000/login)
 - Digite o nome de usuário e a senha criada
-- Adicione um novo usuário
+- Adicione um novo usuário de funcionário
+- Fazer logout
 
-2- Para acessar o [Painel dos Funcionários] >>
+2- Para acessar o [Painel dos Funcionários]:
 
 - No seu navegador acesse (http://127.0.0.1:8000/login)
 - Entre com as credenciais criadas do usuário

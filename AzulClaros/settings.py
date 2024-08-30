@@ -183,6 +183,7 @@ JAZZMIN_SETTINGS = {
     'show_ui_builder': False,
     
 }
+LOGOUT_REDIRECT_URL = 'login'
 
 #CONFIGURAÇÂO DE EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
