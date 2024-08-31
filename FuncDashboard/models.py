@@ -95,7 +95,7 @@ class Reserva (models.Model):
     estado = models.IntegerField(default=0, max_length=1)
     data_entrada = models.DateField(null=True)
     data_saida = models.DateField(null=True)
-    obs = models.TextField(null=True)
+    obs = models.TextField(null=True, blank=True)
     codigo_reserva = models.CharField(max_length=10, unique=True, editable=False)
     
     

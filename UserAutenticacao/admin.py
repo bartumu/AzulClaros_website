@@ -9,13 +9,13 @@ class UserAdmin(BaseUserAdmin):
     form = UsuarioChangeForm
     add_form = UsuarioCreationForm
     fieldsets = (
-        ('Segurança', {'fields': ('email', 'password')}),
+        ('Segurança', {'fields': ('email', 'is_superuser', 'password')}),
         ('Informações pessoais', {'fields': ('username',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'password1','password2'),
+            'fields': ('username', 'email','is_superuser', 'password1','password2'),
             'description': 'Preencha os campos abaixo para criar um novo usuário.'
         }),
     )

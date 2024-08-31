@@ -17,26 +17,38 @@ class FormRegistarUser(UserCreationForm):
 class UsuarioCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Usuario
-        fields = ['email', 'username']
+        fields = ['email', 'username','is_superuser']  
         labels = {
             'email': 'Endereço de E-mail',
-            'username': 'Nome de Usuário',
+            'username': 'Nome de Usuário',  
+            'is_superuser': 'Administrador',
         }
         help_texts = {
             'email': 'Digite um endereço de e-mail válido.',
         }
+    
+    def __init__(self, *args, **kwargs):  
+        super().__init__(*args, **kwargs)  
+        self.fields['is_superuser'] = forms.BooleanField(required=False, label='Administrador')  
+
 
 class UsuarioChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = Usuario
-        fields = ['email', 'username']
+        fields = ['email', 'username','is_superuser']  
         labels = {
             'email': 'Endereço de E-mail',
-            'username': 'Nome de Usuário',
+            'username': 'Nome de Usuário',  
+            'is_superuser': 'Administrador',
         }
         help_texts = {
             'email': 'Digite um endereço de e-mail válido.',
         }
+    
+    def __init__(self, *args, **kwargs):  
+        super().__init__(*args, **kwargs)  
+        self.fields['is_superuser'] = forms.BooleanField(required=False, label='Administrador')  
+
 
 class RecuperarSenhaForm(forms.ModelForm):
     password = forms.CharField(
@@ -72,7 +84,6 @@ class RecuperarSenhaForm(forms.ModelForm):
         
         if user:
             self.fields['email'].initial = user.email
-
 
     def clean(self):
         cleaned_data = super().clean()

@@ -21,34 +21,64 @@ def atualizar_estatisticas(sender, instance, created, **kwargs):
     else:
         # Caso a reserva tenha sido editada, verifica se o estado foi alterado
         reserva_antiga = Reserva.objects.get(pk=instance.pk)
-        reserva_estati = ReservaEstatistica.objects.all()
-
-        for res in reserva_estati:
-            if res.estado == 1:
+        if ReservaEstatistica.objects.filter(funcionario_id=func).exists():
+            reserva_estati = ReservaEstatistica.objects.get(funcionario_id=func)
+            reserva_estati.quantidade += 1
+            reserva_estati.save()
+            """ for res in reserva_estati:
                 if res.mes == mes:
-                    if res.funcionario == func:
+                    if res.estado == 1:
+                        if res.funcionario == func:
+                            reserva_estati.quantidade += 1
+                            reserva_estati.save()
+                            break
+                    elif novo_estado == 1:
+                        estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
+                        estatistica_nova.quantidade += 1
+                        estatistica_nova.save()
+                        break
+
+                if res.mes == mes:
+                    if res.estado == 2: 
+                        if res.funcionario == func:
+                            reserva_estati.quantidade += 1
+                            reserva_estati.save()
+                            break
+                    elif novo_estado == 2:
+                        estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
+                        estatistica_nova.quantidade += 1
+                        estatistica_nova.save()
+                        break """
+        else:
+            reserva_estati = ReservaEstatistica.objects.get(mes=mes, estado=novo_estado)
+            reserva_estati.quantidade += 1
+            reserva_estati.funcionario = func
+            reserva_estati.save()
+            """ for res in reserva_estati:
+                if res.mes == mes:
+                    if res.estado == 1:
+                        print('Entrou')
                         reserva_estati.quantidade += 1
+                        reserva_estati.funcionario = func
                         reserva_estati.save()
                         break
-            elif novo_estado == 1:
-                estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
-                estatistica_nova.quantidade += 1
-                estatistica_nova.save()
-                break
+                    elif novo_estado == 1:
+                        estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
+                        estatistica_nova.quantidade += 1
+                        estatistica_nova.save()
+                        break
 
-            if res.estado == 2: 
                 if res.mes == mes:
-                    if res.funcionario == func:
+                    if res.estado == 2: 
                         reserva_estati.quantidade += 1
+                        reserva_estati.funcionario = func
                         reserva_estati.save()
                         break
-            elif novo_estado == 2:
-                estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
-                estatistica_nova.quantidade += 1
-                estatistica_nova.save()
-                break
-
-
+                    elif novo_estado == 2:
+                        estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
+                        estatistica_nova.quantidade += 1
+                        estatistica_nova.save()
+                        break """
 
 @receiver(post_migrate)
 def create_initial_data(sender, **kwargs):

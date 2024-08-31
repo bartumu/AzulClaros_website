@@ -53,7 +53,7 @@ def main():
     remove_migrations()
     remove_pycache()
     migrate_database()
-    collect_static()
+    #collect_static()
     print("Otimização completa.")
 
 if __name__ == "__main__":

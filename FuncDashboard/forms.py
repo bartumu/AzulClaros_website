@@ -221,11 +221,22 @@ class FormFazerReserva(forms.ModelForm):
     )
     class Meta:
         model = Reserva
-        fields = ['data_saida']
+        fields = ['data_saida','obs']
+        widgets = {  
+            'obs': forms.Textarea(attrs={  
+                'placeholder': 'Descreva as peças aqui',  
+                'rows': 4,  
+                'cols': 50,
+                'required': 'false',  
+            })  
+        } 
 
     def __init__(self, *args, **kwargs):
         super(FormFazerReserva, self).__init__(*args, **kwargs)
         self.fields['data_saida'].label = 'Data De Saída'
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
     def clean(self):
         cleaned_data = super().clean()
         data_entrada = cleaned_data.get('data_saida')

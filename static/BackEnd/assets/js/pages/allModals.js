@@ -104,7 +104,10 @@ document.addEventListener('DOMContentLoaded', function() {
       $("#FormAtender").on("submit", function(e){
         let $this = $(this);
         let data = $this.serialize();
-        // Adicione aqui o código para enviar o formulário via AJAX, se necessário
+        $.ajax({
+          type: "POST",   
+          data: data,
+        });
       });
     }
   }

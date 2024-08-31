@@ -106,12 +106,12 @@ def Levantamento_view(request):
     return redirect('login')
 
 def atender_view(request,idReserva):
-    
     if request.method == 'POST':
        reservas = get_object_or_404(Reserva,id=idReserva)
        func = get_object_or_404(Funcionario, usuario=request.user)
        formPagamento = FormPagamento(request.POST)
        atenderF = FormAtender(request.POST) 
+       print('POOOOOOOOOOOOO')
        if atenderF.is_valid():
             data_saida = atenderF.cleaned_data.get('data_saida')
 
@@ -126,7 +126,6 @@ def atender_view(request,idReserva):
                 Pag.reserva = reservas
                 Pag.valor = Calcular_Total(idReserva)
                 Pag.save()
-
                 # Envio do email ao cliente
                 subject = 'Factura | Azul Claros'
                 cliente_email = reservas.cliente.email
@@ -139,11 +138,10 @@ def atender_view(request,idReserva):
                 Thread(target=Enviar_fatura_email, args=(html,subject, context, cliente_email)).start()
                 messages.success(request, f'{ reservas.cliente.nome } atendido com sucesso e notificado por Email')
                 return redirect('reserva')
-       else:
+            else:
                 messages.warning(request, 'Verifique a Data de Saida')
-                return redirect('reserva')
+                return redirect('levantamento')
     else:
-        Total = Calcular_Total(idReserva)
         atenderF = FormAtender()
         formPagamento = FormPagamento()
        
@@ -158,13 +156,13 @@ def atender_view(request,idReserva):
 def levantar_view(request,idReserva):
     
     if request.method == 'POST':
+       print("Passou aqui")
        reservas = get_object_or_404(Reserva,id=idReserva)
        func = get_object_or_404(Funcionario, usuario=request.user)
        levantarF = FormAtender(request.POST) 
        #data_Hoje = levantarF.cleaned_data.get('data_saida')
        data_saida_BD = reservas.data_saida
        data_Hoje = date.today()
-       print("Passou aqui")
        if data_saida_BD == data_Hoje:
             reservas.estado = 2
             reservas.funcionario = func
@@ -243,10 +241,10 @@ def RegistarPerfil(request):
         return redirect('login')
 
 def RegistarCliente(request):
+    func = get_object_or_404(Funcionario, usuario=request.user)
     if request.method == 'POST':
          formCliente = FormRegistarCliente(request.POST)
          formServicosReservados = FormReservaServico(request.POST)
-         func = get_object_or_404(Funcionario, usuario=request.user)
          formPagamento = FormPagamento(request.POST)
          FormReserva = FormFazerReserva(request.POST)
          
@@ -254,9 +252,13 @@ def RegistarCliente(request):
          if formCliente.is_valid():
             cliente = formCliente.save()
             if FormReserva.is_valid():
-                dataSaida = FormReserva.cleaned_data['data_saida']
-                reserva = Reserva.objects.create(cliente=cliente, data_saida=dataSaida, estado=1, data_entrada=datetime.now().date(), funcionario=func)
-                    
+                reserva = FormReserva.save(commit=False)
+                reserva.cliente=cliente
+                reserva.estado=1
+                reserva.data_entrada = datetime.now().date()
+                reserva.funcionario = func
+                reserva.save()
+
                 if formServicosReservados.is_valid():
 
                     servicosReservado = formServicosReservados.cleaned_data.get('servicos')
@@ -306,7 +308,8 @@ def RegistarCliente(request):
          'FormCliente': formCliente,
          'FormServicosReservados': formServicosReservados,
          'formPagamento': formPagamento,
-         'FormReserva': FormReserva
+         'FormReserva': FormReserva,
+         'Func': func
     }
 
     return render(request, 'BackEnd/Cliente/AddCli.html', context)
