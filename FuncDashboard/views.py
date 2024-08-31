@@ -7,11 +7,13 @@ from django.http import HttpResponse, JsonResponse
 from datetime import date
 from django.db.models import Sum, Count
 from FuncDashboard.relactorio import *
-from datetime import date, timedelta
+from datetime import date, datetime  
+
 from Portifolio.views import Enviar_fatura_email
 from threading import Thread
 from django.utils.safestring import mark_safe
 import json
+
 
 # Create your views here.
 def FuncDashboard(request):
@@ -241,12 +243,81 @@ def RegistarPerfil(request):
         return redirect('login')
 
 def RegistarCliente(request):
-    return 'a'
+    if request.method == 'POST':
+         formCliente = FormRegistarCliente(request.POST)
+         formServicosReservados = FormReservaServico(request.POST)
+         func = get_object_or_404(Funcionario, usuario=request.user)
+         formPagamento = FormPagamento(request.POST)
+         FormReserva = FormFazerReserva(request.POST)
+         
+         
+         if formCliente.is_valid():
+            cliente = formCliente.save()
+            if FormReserva.is_valid():
+                dataSaida = FormReserva.cleaned_data['data_saida']
+                reserva = Reserva.objects.create(cliente=cliente, data_saida=dataSaida, estado=1, data_entrada=datetime.now().date(), funcionario=func)
+                    
+                if formServicosReservados.is_valid():
+
+                    servicosReservado = formServicosReservados.cleaned_data.get('servicos')
+                    qtd = formServicosReservados.cleaned_data.get('qtd')
+                    for servico in servicosReservado:
+                        
+                        subtotal = servico.preco * qtd
+                        
+                        ServicosReservado.objects.create(
+                            servico=servico,
+                            reserva=reserva,
+                            subtotal=subtotal,
+                            qtd=qtd
+                        )
+
+                    if formPagamento.is_valid():
+                        Pag = formPagamento.save(commit=False)
+                        Pag.reserva = reserva
+                        Pag.valor = Calcular_Total(reserva.id)
+                        Pag.save()
+
+                    # Envio do email ao cliente
+                        subject = 'Comprovante da sua Reserva | Azul Claros'
+                        cliente_email = cliente.email
+                        html = 'BackEnd/Cliente/ComprovEmail.html'
+                        context = {
+                            'Reserva': Reserva.objects.get(id=reserva.id),
+                            'servicosReservados': ServicosReservado.objects.filter(reserva=reserva),
+                            'Qtd':qtd
+                        }
+                        Thread(target=Enviar_fatura_email, args=(html,subject, context, cliente_email)).start()
+
+                        messages.success(request, 'Reserva realizada com sucesso! O comprovante foi enviado para o seu email.')
+
+
+                        resera = request.session['reserva_id'] = reserva.id      
+                        return redirect('levantamento')
+                
+    else:
+        formCliente = FormRegistarCliente()
+        formServicosReservados = FormReservaServico()
+        formPagamento = FormPagamento()
+        FormReserva = FormFazerReserva()
+              
+
+    context = {
+         'FormCliente': formCliente,
+         'FormServicosReservados': formServicosReservados,
+         'formPagamento': formPagamento,
+         'FormReserva': FormReserva
+    }
+
+    return render(request, 'BackEnd/Cliente/AddCli.html', context)
+
+ 
 
 def Relatorio(request):
     today = date.today()
     start_date = today.replace(day=1) 
     end_date = today 
+    feedbacks = Feedback.objects.select_related('cliente').order_by('-data')
 
     # Total de Clientes Atendidos no mês atual
     CliAtendido = Reserva.objects.filter(estado=2, data_reserva__range=[start_date, end_date]).count()
@@ -335,7 +406,8 @@ def Relatorio(request):
         receita_por_mes= receita_por_mes,
         receita_por_semana= receita_por_semana,
         labelsS= labelsS,
-        seriesS= seriesS
+        seriesS= seriesS,
+        feedbacks = feedbacks
     )
     
     return render(request, 'Admin/Relactorios.html', context)

@@ -1,0 +1,152 @@
+
+
+{% extends 'BackEnd/layout/index.html' %} {% load static %} {% block Conteudo %}
+
+<div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box d-flex align-items-center justify-content-between">
+                <h4 class="mb-0 font-size-18">Clientes</h4>
+
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Azul Claros</a></li>
+                        <li class="breadcrumb-item"><a href="javascript: void(0);">Cliente</a></li>
+                        <li class="breadcrumb-item active">Formulário Adicionar Cliente</li>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-md-12 col-xl-6">
+            <div class="card">
+                <div class="card-body">
+
+                    <h5 class="card-title">Registe Cliente</h5>
+
+                        {% if FormCliente.errors %}
+                        {% for error in FormCliente.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error }}</strong>
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% if FormServicosReservados.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ FormServicosReservados.errors }}</strong>
+                            </div>
+                        {% endif %}
+                        {% if FormReserva.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ FormReserva.errors }}</strong>
+                            </div>
+                        {% endif %}
+                
+                      <form class="needs-validation" novalidate="" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row gx-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip01" class="form-label">{{ FormCliente.nome.label }}</label>
+                                    {{ FormCliente.nome }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip02" class="form-label">{{ FormCliente.email.label }}</label>
+                                    {{ FormCliente.email }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row gx-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip03" class="form-label">{{ FormCliente.numero.label }}</label>
+                                    {{ FormCliente.numero }}
+                                </div>
+                            </div>
+                            <!-- end col -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip04" class="form-label">{{ FormCliente.genero.label }}</label>
+                                    {{ FormCliente.genero }}   
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+
+                        <div class="row gx-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip03" class="form-label">Quantidade p/ Cesto</label>
+                                    {{ FormServicosReservados.qtd }}
+                                </div>
+                            </div>
+                            <!-- end col -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip04" class="form-label">{{ FormServicosReservados.servicos.label }}</label>
+                                    {{ FormServicosReservados.servicos }}  
+                                </div>
+                            </div>
+                            <!-- end col -->
+                        </div>
+
+                        <div class="row gx-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip03" class="form-label">Metodo</label>
+                                    {{ formPagamento.metodoPagamento }}
+                                </div>
+                            </div>
+                            <!-- end col -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="validationTooltip03" class="form-label">{{ FormReserva.data_saida.label }}</label>
+                                    {{ FormReserva.data_saida }}
+                                </div>
+                                <!-- <div class="mb-3" id="divRefCli" style="display: none">
+                                    <label for="validationTooltip04" class="form-label">Referencia Bancaria</label>
+                                    <h3><strong id="referenciaBancaria">Nnnsnsnsn</strong></h3> 
+                                </div>
+                                <div class="mb-3" id="divPagCli" style="display: none">
+                                    <label for="validationTooltip04" class="form-label">Total a Pagar</label>
+                                    <h3><strong id="TotalPagamento_Cli">{{ total }}</strong></h3> 
+                                </div> -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                        
+                        <div class="row gx-3">
+                            
+                            <!-- end col -->
+                            <button class="btn btn-light mb-9 w-auto" type="submit">Registar</button>
+                            
+                            <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                    </form>
+                    <!-- end form -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <!-- end row -->
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

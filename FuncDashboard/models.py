@@ -18,7 +18,7 @@ class Sobre(models.Model):
     class Meta:
         db_table = 'Sobre'
         verbose_name = 'Sobre'
-        verbose_name_plural = 'Sobres'
+        verbose_name_plural = 'Sobre'
     
     def __str__(self):
         return self.titulo
@@ -132,8 +132,8 @@ class ServicosReservado (models.Model):
 
     class Meta:
         db_table = 'ServicoReservado'
-        verbose_name = 'ServicoReservado'
-        verbose_name_plural = 'ServicoReservados'    
+        verbose_name = 'Serviço Reservado'
+        verbose_name_plural = 'Serviços Reservados'    
 
     
 class MetodoPagamento (models.Model):
@@ -158,7 +158,7 @@ class Pagamentos (models.Model):
         verbose_name_plural = 'Pagamentos'
     
     def __str__(self):
-        return self.dataPagamento
+        return f"{self.dataPagamento.strftime('%d/%m/%Y')}"
     
 
 class Feedback(models.Model):

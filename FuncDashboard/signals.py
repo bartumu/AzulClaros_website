@@ -26,9 +26,10 @@ def atualizar_estatisticas(sender, instance, created, **kwargs):
         for res in reserva_estati:
             if res.estado == 1:
                 if res.mes == mes:
-                    reserva_estati.quantidade += 1
-                    reserva_estati.save()
-                    break
+                    if res.funcionario == func:
+                        reserva_estati.quantidade += 1
+                        reserva_estati.save()
+                        break
             elif novo_estado == 1:
                 estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
                 estatistica_nova.quantidade += 1
@@ -37,9 +38,10 @@ def atualizar_estatisticas(sender, instance, created, **kwargs):
 
             if res.estado == 2: 
                 if res.mes == mes:
-                    reserva_estati.quantidade += 1
-                    reserva_estati.save()
-                    break
+                    if res.funcionario == func:
+                        reserva_estati.quantidade += 1
+                        reserva_estati.save()
+                        break
             elif novo_estado == 2:
                 estatistica_nova, _ = ReservaEstatistica.objects.get_or_create(mes=mes, estado=novo_estado, funcionario=func)
                 estatistica_nova.quantidade += 1

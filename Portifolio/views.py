@@ -106,10 +106,7 @@ def addReserva_view(request):
          
          
          if formCliente.is_valid():
-            #tel = formCliente.clean_telefone()
             cliente = formCliente.save()
-            """ cliente.numero = tel
-            cliente.save() """
 
             if formReserva.is_valid():
                 reserva = formReserva.save(commit=False)

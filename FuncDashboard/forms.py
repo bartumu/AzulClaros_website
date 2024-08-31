@@ -47,8 +47,6 @@ class FormCadFuncionario(forms.ModelForm):
 
         return numero
     
-    
-
 class FuncionarioPerfilForm(forms.ModelForm):
     password = forms.CharField(
         label="Senha",
@@ -144,7 +142,6 @@ class FormPagamento(forms.ModelForm):
             'metodoPagamento': forms.ModelChoiceField(queryset=MetodoPagamento.objects.all(),attrs={'id': 'metodo-pagamento'})
         } """
 
-
 class FuncForm(forms.ModelForm):
     class Meta:
         model = Funcionario
@@ -163,3 +160,89 @@ class FeedbackForm(forms.ModelForm):
             'avaliacao': 'Avaliação (1 a 5)',
             'comentario': 'Comentário'
         }
+
+
+class FormRegistarCliente(forms.ModelForm):
+    nome = forms.CharField(widget=forms.TextInput(attrs={
+            'placeholder': 'insira o seu Nome Completo',
+            'id':'nome',
+            'class': 'form-control' }), required=True)
+    numero = forms.CharField(widget=forms.TextInput(attrs={
+            'placeholder': 'Insira o Número de Telefone',
+            'class': 'form-control'}), required=True)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={
+            'placeholder': 'Insira o Endereço de Email',
+            'class': 'form-control'}), required=True)
+
+    class Meta:
+        model = Cliente
+        fields = ['nome', 'numero', 'genero', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super(FormRegistarCliente, self).__init__(*args, **kwargs)
+        self.fields['numero'].label = 'Telefone'
+        self.fields['nome'].label = 'Nome Completo'
+        
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'form-control'})
+
+    def clean_numero(self):
+        numero = self.cleaned_data.get('numero')
+        
+        # Verifica se o número está no formato correto
+        if not re.match(r'^9\d{8}$', numero):
+            self.add_error('numero','O numero deve começar com 9 e ter 9 dígitos no total.')
+
+        return numero
+
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+
+        if email and Cliente.objects.filter(email=email).exists():
+            # Recupera o cliente existente e define self.instance para evitar uma nova inserção
+            cliente = Cliente.objects.get(email=email)
+            self.instance = cliente
+
+        return cleaned_data
+ 
+
+    def save(self, commit=True):
+        #telefone = self.cleaned_data.get('numero')
+        #if not re.match(r'^9\d{8}$', telefone):
+        #    raise ValidationError("Por favor, insira um número de telemóvel válido com 9 dígitos, começando com 9.")
+        # Usa a instância atual se um cliente existente foi definido
+        return super().save(commit=commit)
+
+class FormFazerReserva(forms.ModelForm):
+    data_saida = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        input_formats=['%Y-%m-%d'], required=True  # Opcional: define o formato de entrada aceitável
+    )
+    class Meta:
+        model = Reserva
+        fields = ['data_saida']
+
+    def __init__(self, *args, **kwargs):
+        super(FormFazerReserva, self).__init__(*args, **kwargs)
+        self.fields['data_saida'].label = 'Data De Saída'
+    def clean(self):
+        cleaned_data = super().clean()
+        data_entrada = cleaned_data.get('data_saida')
+
+        # Verifica se a data é anterior à data de hoje
+        if data_entrada and data_entrada < date.today():
+            self.add_error('data_saida', "A data de Saída não pode ser anterior à data de hoje.")
+
+        return cleaned_data
+        
+
+class FormReservaServico(forms.ModelForm):
+    servicos = forms.ModelMultipleChoiceField(queryset=Servico.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
+    qtd = forms.IntegerField(widget=forms.NumberInput(attrs={
+            'placeholder': 'Insira a Quantidade','class': 'form-control'}), required=True)
+    class Meta:
+        model = ServicosReservado
+        fields = ['qtd']
+        
+  
