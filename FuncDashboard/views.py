@@ -106,12 +106,12 @@ def Levantamento_view(request):
     return redirect('login')
 
 def atender_view(request,idReserva):
+    
     if request.method == 'POST':
        reservas = get_object_or_404(Reserva,id=idReserva)
        func = get_object_or_404(Funcionario, usuario=request.user)
        formPagamento = FormPagamento(request.POST)
        atenderF = FormAtender(request.POST) 
-       print('POOOOOOOOOOOOO')
        if atenderF.is_valid():
             data_saida = atenderF.cleaned_data.get('data_saida')
 
@@ -126,6 +126,7 @@ def atender_view(request,idReserva):
                 Pag.reserva = reservas
                 Pag.valor = Calcular_Total(idReserva)
                 Pag.save()
+
                 # Envio do email ao cliente
                 subject = 'Factura | Azul Claros'
                 cliente_email = reservas.cliente.email
@@ -138,10 +139,11 @@ def atender_view(request,idReserva):
                 Thread(target=Enviar_fatura_email, args=(html,subject, context, cliente_email)).start()
                 messages.success(request, f'{ reservas.cliente.nome } atendido com sucesso e notificado por Email')
                 return redirect('reserva')
-            else:
+       else:
                 messages.warning(request, 'Verifique a Data de Saida')
-                return redirect('levantamento')
+                return redirect('reserva')
     else:
+        Total = Calcular_Total(idReserva)
         atenderF = FormAtender()
         formPagamento = FormPagamento()
        
@@ -156,13 +158,13 @@ def atender_view(request,idReserva):
 def levantar_view(request,idReserva):
     
     if request.method == 'POST':
-       print("Passou aqui")
        reservas = get_object_or_404(Reserva,id=idReserva)
        func = get_object_or_404(Funcionario, usuario=request.user)
        levantarF = FormAtender(request.POST) 
        #data_Hoje = levantarF.cleaned_data.get('data_saida')
        data_saida_BD = reservas.data_saida
        data_Hoje = date.today()
+       print("Passou aqui")
        if data_saida_BD == data_Hoje:
             reservas.estado = 2
             reservas.funcionario = func
@@ -435,41 +437,37 @@ def obter_dados_estatisticas_reservas():
 
 def preparar_dados_grafico(request):
     func = Funcionario.objects.get(usuario=request.user)
-    estatisticasPendente = ReservaEstatistica.objects.all().order_by('mes', 'estado')
+    
+    # Filtrar todas as estatísticas para o funcionário atual
+    estatisticas = ReservaEstatistica.objects.filter(funcionario=func).order_by('mes', 'estado')
 
     labels = []
     dados_pendentes = []
     dados_processamento = []
     dados_atendido = []
 
-    for estatistica in estatisticasPendente:
-        mes = estatistica.mes.strftime('%Y-%m')
-        if mes not in labels:
-            labels.append(mes)
-        if estatistica.estado == 0:
-            dados_pendentes.append(estatistica.quantidade)
-
-    if ReservaEstatistica.objects.filter(funcionario=func.id).exists():
-        estatisticas = ReservaEstatistica.objects.filter(funcionario=func.id).order_by('mes', 'estado')
-        for estatistica in estatisticas:
+    # Iterar sobre as estatísticas e organizar os dados para o gráfico
+    for estatistica in estatisticas:
+        res = ReservaEstatistica.objects.filter(mes=estatistica.mes)
+        for re in res:
+            mes = re.mes.strftime('%Y-%m')
+            if mes not in labels:
+                labels.append(mes)
             
+            if re.estado == 1:
+                dados_processamento.append(re.quantidade)
+            elif re.estado == 2:
+                dados_atendido.append(re.quantidade)
 
-            if estatistica.estado == 1:
-                dados_processamento.append(estatistica.quantidade)
-            elif estatistica.estado == 2:
-                dados_atendido.append(estatistica.quantidade)
-        
-    
+    # Garantir que os dados estejam alinhados com os labels
+    while len(dados_processamento) < len(labels):
+        dados_processamento.append(0)
+    while len(dados_atendido) < len(labels):
+        dados_atendido.append(0)
 
     return {
         'labels': labels,
         'datasets': [
-            {
-                'label': 'Pendentes',
-                'backgroundColor': 'rgba(255, 99, 132, 0.4)',
-                'borderColor': 'rgba(255, 99, 132, 1)',
-                'data': dados_pendentes,
-            },
             {
                 'label': 'Em Processamento',
                 'backgroundColor': 'rgba(54, 162, 235, 0.4)',

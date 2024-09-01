@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
+  
   // Função para tratar o botão de levantar
   function LevantarProduto() {
     var CliModal = document.getElementById('sairCliModal');
     var FormCli = document.getElementById('FormLevantar');
 
     if (CliModal && FormCli) {
-      $("#tabela tbody").on("click", "#LevantarButton", function(e){
+      $("#datatable2 tbody").on("click", "#LevantarButton", function(e){
         var $this = $(this);
         $("#FormLevantar").attr("action", $this.attr('href'));
       });
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var pag = document.getElementById('divPag');
 
     if (CliModal && FormCli && metodoPagamentoSelect && ref && pag) {
-      $("#tabela tbody").on("click", "#AtenderButton", function(e){
+      $("#datatable2 tbody").on("click", "#AtenderButton", function(e){
         var $this = $(this);
         $("#FormAtender").attr("action", $this.attr('href'));
       });

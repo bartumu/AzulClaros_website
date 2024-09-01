@@ -106,7 +106,11 @@ def addReserva_view(request):
          
          
          if formCliente.is_valid():
-            cliente = formCliente.save()
+            email = formCliente.cleaned_data.get('email')
+            if Cliente.objects.filter(email=email).exists():
+                cliente = Cliente.objects.get(email=email)
+            else:
+                cliente = formCliente.save()
 
             if formReserva.is_valid():
                 reserva = formReserva.save(commit=False)
@@ -195,36 +199,3 @@ def Enviar_fatura_email(html,subject, context, cliente_email):
     email.content_subtype = 'html'
     email.send()
 
-""" def save_pdf(template_src,context_dict):
-    template = get_template(template_src)
-    html = template.render(context_dict)
-    result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
-    if not pdf.err:
-        return result.getvalue()
-    return None
-    
-def pdf():
-    codigo = 00000
-    template_path = 'BackEnd/Cliente/FacturaPag.html'
-    context = {'codigo': '00000'}
-
-    pdf_file = save_pdf(template_path, context)
-    if pdf_file:
-        file_path = os.path.join(settings.MEDIA_ROOT, 'pdfs',f'Reserva_{codigo}.pdf') 
-        with open(file_path, 'wb') as f:
-            f.write(pdf_file)
-        BaixarComprovante()
-        return JsonResponse({'url':f'{settings.MEDIA_URL}pdfs/Reserva_{codigo}.pdf'})
-    
-    return HttpResponse('Erro Em gerar Pdf', status=500) 
-
-def BaixarComprovante():
-    response = pdf()
-    if response.status_code == 200:
-        response_data= json.loads(response.content)
-        pdf_url = response_data.get('url')
-        return redirect(pdf_url)
-    else:
-        return HttpResponse('Erro gerando PDF', status=500)
- """

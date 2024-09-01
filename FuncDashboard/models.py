@@ -183,7 +183,7 @@ class ReservaEstatistica(models.Model):
     funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Funcionario')
 
     class Meta:
-        unique_together = ('mes', 'estado')
+        unique_together = ('mes', 'estado','funcionario')
         db_table = 'reserva_estatistica'
         verbose_name = 'Estatística de Reserva'
         verbose_name_plural = 'Estatísticas de Reservas'
