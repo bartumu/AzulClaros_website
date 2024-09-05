@@ -14,7 +14,9 @@ from django.shortcuts import render
 # Create your views here.
 def index(request):
     sobre = Sobre.objects.get()
+    servico = Servico.objects.all()
     context = {
+        "Servicos":servico,
         "Sobre":sobre,
         "Tem_Sobre":Existe_servico(),
     }
@@ -23,12 +25,17 @@ def index(request):
 def sobre(request):
     sobre = Sobre.objects.get()
     context = {
-        "Sobre":sobre
+        "Sobre":sobre,
+        "Tem_Sobre":Existe_servico(),
     }
     return render(request,'Portifolio/SobreNos.html', context)
 
 def servico(request):
-    return render(request,'Portifolio/nossoServico.html')
+    servico = Servico.objects.all()
+    context = {
+        "Servicos":servico,
+    }
+    return render(request,'Portifolio/nossoServico.html', context)
 
 def contacto(request):
     if request.method == 'POST':  

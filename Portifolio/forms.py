@@ -90,9 +90,16 @@ class FormFazerReserva(forms.ModelForm):
         
 
 class FormReservaServico(forms.ModelForm):
-    servicos = forms.ModelMultipleChoiceField(queryset=Servico.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
-    qtd = forms.IntegerField(widget=forms.NumberInput(attrs={
-            'placeholder': 'Insira a Quantidade','class': 'single-input'}), required=True)
+    servicos = forms.ModelMultipleChoiceField(queryset=Servico.objects.all(), widget=forms.CheckboxSelectMultiple, required=True)
+    qtd = forms.IntegerField(
+        widget=forms.NumberInput(attrs={
+            'placeholder': 'Insira a Quantidade',
+            'class': 'single-input',
+            'min': 1,  # Valor mínimo
+            'max': 4  # Valor máximo
+        }),
+        required=True
+    )
     class Meta:
         model = ServicosReservado
         fields = ['qtd']

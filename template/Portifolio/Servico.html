@@ -11,44 +11,57 @@
             </div>
         </div>
         <div class="row no-gutters">
-            <div class="col-lg-6 col-md-6">
-                <div class="single-offers">
-                    <img src="{% static 'frontEnd/assets/img/gallery/offers1.png' %}" alt="" class=" w-100">
+
+            {% for servico in Servicos %}
+            {% if forloop.counter|divisibleby:2 %}
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="single-offers">
+                        <img src="{{ servico.img.url }}" alt="" class=" w-100">
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="single-offers">
-                    <img src="{% static 'frontEnd/assets/img/gallery/offers2.png' %}" alt="" class=" w-100">
-                    <div class="offers-caption text-center">
-                        <div class="cat-icon">
-                            <img src="{% static 'frontEnd/assets/img/icon/offers-icon1.png' %}" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Lavagem De Roupas</a></h5>
-                            <p>Por Cada Cesto tens a vantagem de fazer lavagens de 15 peças leves, 6 peças pesadas e 10 peças jeans.</p>
+                <div class="col-lg-6 col-md-6">
+                    <div class="single-offers">
+                        <img src="{% static 'frontEnd/assets/img/gallery/offers2.png' %}" alt="" class=" w-100">
+                        <div class="offers-caption text-center">
+                            <div class="cat-icon">
+                                <img src="{% static 'frontEnd/assets/img/icon/offers-icon1.png' %}" alt="">
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a href="services.html">{{ servico.nome }}</a></h5>
+                                <p>{{ servico.descricao }} ao preço de {{ servico.preco }} Kz</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="single-offers">
-                    <img src="{% static 'frontEnd/assets/img/gallery/offers2.png' %}" alt="" class=" w-100">
-                    <div class="offers-caption text-center">
-                        <div class="cat-icon">
-                            <img src="{% static 'frontEnd/assets/img/icon/offers-icon1.png' %}" alt="">
-                        </div>
-                        <div class="cat-cap">
-                            <h5><a href="services.html">Engomagem de Roupas</a></h5>
-                            <p>Peças afinadas e requintadas, só com um bom vinco são reconhecidas e elogiadas pelas pessoas, não fique de fora da moda.</p>
+                
+            {% else %}
+
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="single-offers">
+                        <img src="{% static 'frontEnd/assets/img/gallery/offers2.png' %}" alt="" class=" w-100">
+                        <div class="offers-caption text-center">
+                            <div class="cat-icon">
+                                <img src="{% static 'frontEnd/assets/img/icon/offers-icon1.png' %}" alt="">
+                            </div>
+                            <div class="cat-cap">
+                                <h5><a href="services.html">{{ servico.nome }}</a></h5>
+                                <p>{{ servico.descricao }} ao preço de {{ servico.preco }} Kz</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <div class="single-offers">
-                    <img src="{% static 'frontEnd/assets/img/gallery/offers4.png' %}" alt="" class=" w-100">
+                <div class="col-lg-6 col-md-6">
+                    <div class="single-offers">
+                        <img src="{{ servico.img.url }}" alt="" class=" w-100">
+                    </div>
                 </div>
-            </div>
+
+            {% endif %}
+        {% endfor %}
+
+
         </div>
     </div>
 </section>

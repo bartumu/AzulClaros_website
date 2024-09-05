@@ -68,17 +68,18 @@ def create_initial_data(sender, **kwargs):
                 nome='Lavagem Completa',
                 descricao='Serviço de lavagem completa de roupas.',
                 preco=3500,
-                img=None  # ou coloque o caminho da imagem se tiver uma
-            )
-            Servico.objects.create(
-                nome='Secagem',
-                descricao='Serviço de secagem de roupas.',
-                preco=2000,
-                img=None  # ou coloque o caminho da imagem se tiver uma
+                img='Servicos/Lavagem.png'  
             )
             Servico.objects.create(
                 nome='Engomagem',
                 descricao='Serviço de engomagem de roupas.',
                 preco=2500,
-                img=None  # ou coloque o caminho da imagem se tiver uma
+                img='Servicos/Engomagem.png'  
             )
+            Servico.objects.create(
+                nome='Secagem',
+                descricao='Serviço de secagem de roupas.',
+                preco=2000,
+                img='Servicos/secagem.jpg'  
+            )
+            
