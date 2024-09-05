@@ -95,8 +95,8 @@ class FormReservaServico(forms.ModelForm):
         widget=forms.NumberInput(attrs={
             'placeholder': 'Insira a Quantidade',
             'class': 'single-input',
-            'min': 1,  # Valor mínimo
-            'max': 4  # Valor máximo
+            'min': 1,  
+            'max': 4  
         }),
         required=True
     )

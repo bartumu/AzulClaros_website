@@ -2,6 +2,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import FileExtensionValidator
 from UserAutenticacao.models import Usuario
+from django.utils import timezone
+from datetime import timedelta
+from django.core.exceptions import ValidationError
 import uuid
 
 # Create your views here.
@@ -172,8 +175,26 @@ class Feedback(models.Model):
         verbose_name = 'Feedback'
         verbose_name_plural = 'Feedbacks'
 
+    def clean(self):
+        super().clean()
+        verificar_volume_feedbacks(self.cliente_id)
+
     def __str__(self):
         return f"Feedback de {self.cliente}"
+
+
+def verificar_volume_feedbacks(cliente):
+    N_de_servicos = Reserva.objects.filter(cliente=cliente, estado=2).count()
+    mes = timezone.now().date().month
+    ano = timezone.now().date().year
+    feedbacks_recente = Feedback.objects.filter(cliente=cliente, data__year=ano, data__month=mes).count()
+    print(N_de_servicos)
+    print(feedbacks_recente)
+    if N_de_servicos == feedbacks_recente:  # Limite de 5 feedbacks por hora
+        raise ValidationError("Caro Cliente o Senhor Já deu feedback suficiente, obrigado!")
+
+    if N_de_servicos == 0:
+        raise ValidationError("Caro Cliente o Senhor nunca conluio o uso dos nossos serviços.")
     
 
 class ReservaEstatistica(models.Model):

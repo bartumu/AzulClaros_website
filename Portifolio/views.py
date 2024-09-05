@@ -40,18 +40,24 @@ def servico(request):
 def contacto(request):
     if request.method == 'POST':  
         form = FeedbackForm(request.POST)  
-        if form.is_valid():  
-            try:
-                email = form.cleaned_data['email']  
-                cliente = Cliente.objects.get(email=email)  
-                
-                feedback = form.save(commit=False)  
-                feedback.cliente = cliente  
-                feedback.save() 
-                return redirect('home') 
-            except:
-                messages.warning(request, 'Faça no mínimo uma reserva para ser Apto a Dar FeedBack')
+        try:
+            email = form.data['email']  # Verifica o email enviado no formulário
+            cliente = Cliente.objects.get(email=email)
+
+            # Associa o cliente ao feedback antes de chamar o is_valid()
+            form.instance.cliente = cliente
+
+            if form.is_valid():  # Chama o método clean e valida o formulário
+                feedback = form.save(commit=False)
+                feedback.cliente = cliente
+                feedback.save()
                 return redirect('home')
+        except Cliente.DoesNotExist:
+            messages.warning(request, 'Cliente não encontrado. Verifique o email e tente novamente.')
+            return redirect('home')
+        except ValidationError as e:
+            messages.warning(request, str(e))  # Exibe o erro de validação no template
+            return redirect('home')
 
     form = FeedbackForm() 
 
@@ -120,42 +126,55 @@ def addReserva_view(request):
                 cliente = formCliente.save()
 
             if formReserva.is_valid():
+                dataEntrada =  formReserva.cleaned_data.get('data_entrada')
+                total =  formReserva.cleaned_data.get('total')
+                obs =  formReserva.cleaned_data.get('obs')
+                data_reserva =  formReserva.cleaned_data.get('data_reserva')
                 reserva = formReserva.save(commit=False)
-                reserva.cliente = cliente
-                reserva.save()
+                print(Reserva.objects.filter(data_entrada=dataEntrada, estado=0, cliente=cliente, total=total))
+                if Reserva.objects.filter(estado=0, data_entrada=dataEntrada, obs=obs, 
+                                          cliente=cliente, total=total, 
+                                          data_reserva=data_reserva).exists():
+                    messages.success(request, 'Essa Reserva Já foi registada!')
+                    redirect('reservaConsultar')
+                else:
+                    reserva.cliente = cliente
+                    reserva.save()
+                    
                 
-            
-                if formServicosReservados.is_valid():
+                    if formServicosReservados.is_valid():
 
-                    servicosReservado = formServicosReservados.cleaned_data.get('servicos')
-                    qtd = formServicosReservados.cleaned_data.get('qtd')
+                        servicosReservado = formServicosReservados.cleaned_data.get('servicos')
+                        qtd = formServicosReservados.cleaned_data.get('qtd')
 
-                    for servico in servicosReservado:
-                        
-                        subtotal = servico.preco * qtd
-                        ServicosReservado.objects.create(
-                            servico=servico,
-                            reserva=reserva,
-                            subtotal=subtotal,
-                            qtd=qtd
-                        )
+                        for servico in servicosReservado:
+                            
+                            subtotal = servico.preco * qtd
+                            ServicosReservado.objects.create(
+                                servico=servico,
+                                reserva=reserva,
+                                subtotal=subtotal,
+                                qtd=qtd
+                            )
 
-                    # Envio do email ao cliente
-                    subject = 'Comprovante da sua Reserva | Azul Claros'
-                    cliente_email = cliente.email
-                    html = 'BackEnd/Cliente/ComprovEmail.html'
-                    context = {
-                        'Reserva': Reserva.objects.get(id=reserva.id),
-                        'servicosReservados': ServicosReservado.objects.filter(reserva=reserva),
-                        'Qtd':qtd
-                    }
-                    Thread(target=Enviar_fatura_email, args=(html,subject, context, cliente_email)).start()
+                        # Envio do email ao cliente
+                        subject = 'Comprovante da sua Reserva | Azul Claros'
+                        cliente_email = cliente.email
+                        html = 'BackEnd/Cliente/ComprovEmail.html'
+                        context = {
+                            'Reserva': Reserva.objects.get(id=reserva.id),
+                            'servicosReservados': ServicosReservado.objects.filter(reserva=reserva),
+                            'Qtd':qtd
+                        }
+                        Thread(target=Enviar_fatura_email, args=(html,subject, context, cliente_email)).start()
 
-                    messages.success(request, 'Reserva realizada com sucesso! O comprovante foi enviado para o seu email.')
+                        messages.success(request, 'Reserva realizada com sucesso! O comprovante foi enviado para o seu email.')
 
 
-                    resera = request.session['reserva_id'] = reserva.id      
-                    return buscarReserva(request,resera)
+                        resera = request.session['reserva_id'] = reserva.id      
+                        return buscarReserva(request,resera)
+         
+         
             
     else:
         formReserva = FormFazerReserva()

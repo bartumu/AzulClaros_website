@@ -119,14 +119,18 @@ class FormAtender(forms.ModelForm):
     class Meta:
         model = Reserva
         fields = ['data_saida']
-
+        
     def clean(self):
         cleaned_data = super().clean()
         data_saida = cleaned_data.get('data_saida')
+        
+        reserva = self.instance
+        data_entrada = reserva.data_entrada
+        print(data_entrada)
 
         # Verifica se a data é anterior à data de hoje
-        if data_saida and data_saida < date.today():
-            self.add_error('data_saida', "A data de Saida não pode ser anterior à data de hoje.")
+        if data_entrada and data_saida and data_saida < data_entrada:
+            self.add_error('data_saida', "A data de saída deve ser posterior à data de entrada.")
 
         return cleaned_data
 
@@ -138,9 +142,7 @@ class FormPagamento(forms.ModelForm):
     class Meta:
         model = Pagamentos
         fields=['metodoPagamento']
-        """ widgets = {
-            'metodoPagamento': forms.ModelChoiceField(queryset=MetodoPagamento.objects.all(),attrs={'id': 'metodo-pagamento'})
-        } """
+        
 
 class FuncForm(forms.ModelForm):
     class Meta:
@@ -161,7 +163,7 @@ class FeedbackForm(forms.ModelForm):
             'comentario': 'Comentário'
         }
 
-
+   
 class FormRegistarCliente(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'insira o seu Nome Completo',
@@ -208,16 +210,12 @@ class FormRegistarCliente(forms.ModelForm):
  
 
     def save(self, commit=True):
-        #telefone = self.cleaned_data.get('numero')
-        #if not re.match(r'^9\d{8}$', telefone):
-        #    raise ValidationError("Por favor, insira um número de telemóvel válido com 9 dígitos, começando com 9.")
-        # Usa a instância atual se um cliente existente foi definido
         return super().save(commit=commit)
 
 class FormFazerReserva(forms.ModelForm):
     data_saida = forms.DateField(
         widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-        input_formats=['%Y-%m-%d'], required=True  # Opcional: define o formato de entrada aceitável
+        input_formats=['%Y-%m-%d'], required=True  
     )
     class Meta:
         model = Reserva
@@ -251,7 +249,9 @@ class FormFazerReserva(forms.ModelForm):
 class FormReservaServico(forms.ModelForm):
     servicos = forms.ModelMultipleChoiceField(queryset=Servico.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
     qtd = forms.IntegerField(widget=forms.NumberInput(attrs={
-            'placeholder': 'Insira a Quantidade','class': 'form-control'}), required=True)
+            'placeholder': 'Insira a Quantidade','class': 'form-control',
+            'min': 1,  
+            'max': 4 }), required=True)
     class Meta:
         model = ServicosReservado
         fields = ['qtd']

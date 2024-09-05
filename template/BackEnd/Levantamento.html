@@ -131,11 +131,17 @@
                                     </td>
                                   {% endif %}
                                   <td>
-                                    <a href="{% url 'Levantar' idReserva=Reserva.id %}" id="LevantarButton" class="btn btn-light" 
-                                    data-bs-toggle="modal" data-bs-target="#sairCliModal" data-codigo="{{ Reserva.codigo_reserva }}" 
-                                    data-nome="{{ Reserva.cliente.nome }}" data-data_reserva="{{ Reserva.data_reserva }}" 
-                                    data-data_saida="{{ Reserva.data_saida }}" data-total="{{ Reserva.total }}" 
-                                    data-estado="{{ Reserva.estado }}">Levantar</a>
+                                    
+                                    {% if Reserva.data_saida == DataHoje %}
+                                      <a href="{% url 'Levantar' idReserva=Reserva.id %}" id="LevantarButton" class="btn btn-light" 
+                                      data-bs-toggle="modal" data-bs-target="#sairCliModal" data-codigo="{{ Reserva.codigo_reserva }}" 
+                                      data-nome="{{ Reserva.cliente.nome }}" data-data_reserva="{{ Reserva.data_reserva }}" 
+                                      data-data_saida="{{ Reserva.data_saida }}" data-total="{{ Reserva.total }}" 
+                                      data-estado="{{ Reserva.estado }}">Levantar</a>
+                                    {% else %}
+                                      <button class="btn btn-light" disabled>Levantar</button>
+                                    {% endif %}
+                                      
                                   </td>
                               </tr>
                             {% endfor %}

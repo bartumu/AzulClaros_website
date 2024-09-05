@@ -99,6 +99,7 @@ def Levantamento_view(request):
                 'usuario':request.user,
                 'FormPagamento':formPagamento,
                 'Func': FuncObj,
+                'DataHoje': datetime.now().date(),
             }
 
             return render(request,'BackEnd/Levantamento.html', context)
@@ -111,11 +112,11 @@ def atender_view(request,idReserva):
        reservas = get_object_or_404(Reserva,id=idReserva)
        func = get_object_or_404(Funcionario, usuario=request.user)
        formPagamento = FormPagamento(request.POST)
-       atenderF = FormAtender(request.POST) 
+       atenderF = FormAtender(request.POST, instance=reservas) 
        if atenderF.is_valid():
             data_saida = atenderF.cleaned_data.get('data_saida')
 
-            print(reservas.cliente,reservas.estado,reservas.codigo_reserva, reservas.data_entrada)
+            
             reservas.data_saida = data_saida
             reservas.total = Calcular_Total(idReserva)
             reservas.estado = True
@@ -180,6 +181,9 @@ def levantar_view(request,idReserva):
             return redirect('levantamento')
     else:
         levantarF = FormAtender
+        Res = Reserva.objects.get(reserva=idReserva)
+        print(datetime().now().date())
+        print(Res.data_saida)
        
     context = {
         'FormLevantar': levantarF,

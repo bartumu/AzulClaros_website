@@ -34,7 +34,7 @@ def login_view(request):
             if usuario.is_superuser:
                 return redirect(reverse('admin:index'))  # Redireciona para o dashboard do admin jazzmin
             else:
-                return redirect('FuncDashBoard')
+                return redirect('reserva')
             
         else:
             messages.warning(request, "Senha incorreta ou conta não existe.")
