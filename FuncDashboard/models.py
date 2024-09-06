@@ -113,6 +113,17 @@ class Reserva (models.Model):
         self.total = total
         self.save()
 
+    def clean(self):
+        # Verificar se já existe uma reserva com cliente, data_entrada, total e estado=0 (pendente)
+        if Reserva.objects.filter(
+            cliente=self.cliente_id,
+            data_entrada=self.data_entrada,
+            total=self.total,
+            estado=0 ,
+            obs=self.obs, data_reserva=self.data_reserva 
+        ).exclude(id=self.id).exists():
+            raise ValidationError('Essa reserva já foi registrada.')
+
     class Meta:
         db_table = 'Reserva'
         verbose_name = 'Reserva'
@@ -132,6 +143,14 @@ class ServicosReservado (models.Model):
     def __str__(self):
         return f"reserva: {self.reserva}, Serviço: {self.servico}"
     
+    """ def save(self, *args, **kwargs):
+        # Calcular subtotal atual (quantidade x preço do serviço)
+        servico_preco = self.servico.preco  # Supondo que o campo 'preco' existe no modelo Servico
+        self.subtotal = self.qtd * servico_preco
+
+        # Chamar o método save() original para salvar a instância
+        super(ServicosReservado, self).save(*args, **kwargs)
+ """
 
     class Meta:
         db_table = 'ServicoReservado'

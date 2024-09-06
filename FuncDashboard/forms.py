@@ -4,6 +4,7 @@ from .models import *
 from django.core.exceptions import ValidationError
 import re
 from datetime import date
+from django.core.validators import RegexValidator
 
 class FormCadFuncionario(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
@@ -12,7 +13,7 @@ class FormCadFuncionario(forms.ModelForm):
             'onblur': "this.placeholder = 'Insira o Nome Completo'",
             'required': True,
             'class': 'form-control'
-        }))
+        }), validators=[RegexValidator(r'^[a-zA-Z]*$', 'Apenas letras são permitidas.')])
     numero = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'Numero de Tel',
             'onfocus': "this.placeholder = ''",
@@ -168,7 +169,7 @@ class FormRegistarCliente(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'insira o seu Nome Completo',
             'id':'nome',
-            'class': 'form-control' }), required=True)
+            'class': 'form-control' }), required=True, validators=[RegexValidator(r'^[a-zA-Z]*$', 'Apenas letras são permitidas.')])
     numero = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'Insira o Número de Telefone',
             'class': 'form-control'}), required=True)

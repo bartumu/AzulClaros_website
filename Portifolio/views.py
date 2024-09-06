@@ -15,10 +15,14 @@ from django.shortcuts import render
 def index(request):
     sobre = Sobre.objects.get()
     servico = Servico.objects.all()
+    Cli = Cliente.objects.all().count()
+    Res = Reserva.objects.filter(estado=1).count()
     context = {
         "Servicos":servico,
         "Sobre":sobre,
         "Tem_Sobre":Existe_servico(),
+        "N_cli":Cli,
+        "N_Res":Res,
     }
     return render(request,'Portifolio/index.html', context)
 
@@ -126,19 +130,11 @@ def addReserva_view(request):
                 cliente = formCliente.save()
 
             if formReserva.is_valid():
-                dataEntrada =  formReserva.cleaned_data.get('data_entrada')
-                total =  formReserva.cleaned_data.get('total')
-                obs =  formReserva.cleaned_data.get('obs')
-                data_reserva =  formReserva.cleaned_data.get('data_reserva')
                 reserva = formReserva.save(commit=False)
-                print(Reserva.objects.filter(data_entrada=dataEntrada, estado=0, cliente=cliente, total=total))
-                if Reserva.objects.filter(estado=0, data_entrada=dataEntrada, obs=obs, 
-                                          cliente=cliente, total=total, 
-                                          data_reserva=data_reserva).exists():
-                    messages.success(request, 'Essa Reserva Já foi registada!')
-                    redirect('reservaConsultar')
-                else:
-                    reserva.cliente = cliente
+                reserva.cliente = cliente
+
+                try:
+                    reserva.clean()
                     reserva.save()
                     
                 
@@ -173,6 +169,10 @@ def addReserva_view(request):
 
                         resera = request.session['reserva_id'] = reserva.id      
                         return buscarReserva(request,resera)
+                    
+                except ValidationError as e:
+                    messages.error(request, f"Erro: {e.message}")
+                    return redirect('reservaConsultar')
          
          
             

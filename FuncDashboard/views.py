@@ -75,6 +75,7 @@ def listReserva_view(request):
                 'Func': FuncObj,
                 'reservaPendente' : Reserva.objects.filter(estado=0).count(),
                 'reservaProc' : Reserva.objects.filter(estado=1).count(),
+                'DataHoje': datetime.now().date(),
             }
 
             return render(request,'BackEnd/ListReservas.html', context)
@@ -152,7 +153,8 @@ def atender_view(request,idReserva):
         'reservaPendente' : Reserva.objects.filter(estado=0).count(),
         'reservaProc' : Reserva.objects.filter(estado=1).count(),
         'FormAtender': atenderF,
-        'FormPagamento':formPagamento
+        'FormPagamento':formPagamento,
+        'DataHoje': datetime.now().date(),
     }
     return render(request,'BackEnd/ListReserva.html', context)
 

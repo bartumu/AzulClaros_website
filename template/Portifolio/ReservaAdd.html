@@ -30,6 +30,16 @@
               <h3 class="mb-30">Faça Pedido de Reserva para os nossos serviços</h3>
               {% if Existe_servico %}
               
+              {% if messages %}
+                  <div>
+                      {% for message in messages %}
+                          <div class="alert alert-{{ message.tags }}">
+                              {{ message }}
+                          </div>
+                      {% endfor %}
+                  </div>
+              {% endif %}
+
               
               <form action="" method="POST">
                 {% csrf_token %}

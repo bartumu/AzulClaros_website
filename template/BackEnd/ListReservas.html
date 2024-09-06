@@ -123,20 +123,36 @@
                               <span class="badge bg-danger">Pendente</span>
                             </td>
                             {% endif %}
-                            <td><a
-                              href="{% url 'atender' idReserva=Reserva.id %}"
-                              id="AtenderButton"
-                              class="btn btn-light"
-                              data-bs-toggle="modal"
-                              data-bs-target="#atenderCliModal"
-                              data-codigo="{{ Reserva.codigo_reserva }}"
-                              data-nome="{{ Reserva.cliente.nome }}"
-                              data-data_reserva="{{ Reserva.data_reserva }}"
-                              data-data_entrada="{{ Reserva.data_entrada }}"
-                              data-total="{{ Reserva.total }}"
-                              data-estado="{{ Reserva.estado }}"
-                              >Atender</a
-                            ></td>
+                            <td>
+                              
+                              {% if DataHoje == Reserva.data_entrada %}
+                              <a
+                                href="{% url 'atender' idReserva=Reserva.id %}"
+                                id="AtenderButton"
+                                class="btn btn-light"
+                                data-bs-toggle="modal"
+                                data-bs-target="#atenderCliModal"
+                                data-codigo="{{ Reserva.codigo_reserva }}"
+                                data-nome="{{ Reserva.cliente.nome }}"
+                                data-data_reserva="{{ Reserva.data_reserva }}"
+                                data-data_entrada="{{ Reserva.data_entrada }}"
+                                data-total="{{ Reserva.total }}"
+                                data-estado="{{ Reserva.estado }}"
+                                >Atender </a
+                              >
+                              {% else %}
+                              <button
+                                href="{% url 'atender' idReserva=Reserva.id %}"
+                                id="AtenderButton"
+                                class="btn btn-light"
+                                disabled
+                                >Atender</button
+                              >
+                              {% endif %}
+                                
+                              
+                          
+                          </td>
                           </tr>
                         {% endfor %}
                           
