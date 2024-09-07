@@ -5,12 +5,16 @@ from FuncDashboard.models import *
 from django.core.exceptions import ValidationError
 import re
 from datetime import date
+from django.core.validators import RegexValidator
 
 class FormRegistarCliente(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'insira o seu Nome Completo',
             'id':'nome',
-            'class': 'single-input' }), required=True)
+            'class': 'single-input' }), required=True, validators=[RegexValidator(
+                regex=r'^[A-Za-zÀ-ÿ\s]+$',
+                message='O campo deve conter apenas letras e espaços.'
+            )])
     numero = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'Insira o Número de Telefone',
             'class': 'single-input'}), required=True)
@@ -31,7 +35,7 @@ class FormRegistarCliente(forms.ModelForm):
         numero = self.cleaned_data.get('numero')
         
         # Verifica se o número está no formato correto
-        if not re.match(r'^9\d{8}$', numero):
+        if not re.match(r'^9\d{9}$', numero):
             self.add_error('numero','O numero deve começar com 9 e ter 9 dígitos no total.')
 
         return numero

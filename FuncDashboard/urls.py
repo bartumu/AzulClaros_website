@@ -16,6 +16,7 @@ urlpatterns = [
     path('func/perfil',views.RegistarPerfil,name="perfil"),
     path('func/Regperfil',views.RegistarPerfil,name="Regperfil"),
     path('func/Cliente',views.RegistarCliente,name="RegCliente"),
+    path('Func/gerarPDF/<int:idReserva>',views.gerarPDF,name="gerarFactPDF"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

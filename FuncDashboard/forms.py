@@ -13,7 +13,10 @@ class FormCadFuncionario(forms.ModelForm):
             'onblur': "this.placeholder = 'Insira o Nome Completo'",
             'required': True,
             'class': 'form-control'
-        }), validators=[RegexValidator(r'^[a-zA-Z]*$', 'Apenas letras são permitidas.')])
+        }), validators=[RegexValidator(
+                regex=r'^[A-Za-zÀ-ÿ\s]+$',
+                message='O campo deve conter apenas letras e espaços.'
+            )])
     numero = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'Numero de Tel',
             'onfocus': "this.placeholder = ''",
@@ -127,10 +130,10 @@ class FormAtender(forms.ModelForm):
         
         reserva = self.instance
         data_entrada = reserva.data_entrada
-        print(data_entrada)
+        print(data_saida)
 
         # Verifica se a data é anterior à data de hoje
-        if data_entrada and data_saida and data_saida < data_entrada:
+        if data_entrada and data_saida and data_saida <= data_entrada:
             self.add_error('data_saida', "A data de saída deve ser posterior à data de entrada.")
 
         return cleaned_data
@@ -169,7 +172,10 @@ class FormRegistarCliente(forms.ModelForm):
     nome = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'insira o seu Nome Completo',
             'id':'nome',
-            'class': 'form-control' }), required=True, validators=[RegexValidator(r'^[a-zA-Z]*$', 'Apenas letras são permitidas.')])
+            'class': 'form-control' }), required=True, validators=[RegexValidator(
+                regex=r'^[A-Za-zÀ-ÿ\s]+$',
+                message='O campo deve conter apenas letras e espaços.'
+            )])
     numero = forms.CharField(widget=forms.TextInput(attrs={
             'placeholder': 'Insira o Número de Telefone',
             'class': 'form-control'}), required=True)

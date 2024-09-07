@@ -8,7 +8,8 @@ from datetime import date
 from django.db.models import Sum, Count
 from FuncDashboard.relactorio import *
 from datetime import date, datetime  
-
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 from Portifolio.views import Enviar_fatura_email
 from threading import Thread
 from django.utils.safestring import mark_safe
@@ -173,7 +174,7 @@ def levantar_view(request,idReserva):
             reservas.funcionario = func
             reservas.save()
             messages.success(request, f'{ reservas.cliente.nome } atendido com sucesso.')
-
+            return redirect('levantamento')
        else:
             reservas.data_saida=data_Hoje
             reservas.estado = 2
@@ -488,3 +489,25 @@ def preparar_dados_grafico(request):
             }
         ]
     }
+
+
+def gerarPDF(request, idReserva):
+    reserva = Reserva.objects.get(id=idReserva)
+    servicosReservados = ServicosReservado.objects.filter(reserva=reserva)
+
+    template_path = 'BackEnd/Cliente/FacturaPag.html'
+    context = {
+        'Reserva': reserva,
+        'servicosReservados': servicosReservados
+    }
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="Reserva_{reserva.codigo_reserva}.pdf"'
+
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('Temos algum erro <pre>' + html + '</pre>')
+    return response

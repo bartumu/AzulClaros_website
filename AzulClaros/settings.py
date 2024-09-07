@@ -200,9 +200,11 @@ LOGOUT_REDIRECT_URL = 'login'
 
 #CONFIGURAÇÂO DE EMAIL
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True
 DEFAULT_EMAIL_FROM = 'Azul Claros - Lavandaria'
-EMAIL_HOST_USER = 'benartur.ab@gmail.com'
-EMAIL_HOST_PASSWORD = 'nvanhlgtygodaddd'
+EMAIL_HOST_USER = 'tonilsonjr07@gmail.com'
+EMAIL_HOST_PASSWORD = 'nqwzkcsjcmcpjlte'
+
+EMAIL_TIMEOUT = 30

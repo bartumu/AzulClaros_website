@@ -1,6 +1,4 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+
 from .models import *
 from datetime import date, timedelta
 
