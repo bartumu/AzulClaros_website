@@ -326,103 +326,106 @@ def RegistarCliente(request):
  
 
 def Relatorio(request):
-    today = date.today()
-    start_date = today.replace(day=1) 
-    end_date = today 
-    feedbacks = Feedback.objects.select_related('cliente').order_by('-data')
+    if request.user.is_authenticated:
+        today = date.today()
+        start_date = today.replace(day=1) 
+        end_date = today 
+        feedbacks = Feedback.objects.select_related('cliente').order_by('-data')
 
-    # Total de Clientes Atendidos no mês atual
-    CliAtendido = Reserva.objects.filter(estado=2, data_reserva__range=[start_date, end_date]).count()
+        # Total de Clientes Atendidos no mês atual
+        CliAtendido = Reserva.objects.filter(estado=2, data_reserva__range=[start_date, end_date]).count()
 
-    # Filtrar reservas no intervalo de datas
-    reservas = Reserva.objects.filter(data_reserva__range=[start_date, end_date])
+        # Filtrar reservas no intervalo de datas
+        reservas = Reserva.objects.filter(data_reserva__range=[start_date, end_date])
 
-    # Contar as reservas por estado
-    counts = [
-        reservas.filter(estado=0).count(),  # Pendente
-        reservas.filter(estado=1).count(),  # Em Processamento
-        reservas.filter(estado=2).count()   # Atendidos
-    ]
+        # Contar as reservas por estado
+        counts = [
+            reservas.filter(estado=0).count(),  # Pendente
+            reservas.filter(estado=1).count(),  # Em Processamento
+            reservas.filter(estado=2).count()   # Atendidos
+        ]
 
-    # Agregar os dados de pagamentos por serviço
-    dados = ServicosReservado.objects.values('servico__nome').annotate(total=Sum('subtotal')).order_by('servico__nome')
+        # Agregar os dados de pagamentos por serviço
+        dados = ServicosReservado.objects.values('servico__nome').annotate(total=Sum('subtotal')).order_by('servico__nome')
 
-    # Formatar os dados para o gráfico de vendas por serviço
-    categorias = [item['servico__nome'] for item in dados]
-    valores = [str(item['total']) for item in dados] 
+        # Formatar os dados para o gráfico de vendas por serviço
+        categorias = [item['servico__nome'] for item in dados]
+        valores = [str(item['total']) for item in dados] 
 
-    # Agregar os dados de reservas por funcionário (apenas as atendidas)
-    dadosF = Reserva.objects.filter(estado=2, data_reserva__range=[start_date, end_date]).values('funcionario__nome').annotate(total=Count('id')).order_by('funcionario__nome')
+        # Agregar os dados de reservas por funcionário (apenas as atendidas)
+        dadosF = Reserva.objects.filter(estado=2, data_reserva__range=[start_date, end_date]).values('funcionario__nome').annotate(total=Count('id')).order_by('funcionario__nome')
 
-    categoriasF = [item['funcionario__nome'] if item['funcionario__nome'] else "Desconhecido" for item in dadosF]
-    valoresF = [str(item['total']) for item in dadosF]
+        categoriasF = [item['funcionario__nome'] if item['funcionario__nome'] else "Desconhecido" for item in dadosF]
+        valoresF = [str(item['total']) for item in dadosF]
 
-    # Frequência de reservas por dia no mês atual
-    reservas_por_dia = reservas.values('data_reserva').annotate(quantidade=Count('id')).order_by('data_reserva')
+        # Frequência de reservas por dia no mês atual
+        reservas_por_dia = reservas.values('data_reserva').annotate(quantidade=Count('id')).order_by('data_reserva')
 
-    # Convertendo a data para string
-    reservas_por_dia = [
-        {'data_reserva': item['data_reserva'].strftime('%Y-%m-%d'), 'quantidade': item['quantidade']}
-        for item in reservas_por_dia
-    ]
-    # Frequência de reservas por cliente no mês atual
-    reservas_por_cliente = reservas.values('cliente__nome').annotate(quantidade=Count('id')).order_by('-quantidade')
+        # Convertendo a data para string
+        reservas_por_dia = [
+            {'data_reserva': item['data_reserva'].strftime('%Y-%m-%d'), 'quantidade': item['quantidade']}
+            for item in reservas_por_dia
+        ]
+        # Frequência de reservas por cliente no mês atual
+        reservas_por_cliente = reservas.values('cliente__nome').annotate(quantidade=Count('id')).order_by('-quantidade')
 
-    # Filtrar reservas atendidas
-    reservas_atendidas = Reserva.objects.filter(estado=2)
+        # Filtrar reservas atendidas
+        reservas_atendidas = Reserva.objects.filter(estado=2)
 
-    # Calcular a receita total por mês
-    receita_por_mes = reservas_atendidas.values('data_reserva__month').annotate(total_receita=Sum('total')).order_by('data_reserva__month')
+        # Calcular a receita total por mês
+        receita_por_mes = reservas_atendidas.values('data_reserva__month').annotate(total_receita=Sum('total')).order_by('data_reserva__month')
 
-    # Convertendo o mês para string e receita total
-    receita_por_mes = [
-        {'mes': item['data_reserva__month'], 'total_receita': float(item['total_receita'])}
-        for item in receita_por_mes
-    ]
+        # Convertendo o mês para string e receita total
+        receita_por_mes = [
+            {'mes': item['data_reserva__month'], 'total_receita': float(item['total_receita'])}
+            for item in receita_por_mes
+        ]
 
-    # Agrupar receitas por semana
-    receita_por_semana = reservas_atendidas.extra(select={'semana': "EXTRACT(week FROM data_reserva)"}).values('semana').annotate(total_receita=Sum('total')).order_by('semana')
+        # Agrupar receitas por semana
+        receita_por_semana = reservas_atendidas.extra(select={'semana': "EXTRACT(week FROM data_reserva)"}).values('semana').annotate(total_receita=Sum('total')).order_by('semana')
 
-    receita_por_semana = [
-        {'semana': item['semana'], 'total_receita': float(item['total_receita'])}
-        for item in receita_por_semana
-    ]
+        receita_por_semana = [
+            {'semana': item['semana'], 'total_receita': float(item['total_receita'])}
+            for item in receita_por_semana
+        ]
 
-   # Mapeamento das expressões para as avaliações
-    avaliacao_labels = {
-        1: 'Péssimo',
-        2: 'Mal',
-        3: 'Bom',
-        4: 'Muito Bom',
-        5: 'Excelente'
-    }
+    # Mapeamento das expressões para as avaliações
+        avaliacao_labels = {
+            1: 'Péssimo',
+            2: 'Mal',
+            3: 'Bom',
+            4: 'Muito Bom',
+            5: 'Excelente'
+        }
 
-    # Agregando os dados de satisfação
-    feedback_data = Feedback.objects.values('avaliacao').annotate(total=models.Count('avaliacao')).order_by('avaliacao')
+        # Agregando os dados de satisfação
+        feedback_data = Feedback.objects.values('avaliacao').annotate(total=models.Count('avaliacao')).order_by('avaliacao')
 
-    # Preparando os dados para o ApexCharts
-    labelsS = [avaliacao_labels[data['avaliacao']] for data in feedback_data]
-    seriesS = [data['total'] for data in feedback_data]
+        # Preparando os dados para o ApexCharts
+        labelsS = [avaliacao_labels[data['avaliacao']] for data in feedback_data]
+        seriesS = [data['total'] for data in feedback_data]
 
 
-    context = dict(
-        counts=counts,
-        categorias=categorias,
-        categoriasF=categoriasF,
-        valoresF=valoresF,
-        valores=valores,
-        CliAtendido=CliAtendido,
-        ValorVendido=reservas.filter(estado=2).aggregate(Sum('total'))['total__sum'],
-        reservas_por_dia=list(reservas_por_dia),
-        reservas_por_cliente=list(reservas_por_cliente),
-        receita_por_mes= receita_por_mes,
-        receita_por_semana= receita_por_semana,
-        labelsS= labelsS,
-        seriesS= seriesS,
-        feedbacks = feedbacks
-    )
-    
-    return render(request, 'Admin/Relactorios.html', context)
+        context = dict(
+            counts=counts,
+            categorias=categorias,
+            categoriasF=categoriasF,
+            valoresF=valoresF,
+            valores=valores,
+            CliAtendido=CliAtendido,
+            ValorVendido=reservas.filter(estado=2).aggregate(Sum('total'))['total__sum'],
+            reservas_por_dia=list(reservas_por_dia),
+            reservas_por_cliente=list(reservas_por_cliente),
+            receita_por_mes= receita_por_mes,
+            receita_por_semana= receita_por_semana,
+            labelsS= labelsS,
+            seriesS= seriesS,
+            feedbacks = feedbacks
+        )
+        
+        return render(request, 'Admin/Relactorios.html', context)
+    else:
+        return redirect('login')
 
 
 def obter_dados_estatisticas_reservas():
